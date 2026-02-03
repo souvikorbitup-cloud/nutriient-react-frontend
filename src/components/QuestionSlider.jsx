@@ -7,7 +7,12 @@ const variants = {
   exit: (dir) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
 };
 
-export default function QuestionSlider({ keyId, dir = 1, children, onDragEnd }) {
+export default function QuestionSlider({
+  keyId,
+  dir = 1,
+  children,
+  onDragEnd,
+}) {
   const ref = useRef(null);
 
   return (
@@ -36,11 +41,6 @@ export default function QuestionSlider({ keyId, dir = 1, children, onDragEnd }) 
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.2}
-          onDragEnd={(_e, info) => {
-            const offset = info.offset.x;
-            if (offset < -80) onDragEnd?.("next");
-            if (offset > 80) onDragEnd?.("back");
-          }}
         >
           {children}
         </motion.div>
