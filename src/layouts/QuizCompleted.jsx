@@ -16,7 +16,7 @@ const QuizCompleted = () => {
         const session = resCompleted?.data?.data;
         if (session) navigate("/recommend");
       } catch (error) {
-        showError(error.message);
+        showError("No completed quiz session found. Please complete the quiz.");
       } finally {
         setLoading(false);
       }

@@ -29,7 +29,7 @@ const Recommendation = () => {
         const data = await fetchReport(session?.sessionId);
         setReport(data?.data?.data);
       } catch (error) {
-        showError(error.message);
+        showError("No recommendation report found. Please complete the quiz.");
       } finally {
         setLoading(false);
       }
