@@ -31,7 +31,6 @@ const StepRenderer = ({
     return currValue;
   });
   // Validation messages are shown via global toasts (no inline error state)
-  
 
   // Toggle a value in the selected array
   const toggleSelected = (value) => {
@@ -40,7 +39,7 @@ const StepRenderer = ({
       if (prev.includes(value)) return prev.filter((v) => v !== value);
       return [...prev, value];
     });
-  }; 
+  };
 
   // Handle GIF Timer
   useEffect(() => {
@@ -159,8 +158,6 @@ const StepRenderer = ({
 
   return (
     <div>
-
-
       {/* GIF View */}
       {question.type === "GIF" && (
         <div className="flex-1 flex justify-center px-4">
@@ -305,12 +302,12 @@ const StepRenderer = ({
               <h2 className="text-xl mb-4 text-center">
                 {question.questionText}
               </h2>
-              <div className="flex justify-center gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {question.options.map((opt) => (
                   <button
                     key={opt.label}
                     onClick={() => onNext(opt)}
-                    className={`border flex flex-col justify-center items-center gap-2 whitespace-nowrap cursor-pointer border-gray-500 hover:border-green-500 py-4 px-8 rounded-xl bg-white hover:text-green-700 text-left ${opt.value === val ? "text-green-700 border-green-500" : ""}`}
+                    className={`border flex flex-col justify-center items-center gap-2 cursor-pointer border-gray-500 hover:border-green-500 py-4 px-8 rounded-xl bg-white hover:text-green-700 text-left ${opt.value === val ? "text-green-700 border-green-500" : ""}`}
                   >
                     {opt.icon && (
                       <img
@@ -319,7 +316,7 @@ const StepRenderer = ({
                         className="inline-block h-16 w-16 object-contain"
                       />
                     )}
-                    {opt.label}
+                    <span className="text-center">{opt.label}</span>
                   </button>
                 ))}
               </div>
