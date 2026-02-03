@@ -3,7 +3,7 @@ import { useQuiz } from "../context/QuizContext";
 import { useAuth } from "../context/AuthContext";
 import StepRenderer from "../components/StepRenderer";
 import QuestionSlider from "../components/QuestionSlider";
-import { getQuestions, getUserCompleted, deleteSession } from "../api/quiz";
+import { getQuestions, getUserCompleted, deleteSession } from "../api/quiz.js";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../api/user-auth.js";
 import QuizProgress from "../components/QuizProgress.jsx";

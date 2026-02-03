@@ -5,7 +5,7 @@ import { Pagination } from "swiper/modules";
 import FAQSection from "../components/FAQSection";
 import { useEffect } from "react";
 import { useState } from "react";
-import { showError } from "../Utils/toast";
+import { showError } from "../Utils/toast.js";
 import { getUserCompleted, getReport as fetchReport } from "../api/quiz";
 import { useNavigate } from "react-router-dom";
 import {
