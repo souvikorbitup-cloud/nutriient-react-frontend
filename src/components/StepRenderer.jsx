@@ -302,7 +302,7 @@ const StepRenderer = ({
               <h2 className="text-xl mb-4 text-center">
                 {question.questionText}
               </h2>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 justify-center">
                 {question.options.map((opt) => (
                   <button
                     key={opt.label}
