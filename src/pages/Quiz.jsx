@@ -188,6 +188,13 @@ const Quiz = () => {
     if (session?.currentSection !== "COMPLETED" || questions.length === 0)
       return;
 
+    // Guard: ensure the loaded questions belong to the current section.
+    // If we just switched sections the questions array may still contain
+    // previous-section questions until the fetch completes — skip in that case.
+    if (questions[0]?.section && String(questions[0].section) !== String(session.currentSection)) {
+      return;
+    }
+
     const current = questions[session.currentStep] || questions[0];
     if (!current) return;
 
