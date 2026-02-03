@@ -1,0 +1,38 @@
+/* Swiper custom square pagination */
+.custom-bullet {
+  width: 28px;
+  height: 4px;
+  background-color: #d1d5db; /* gray-300 */
+  border-radius: 2px;
+  display: inline-block;
+  margin: 0 6px !important;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.custom-bullet-active {
+  background-color: #22c55e; /* green-500 */
+}
+
+.swiper-pagination {
+  bottom: 0 !important;
+  text-align: center;
+}
+
+/* Swiper custom square pagination */
+.custom-bullet-r {
+  width: 10px;
+  height: 10px;
+  background-color: #d1d5db; /* gray-300 */
+  border-radius: 2px;
+  display: inline-block;
+  margin: 0 6px !important;
+  transition: all 0.3s ease;
+  opacity: 1;
+  border-radius: 50%;
+}
+
+.custom-bullet-active-r {
+  background-color: var(--color-dark-green); /* green-500 */
+}
+
