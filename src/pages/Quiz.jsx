@@ -429,13 +429,14 @@ const Quiz = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[url('/bg/quiz-bg.jpg')] bg-cover bg-center flex flex-col">
+    <div className="min-h-screen bg-[url('/bg/quiz-bg.jpg')] bg-center flex flex-col">
       {/* Header */}
       <div className="pt-8">
         <img
           src="/logo.png"
           alt="Nutrient"
-          className="mx-auto h-20 object-contain"
+          className="mx-auto h-20 object-contain cursor-pointer"
+          onClick={() => navigate("/")}
         />
       </div>
 
