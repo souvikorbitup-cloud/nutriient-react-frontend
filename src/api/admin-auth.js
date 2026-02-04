@@ -8,6 +8,8 @@ const API = axios.create({
 
 export const createManager = (data) => API.post("/register", data);
 
+export const currentAdmin = () => API.get("/current-admin");
+
 export const adminLogin = (data) => API.post("/login", data);
 
 export const updateAdmin = (data) => API.put("/update-account", data);

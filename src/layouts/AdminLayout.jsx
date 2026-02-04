@@ -1,13 +1,17 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-export default function Adminlayout() {
-  const location = useLocation();
+const AdminLayout = () => {
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Admin Navbar / Sidebar */}
+      <div className="flex">
+        <aside className="w-64 bg-white shadow">Admin Sidebar</aside>
+        <main className="flex-1 p-6">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
 
-  if (!user) {
-    return (
-        <div>Login page</div>
-    );
-  }
-
-  return <Outlet />;
-}
+export default AdminLayout;

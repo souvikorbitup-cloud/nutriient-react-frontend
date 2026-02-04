@@ -1,42 +1,37 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import {
-  currentUser,
-  logoutUser,
-  userSignIn,
-  userSignUp,
-} from "../api/user-auth.js";
+import { adminLogin, adminLogout, currentAdmin } from "../api/admin-auth.js";
 
 const AdminContext = createContext(null);
 
 export const AdminProvider = ({ children }) => {
-  const [user, setUser] = useState(() =>
+  const [admin, setAdmin] = useState(() =>
     JSON.parse(localStorage.getItem("admin")),
   );
 
-  console.log("curr Admin:", user);
+  console.log("curr Admin:", admin);
 
-  const [authLoading, setAuthLoading] = useState(false);
+  const [adminLoading, setAdminLoading] = useState(false);
 
-  const setUserAndPersist = (userData) => {
-    if (!userData) {
-      localStorage.removeItem("user");
-      setUser(null);
+  const setAdminAndPersist = (adminData) => {
+    if (!adminData) {
+      localStorage.removeItem("admin");
+      setAdmin(null);
       return;
     }
-    localStorage.setItem("user", JSON.stringify(userData));
-    setUser(userData);
+    localStorage.setItem("admin", JSON.stringify(adminData));
+    setAdmin(adminData);
   };
 
   const refresh = async () => {
     try {
-      setAuthLoading(true);
-      const res = await currentUser();
-      setUserAndPersist(res?.data?.data || null);
+      setAdminLoading(true);
+      const res = await currentAdmin();
+      setAdminAndPersist(res?.data?.data || null);
     } catch {
       // Not logged in / cookie missing
-      setUserAndPersist(null);
+      setAdminAndPersist(null);
     } finally {
-      setAuthLoading(false);
+      setAdminLoading(false);
     }
   };
 
@@ -47,55 +42,42 @@ export const AdminProvider = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const login = (userData) => setUserAndPersist(userData);
+  const login = (adminData) => setAdminAndPersist(adminData);
 
   const signIn = async (data) => {
-    setAuthLoading(true);
+    setAdminLoading(true);
     try {
-      const res = await userSignIn(data);
-      const userData = res?.data?.data?.user || res?.data?.data;
-      if (userData) setUserAndPersist(userData);
+      const res = await adminLogin(data);
+      const adminData = res?.data?.data?.admin || res?.data?.data;
+      if (adminData) setAdminAndPersist(adminData);
       return res;
     } finally {
-      setAuthLoading(false);
-    }
-  };
-
-  const signUp = async (data) => {
-    setAuthLoading(true);
-    try {
-      const res = await userSignUp(data);
-      const userData = res?.data?.data?.user || res?.data?.data;
-      if (userData) setUserAndPersist(userData);
-      return res;
-    } finally {
-      setAuthLoading(false);
+      setAdminLoading(false);
     }
   };
 
   const logout = async () => {
-    setAuthLoading(true);
+    setAdminLoading(true);
     try {
-      await logoutUser();
+      await adminLogout();
     } catch {
       // ignore
     } finally {
-      setUserAndPersist(null);
-      setAuthLoading(false);
+      setAdminAndPersist(null);
+      setAdminLoading(false);
     }
   };
 
   const value = useMemo(
     () => ({
-      user,
-      authLoading,
+      admin,
+      adminLoading,
       login,
       signIn,
-      signUp,
       logout,
       refresh,
     }),
-    [user, authLoading],
+    [admin, adminLoading],
   );
 
   return (
