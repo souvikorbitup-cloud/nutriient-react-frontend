@@ -25,7 +25,6 @@ import ProtectedRoute from "./layouts/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { QuizProvider } from "./context/QuizContext";
 import CustomToaster from "./components/CustomToaster";
-import Pricing from "./pages/Pricing";
 import QuizCompleted from "./layouts/QuizCompleted";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminProtectedRoute from "./layouts/AdminProtectedRoute";
@@ -66,7 +65,6 @@ const App = () => {
                   <Route path="/profile" element={<Profile />} />
                   <Route element={<QuizCompleted />}>
                     <Route path="/recommend" element={<Recommendation />} />
-                    <Route path="/pricing" element={<Pricing />} />
                   </Route>
                 </Route>
               </Route>
