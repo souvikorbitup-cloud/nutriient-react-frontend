@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { updateUser } from "../api/user-auth.js";
 import QuizProgress from "../components/QuizProgress.jsx";
 import Preloder from "../sections/Preloder.jsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const SECTIONS = ["BASIC", "GOAL_SELECT", "GOALS", "LIFESTYLE", "COMPLETED"];
 
@@ -43,6 +44,7 @@ function inferFieldKey(question) {
 }
 
 const Quiz = () => {
+  useDocumentTitle("Nutriient - Quiz");
   const { user, signIn, signUp } = useAuth();
   const { session, updateSession, loading } = useQuiz();
   const navigate = useNavigate();

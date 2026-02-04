@@ -14,8 +14,10 @@ import {
   testimonialSlides,
 } from "../variables";
 import Preloder from "../sections/Preloder";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const Recommendation = () => {
+  useDocumentTitle("Nutriient - Recommendation");
   const sectionRef = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);

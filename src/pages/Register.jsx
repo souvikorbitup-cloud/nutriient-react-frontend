@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { useAuth } from "../context/AuthContext";
 
@@ -13,7 +13,6 @@ const Register = () => {
   );
 
   const navigate = useNavigate();
-  const location = useLocation();
   const { signUp } = useAuth();
 
   const [fullName, setFullName] = useState("");
@@ -50,8 +49,8 @@ const Register = () => {
         err?.message ||
         "Failed to create account.";
 
-        if(err?.status === 409) msg = "Mobile Already Registered | Please Login"
-        
+      if (err?.status === 409) msg = "Mobile Already Registered | Please Login";
+
       {
         const { showError } = await import("../Utils/toast");
         navigate("/login");
@@ -74,7 +73,6 @@ const Register = () => {
                    shadow-[0_24px_35px_11px_rgba(153,153,153,0.15)]
                    px-6 py-8 sm:px-8"
       >
-
         {/* Inputs */}
         <div className="space-y-4">
           <input
