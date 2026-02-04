@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { currentUser, logoutUser, userSignIn, userSignUp } from "../api/user-auth.js";
+import {
+  currentUser,
+  logoutUser,
+  userSignIn,
+  userSignUp,
+} from "../api/user-auth.js";
 
 const AuthContext = createContext(null);
 
@@ -8,9 +13,6 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")),
   );
 
-  console.log("curr User:", user);
-  
-  
   const [authLoading, setAuthLoading] = useState(false);
 
   const setUserAndPersist = (userData) => {
@@ -94,11 +96,7 @@ export const AuthProvider = ({ children }) => {
     [user, authLoading],
   );
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
