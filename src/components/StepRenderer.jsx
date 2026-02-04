@@ -208,7 +208,7 @@ const StepRenderer = ({
                 className=" bg-green-600 text-white p-3 rounded cursor-pointer hover:bg-green-700 transition"
               >
                 {actionLoading ? (
-                  <i className="fa-solid fa-spinner"></i>
+                  <i className="fa-solid fa-spinner fa-spin" />
                 ) : (
                   <i className="fa fa-angle-right"></i>
                 )}
@@ -226,14 +226,14 @@ const StepRenderer = ({
       {question.type === "MULTI" && (
         <div className="flex-1 flex justify-center px-4">
           <div className="pt-16">
-            <h2 className="text-xl mb-4 text-center">
+            <h2 className="text-xl mb-7 text-center">
               {question.questionText}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               {question.options.map((opt) => (
                 <label
                   key={opt.value}
-                  className={`border flex flex-col justify-center items-center gap-2 whitespace-nowrap cursor-pointer border-gray-500 hover:border-green-500 py-4 px-8 rounded-xl bg-white hover:text-green-700 ${selected.includes(opt.value) ? "text-green-700 border-green-500" : ""}`}
+                  className={`border flex flex-col justify-center items-center gap-2 whitespace-nowrap cursor-pointer border-gray-500 hover:border-green-500 py-6 px-8 rounded-xl bg-white hover:text-green-700 ${selected.includes(opt.value) ? "text-green-700 border-green-500" : ""}`}
                 >
                   {opt.icon && (
                     <img
@@ -284,7 +284,7 @@ const StepRenderer = ({
       {user && user?.gender !== "unset" && fieldKey === "gender" ? (
         <div className="flex-1 flex justify-center px-4">
           <div className="pt-16">
-            <h2 className="text-xl mb-4 text-center">Gender: {user?.gender}</h2>
+            <h2 className="text-xl mb-7 text-center">Gender: {user?.gender}</h2>
             <div className="grid grid-cols-1 gap-3">
               <button
                 onClick={() => onNext(user?.gender)}
@@ -299,15 +299,17 @@ const StepRenderer = ({
         question.type === "CHOICE" && (
           <div className="flex-1 flex justify-center px-4">
             <div className="pt-16">
-              <h2 className="text-xl mb-4 text-center">
+              <h2 className="text-xl mb-7 text-center">
                 {question.questionText}
               </h2>
-              <div className={`grid grid-cols-2 lg:grid-cols-${question.options.length > 4 ? 4 : question.options.length} gap-3 justify-center`}>
+              <div
+                className={`grid grid-cols-2 ${question.options.length > 3 ? "lg:grid-cols-4" : question.options.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-3 justify-center`}
+              >
                 {question.options.map((opt) => (
                   <button
                     key={opt.label}
                     onClick={() => onNext(opt)}
-                    className={`border flex flex-col justify-center items-center gap-2 cursor-pointer border-gray-500 hover:border-green-500 py-4 px-8 rounded-xl bg-white hover:text-green-700 text-left ${opt.value === val ? "text-green-700 border-green-500" : ""}`}
+                    className={`border flex flex-col justify-center items-center gap-2 cursor-pointer border-gray-500 hover:border-green-500 py-6 px-8 rounded-xl bg-white hover:text-green-700 text-left ${opt.value === val ? "text-green-700 border-green-500" : ""}`}
                   >
                     {opt.icon && (
                       <img

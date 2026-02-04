@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button2 from "../components/Button2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -16,6 +16,7 @@ import {
 import Preloder from "../sections/Preloder";
 
 const Recommendation = () => {
+  const sectionRef = useRef(null);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState({});
@@ -27,7 +28,15 @@ const Recommendation = () => {
         const session = resCompleted?.data?.data;
         if (!session) navigate("/quiz");
         const data = await fetchReport(session?.sessionId);
-        setReport(data?.data?.data);
+        const getData = data?.data?.data;
+        if (getData?.healthAssessment > 80) {
+          getData.healthAssessmentColor = "green";
+        } else if (getData?.healthAssessment > 40) {
+          getData.healthAssessmentColor = "yellow";
+        } else {
+          getData.healthAssessmentColor = "red";
+        }
+        setReport(getData);
       } catch (error) {
         showError("No recommendation report found. Please complete the quiz.");
       } finally {
@@ -38,6 +47,20 @@ const Recommendation = () => {
   }, []);
 
   if (loading) return <Preloder />;
+
+  const scrollToSection = (ref) => {
+    if (!ref.current) return;
+    const offset = 80;
+
+    const elementTop = ref.current.getBoundingClientRect().top;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    window.scrollTo({
+      top: elementTop + scrollTop - offset,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
       {/* Hero Section */}
@@ -62,11 +85,15 @@ const Recommendation = () => {
 
             {/* Score Display */}
             <div className="flex flex-col items-center gap-x-1 sm:gap-5">
-              <div className="text-orange-light text-6xl font-bold">
+              <div
+                className={`text-${report.healthAssessmentColor}-500 text-6xl font-bold`}
+              >
                 {report?.healthAssessment} / 100
               </div>
               <div className="text-t-black-light text-center">
-                <p className="text-2xl text-t-black">
+                <p
+                  className={`text-2xl text-white py-2.5 px-6 bg-${report.healthAssessmentColor}-500 rounded-full`}
+                >
                   {report?.healthAssessmentTag}
                 </p>
               </div>
@@ -106,7 +133,7 @@ const Recommendation = () => {
       <section className="pt-16 md:pt-24 bg-gradient-green z-10 relative">
         {/* bg layer */}
         <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[373px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="app-container mx-auto relative z-10 p-4">
+        <div className="app-container mx-auto relative z-10 px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               Your BMR & Maintenance Calories
@@ -143,36 +170,33 @@ const Recommendation = () => {
               </p>
             </div>
           </div>
-
-          <div className="mt-4 text-center">
-            <p className="text-black font-semibold pb-6 text-2xl p-6">
-              Why this matters
-            </p>
-            <p className="text-t-black-light">
-              To lose weight sustainably, we create a safe calorie deficit of
-              350–500 kcal.
-            </p>
-            <div className="bg-dark-green color-white rounded-2xl p-6 max-w-[320px] sm:max-w-2xl mx-auto mt-8">
-              <h3 className="text-white font-normal text-lg sm:text-2xl mb-3 text-center ">
-                Your Ideal Fat Loss Target:
-              </h3>
-              <div className="text-xl sm:text-4xl font-bold text-white mb-4 text-center">
-                {report?.idealTarget?.low}-{report?.idealTarget?.high}{" "}
-                {report?.idealTarget?.unit}
-              </div>
-              <p className="text-white text-sm text-center font-normal">
-                This will be built into your personalized 7-day diet plan.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      <div className="h-2.5 bg-green-1 w-full -translate-y-[103px] sm:-translate-y-[90px] z-0 relative"></div>
+      <section className="pt-16 md:pt-24 bg-gradient-green z-10 relative">
+        <h2 className="text-3xl md:text-4xl font-bold text-t-black text-center">
+          Why this matters
+        </h2>
+        <div className="relative">
+          <div className="bg-dark-green color-white rounded-2xl p-6 max-w-[320px] sm:max-w-2xl mx-auto mt-8 relative z-10">
+            <h3 className="text-white font-normal text-lg sm:text-2xl mb-3 text-center ">
+              {report?.idealTarget?.text || "Your Target:"}
+            </h3>
+            <div className="text-xl sm:text-4xl font-bold text-white mb-4 text-center">
+              {report?.idealTarget?.low}-{report?.idealTarget?.high}{" "}
+              {report?.idealTarget?.unit}
+            </div>
+            <p className="text-white text-sm text-center font-normal">
+              This will be built into your personalized 7-day diet plan.
+            </p>
+          </div>
+          <div className="h-2.5 bg-green-1 w-full top-1/2 z-0 absolute -translate-y-1.5"></div>
+        </div>
+      </section>
 
       {/* Root Causes Section */}
       <section className="w-full py-16">
-        <div className="app-container mx-auto p-4">
+        <div className="app-container mx-auto px-4">
           {/* Heading */}
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black">
@@ -234,7 +258,7 @@ const Recommendation = () => {
       <section className="pt-[100px] bg-gradient-green z-10 relative">
         {/* bg layer */}
         <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="app-container mx-auto p-4">
+        <div className="app-container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-t-black">
               Your Nutrient <br /> Personalized Plan
@@ -273,7 +297,7 @@ const Recommendation = () => {
 
       {/* Recommended Supplements Section */}
       <section className="py-16 md:py-24">
-        <div className="app-container mx-auto p-4 max-w-7xl">
+        <div className="app-container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-bold text-t-black">
               Your Recommended Dietary Supplements
@@ -405,78 +429,291 @@ const Recommendation = () => {
       </section>
 
       {/* Transformation Section */}
-      <section className="py-16 md:py-24 relative z-10">
+      <section className="py-16 md:py-24 relative z-10" ref={sectionRef}>
         {/* bg layer */}
         <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="container mx-auto p-4">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-t-black mb-4">
-              Ready to Begin Your <br /> Transformation?
+        <div className="container mx-auto px-4">
+          {/* Heading */}
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black">
+              {`${report.userName}'s Nutriient Personalized Kit`}
             </h2>
-          </div>
-
-          <div className="bg-[url('/recomended/Transformation.png')] sm:h-[514px] bg-no-repeat bg-cover rounded-3xl p-12 md:p-16 flex-center mx-auto">
-            <img
-              src="/recomended/Transformation-product.png"
-              alt="Transformation"
-              className="h-full h-auto mb-8 rounded-2xl"
-            />
-          </div>
-          <div className="mt-12">
-            <p className="text-center mx-auto max-w-3xl">
+            <p className="mt-3 text-t-black-light text-sm md:text-base max-w-3xl mx-auto">
               Your Nutriient Journey is tailored to you—combining a structured
               diet chart, targeted supplements, and guided monitoring.
             </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8 mt-8">
-              <div className="flex sm:flex-col items-center gap-3">
-                <div className="w-6 sm:w-12 h-6 sm:h-12 bg-dark-green rounded-lg flex items-center justify-center p-1">
-                  <img src="/recomended/thik-vector.svg" alt="icon" />
-                </div>
-                <p className="text-sm font-semibold">
-                  Sustainable calorie plan
-                </p>
+          {/* Pricing section */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {/* <!-- Plan 1: Basic --> */}
+            <div className="bg-white rounded-lg shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)] p-6 flex flex-col">
+              <h3 className="text-2xl font-semibold mb-4">Trial</h3>
+              <span className="text-lg text-t-black-light/70 font-semibold line-through">
+                ₹999
+              </span>
+              <div className="mb-6">
+                <span className="text-4xl text-t-black font-semibold">
+                  ₹799
+                </span>{" "}
+                <span className="text-sm text-t-black-light font-semibold">
+                  Save 20%
+                </span>
               </div>
-              <div className="flex sm:flex-col items-center gap-3">
-                <div className="w-6 sm:w-12 h-6 sm:h-12 bg-dark-green rounded-lg flex items-center justify-center p-1">
-                  <img src="/recomended/thik-vector.svg" alt="icon" />
-                </div>
-                <p className="text-sm font-semibold text-black">
-                  Home workout plan
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+                One Month Plan
+              </p>
+              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer">
+                Select Trial Plan
+              </button>
+              <span className="mb-8 text-sm text-t-black-light">
+                *Get Additional 10% Discount On Online Payment
+              </span>
+              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Try For 1 Month Then Decide</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Free Nutritionist's Consultation</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>24/7 Support With Experts</span>
+                </li>
+              </ul>
+              <div className="p-4 bg-black rounded-xl text-white mt-6">
+                <p className="text-sm">
+                  One Kit Delivered To You & One FREE Consultancuy with our
+                  Nutritionists
                 </p>
-              </div>
-              <div className="flex sm:flex-col items-center gap-3">
-                <div className="w-6 sm:w-12 h-6 sm:h-12 bg-dark-green rounded-lg flex items-center justify-center p-1">
-                  <img src="/recomended/thik-vector.svg" alt="icon" />
-                </div>
-                <p className="text-sm font-semibold text-black">
-                  Aiding supplements
-                </p>
-              </div>
-              <div className="flex sm:flex-col items-center gap-3">
-                <div className="w-6 sm:w-12 h-6 sm:h-12 bg-dark-green rounded-lg flex items-center justify-center p-1">
-                  <img src="/recomended/thik-vector.svg" alt="icon" />
-                </div>
-                <p className="text-sm font-semibold text-black">
-                  Weekly monitoring
-                </p>
-              </div>
-              <div className="flex sm:flex-col items-center gap-3">
-                <div className="w-6 sm:w-12 h-6 sm:h-12 bg-dark-green rounded-lg flex items-center justify-center p-1">
-                  <img
-                    src="/recomended/thik-vector.svg"
-                    className="w-full"
-                    alt="icon"
-                  />
-                </div>
-                <p className="text-sm font-semibold text-black">
-                  Lifestyle support
+                <hr class="h-px my-2 bg-white/50 border-0" />
+                <p className="text-sm">
+                  You Can Buy Your Nutrition Plan For Following Months From Your
+                  Nuitriient Dashboard
                 </p>
               </div>
             </div>
 
-            <div className="flex-center">
-              <Button2 text="Start My Transformation" />
+            {/* <!-- Plan 2: Plus / Recommended --> */}
+            <div className="bg-white  rounded-lg p-6 flex flex-col border-2 border-dark-green  relative lg:scale-110">
+              <span className="absolute top-0 right-4 -mt-3 bg-dark-green  text-white  text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                Recommended
+              </span>
+              <h3 className="text-2xl font-semibold mb-4">Standard</h3>
+              <span className="text-lg text-t-black-light/70 font-semibold line-through">
+                ₹999
+              </span>
+              <div className="mb-6">
+                <span className="text-4xl text-t-black font-semibold">
+                  ₹599
+                </span>{" "}
+                <span className="text-sm text-t-black-light font-semibold">
+                  Save 40%
+                </span>
+              </div>
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+                Six Months Subscription
+              </p>
+              <button className="w-full bg-dark-green  text-white  py-2 px-4 rounded-md font-semibold hover:bg-dark-green/80  transition duration-200 mb-1 cursor-pointer">
+                Select Standard Plan
+              </button>
+              <span className="mb-8 text-sm text-t-black-light">
+                *Get Additional 10% Discount On Online Payment
+              </span>
+              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Good Value For Money</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Pay Monthly Cancel Any Time</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Uninterrupted Guidance</span>
+                </li>
+              </ul>
+              <div className="p-4 bg-dark-green rounded-xl text-white mt-6">
+                <p className="text-sm">
+                  One Kit Delivered Automatically Every Monthy After Your
+                  Monthly Nutritionist Consultanc
+                </p>
+                <hr class="h-px my-2 bg-white/50 border-0" />
+                <p className="text-sm">
+                  Your Diet, Routine And Supplemnets Are Updated Every Month
+                  According To Your Improvements And Nutritionist's Consultation
+                </p>
+              </div>
+            </div>
+
+            {/* <!-- Plan 3: Pro --> */}
+            <div className="bg-white rounded-lg shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)] p-6 flex flex-col">
+              <h3 className="text-2xl font-semibold mb-4">Premium</h3>
+              <span className="text-lg text-t-black-light/70 font-semibold line-through">
+                ₹999
+              </span>
+              <div className="mb-6">
+                <span className="text-4xl text-t-black font-semibold">
+                  ₹499
+                </span>{" "}
+                <span className="text-sm text-t-black-light font-semibold">
+                  Save 50%
+                </span>
+              </div>
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+                Twelve Months Subscription
+              </p>
+              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer">
+                Select Premium Plan
+              </button>
+              <span className="mb-8 text-sm text-t-black-light">
+                *Get Additional 10% Discount On Online Payment
+              </span>
+              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Best Value For Money</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Uninterrupted Routine</span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                  <span>Uninterrupted Guidance</span>
+                </li>
+              </ul>
+              <div className="p-4 bg-black rounded-xl text-white mt-6">
+                <p className="text-sm">
+                  One Kit Delivered Automatically Every Monthy After Your
+                  Monthly Nutritionist Consultancy
+                </p>
+                <hr class="h-px my-2 bg-white/50 border-0" />
+                <p className="text-sm">
+                  Your Diet, Routine And Supplemnets Are Updated Every Month
+                  According To Your Improvements And Nutritionist's Consultation
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -510,7 +747,11 @@ const Recommendation = () => {
               </div>
 
               <div className="flex-center">
-                <Button2 text="Checkout Pricing Plans" />
+                <Button2
+                  text="Checkout Pricing Plans"
+                  scrollToSection={scrollToSection}
+                  sectionRef={sectionRef}
+                />
               </div>
             </div>
           </div>
@@ -521,7 +762,7 @@ const Recommendation = () => {
       <section className="py-16 md:py-24 relative z-10">
         {/* bg layer */}
         <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="app-container mx-auto p-4">
+        <div className="app-container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               What Our Customers Say
@@ -600,7 +841,11 @@ const Recommendation = () => {
           </Swiper>
 
           <div className="flex-center mt-12">
-            <Button2 text="Checkout Pricing Plans" />
+            <Button2
+              text="Checkout Pricing Plans"
+              scrollToSection={scrollToSection}
+              sectionRef={sectionRef}
+            />
           </div>
         </div>
       </section>
@@ -609,7 +854,7 @@ const Recommendation = () => {
       <section className="pb-16 md:pb-24 relative z-10">
         {/* bg layer */}
         <div className="bg-[linear-gradient(180deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute bottom-0 left-0 z-0"></div>
-        <div className="container mx-auto p-4 relative z-10">
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               Our Team
@@ -702,14 +947,18 @@ const Recommendation = () => {
           </div>
 
           <div className="flex-center mt-20">
-            <Button2 text="Checkout Pricing Plans" />
+            <Button2
+              text="Checkout Pricing Plans"
+              scrollToSection={scrollToSection}
+              sectionRef={sectionRef}
+            />
           </div>
         </div>
       </section>
 
       {/* FAQ */}
       <section className="py-16 md:py-24 relative z-10">
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               Frequently Asked Questions
@@ -717,7 +966,11 @@ const Recommendation = () => {
           </div>
           <FAQSection />
           <div className="flex-center mt-12">
-            <Button2 text="Checkout Pricing Plans" />
+            <Button2
+              text="Checkout Pricing Plans"
+              scrollToSection={scrollToSection}
+              sectionRef={sectionRef}
+            />
           </div>
         </div>
       </section>

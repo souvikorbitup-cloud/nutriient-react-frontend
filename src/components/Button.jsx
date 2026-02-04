@@ -2,6 +2,7 @@ import React, { use, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserCompleted } from "../api/quiz";
 import { useAuth } from "../context/AuthContext";
+import Preloder from "../sections/Preloder";
 
 const Button = ({ text = "TAKE QUIZ NOW", cText = "MY NUTRITION REPORT" }) => {
   const navigate = useNavigate();
@@ -37,13 +38,15 @@ const Button = ({ text = "TAKE QUIZ NOW", cText = "MY NUTRITION REPORT" }) => {
     else navigate("/quiz");
   };
 
+  if (loading) return <Preloder />;
+
   return (
     <button
       className={`rounded-xl uppercase bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] px-6 py-3 text-sm font-semibold text-white shadow-md hover:opacity-90 transition ${loading ? "cursor-not-allowed opacity-80" : "cursor-pointer hover:bg-[linear-gradient(270deg,#E7497B_0%,#717FF3_100%)]"}`}
       onClick={handleClick}
       disabled={loading}
       aria-busy={loading}
-      title={loading ? "Checking quiz status..." : completed ? cText : text}
+      title={completed ? cText : text}
     >
       {loading ? (
         <>

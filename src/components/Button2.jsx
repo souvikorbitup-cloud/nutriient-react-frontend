@@ -1,15 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-const Button2 = ({ text, url = "/pricing" }) => {
-  const navigate = useNavigate();
+const Button2 = ({ text, url = "/pricing", scrollToSection, sectionRef }) => {
   return (
     <button
       className="flex px-[20px] py-[12px]
          justify-center items-center gap-[8px]
          rounded-[8px]
          bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] hover:bg-[linear-gradient(270deg,#E7497B_0%,#717FF3_100%)] text-white uppercase cursor-pointer"
-      onClick={() => navigate(url)}
+      onClick={() => scrollToSection(sectionRef)}
     >
       {text}{" "}
       <svg
