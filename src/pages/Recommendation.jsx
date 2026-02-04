@@ -30,11 +30,14 @@ const Recommendation = () => {
         const data = await fetchReport(session?.sessionId);
         const getData = data?.data?.data;
         if (getData?.healthAssessment > 80) {
-          getData.healthAssessmentColor = "green";
+          getData.healthAssessmentTextColor = "text-green-500";
+          getData.healthAssessmentBgColor = "bg-green-500";
         } else if (getData?.healthAssessment > 40) {
-          getData.healthAssessmentColor = "yellow";
+          getData.healthAssessmentTextColor = "text-yellow-500";
+          getData.healthAssessmentBgColor = "bg-yellow-500";
         } else {
-          getData.healthAssessmentColor = "red";
+          getData.healthAssessmentTextColor = "text-red-500";
+          getData.healthAssessmentBgColor = "bg-red-500";
         }
         setReport(getData);
       } catch (error) {
@@ -86,13 +89,13 @@ const Recommendation = () => {
             {/* Score Display */}
             <div className="flex flex-col items-center gap-x-1 sm:gap-5">
               <div
-                className={`text-${report.healthAssessmentColor}-500 text-6xl font-bold`}
+                className={`${report.healthAssessmentTextColor} text-6xl font-bold`}
               >
                 {report?.healthAssessment} / 100
               </div>
               <div className="text-t-black-light text-center">
                 <p
-                  className={`text-2xl text-white py-2.5 px-6 bg-${report.healthAssessmentColor}-500 rounded-full`}
+                  className={`text-2xl text-white py-2.5 px-6 ${report.healthAssessmentBgColor} rounded-full`}
                 >
                   {report?.healthAssessmentTag}
                 </p>
