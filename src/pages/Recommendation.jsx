@@ -87,7 +87,7 @@ const Recommendation = () => {
             </div>
 
             {/* Score Display */}
-            <div className="flex flex-col items-center gap-x-1 sm:gap-5">
+            <div className="flex flex-col items-center gap-3.5 sm:gap-5">
               <div
                 className={`${report.healthAssessmentTextColor} text-6xl font-bold`}
               >
@@ -95,7 +95,7 @@ const Recommendation = () => {
               </div>
               <div className="text-t-black-light text-center">
                 <p
-                  className={`text-2xl text-white py-2.5 px-6 ${report.healthAssessmentBgColor} rounded-full`}
+                  className={`text-xl sm:text-2xl text-white py-2.5 px-6 ${report.healthAssessmentBgColor} rounded-full`}
                 >
                   {report?.healthAssessmentTag}
                 </p>
