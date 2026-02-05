@@ -7,7 +7,6 @@ import {
   ChevronDownIcon,
   ListIcon,
   TableIcon,
-  UserCircleIcon,
   HorizontaLDots,
   ProductIcon,
   CategoryIcon,
@@ -43,11 +42,6 @@ const navItems = [
       { name: "Category List", path: "/admin/categories" },
       { name: "Add Category", path: "/admin/add-category" },
     ],
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "Admin Profile",
-    path: "/admin/profile",
   },
   {
     icon: <ChartIcon />,
