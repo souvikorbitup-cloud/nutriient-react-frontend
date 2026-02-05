@@ -8,8 +8,6 @@ export const AdminProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("admin")),
   );
 
-  console.log("curr Admin:", admin);
-
   const [adminLoading, setAdminLoading] = useState(false);
 
   const setAdminAndPersist = (adminData) => {
@@ -27,6 +25,7 @@ export const AdminProvider = ({ children }) => {
       setAdminLoading(true);
       const res = await currentAdmin();
       setAdminAndPersist(res?.data?.data || null);
+      console.log("curr Admin:", admin);
     } catch {
       // Not logged in / cookie missing
       setAdminAndPersist(null);

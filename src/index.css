@@ -4,15 +4,15 @@
 
 /* Font faces: Montserrat (local files in /font) */
 @font-face {
-  font-family: 'Montserrat';
-  src: url('/font/Montserrat-Medium.woff') format('woff');
+  font-family: "Montserrat";
+  src: url("/font/Montserrat-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: 'Montserrat';
-  src: url('/font/Montserrat-Bold.woff') format('woff');
+  font-family: "Montserrat";
+  src: url("/font/Montserrat-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,9 @@
 
 /* Base styles */
 :root {
-  --font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+  --font-sans:
+    "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
 }
 html,
 body {
@@ -40,8 +42,8 @@ section {
 @theme {
   --color-primary: #6dbe45;
   --color-secondary: #4e982a;
-  --color-green-1: #68C500;
-  --color-orange-light: #FFBB00;
+  --color-green-1: #68c500;
+  --color-orange-light: #ffbb00;
   --color-t-black: #141313;
   --color-t-black-light: #434343;
   --color-dark-green: #399645;
@@ -91,4 +93,16 @@ section {
   .navbar.not-scrolled {
     @apply bg-transparent;
   }
+}
+
+/* ============================= */
+/* Admin */
+/* ============================= */
+.no-scrollbar {
+  /* Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
