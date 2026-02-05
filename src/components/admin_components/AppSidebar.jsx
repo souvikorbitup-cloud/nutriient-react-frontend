@@ -74,7 +74,14 @@ const navItems = [
 ];
 
 const AppSidebar = () => {
-  const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const {
+    isExpanded,
+    isMobileOpen,
+    isHovered,
+    setIsHovered,
+    toggleSidebar,
+    toggleMobileSidebar,
+  } = useSidebar();
   const location = useLocation();
 
   const [openSubmenu, setOpenSubmenu] = useState(null);
@@ -82,6 +89,12 @@ const AppSidebar = () => {
   const [subMenuHeight, setSubMenuHeight] = useState({});
 
   const subMenuRefs = useRef({});
+
+  const handleToggle = () => {
+    if (window.innerWidth < 450) {
+      toggleMobileSidebar();
+    }
+  };
 
   // const isActive = (path: string) => location.pathname === path;
   const isActive = useCallback(
@@ -143,7 +156,7 @@ const AppSidebar = () => {
               onClick={() => handleSubmenuToggle(index, menuType)}
               className={`relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm group ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
-                  ? "bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12] dark:text-brand-400"
+                  ? "bg-brand-50 text-brand-500 dark:text-brand-400"
                   : "text-gray-700 hover:bg-gray-100 group-hover:text-gray-700"
               } cursor-pointer ${
                 !isExpanded && !isHovered
@@ -177,10 +190,11 @@ const AppSidebar = () => {
           ) : (
             nav.path && (
               <Link
+                onClick={handleToggle}
                 to={nav.path}
                 className={`relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm group ${
                   isActive(nav.path)
-                    ? "bg-brand-50 text-brand-500 dark:bg-brand-500/[0.12]"
+                    ? "bg-brand-50 text-brand-500 "
                     : "text-gray-700 hover:bg-gray-100 group-hover:text-gray-700"
                 }`}
               >
@@ -216,6 +230,7 @@ const AppSidebar = () => {
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.name}>
                     <Link
+                      onClick={handleToggle}
                       to={subItem.path}
                       className={`relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-theme-sm font-medium ${
                         isActive(subItem.path)
