@@ -127,6 +127,7 @@ const Quiz = () => {
   useEffect(() => {
     let mounted = true;
     const initialCheck = async () => {
+      if(user?.role) navigate('/admin', { replace: true });
       try {
         const res = await getUserCompleted();
         const completed = res?.data?.data;

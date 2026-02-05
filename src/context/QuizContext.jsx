@@ -1,12 +1,44 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { getSession, syncSession } from "../api/quiz.js";
+import { getSession, getUserCompleted, syncSession } from "../api/quiz.js";
+import { useAuth } from "./AuthContext.jsx";
 
 export const QuizContext = createContext();
 
 export const QuizProvider = ({ children }) => {
+  const { user } = useAuth();
+  const [completed, setCompleted] = useState(false);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      setCompleted(false);
+      setLoading(false);
+      return;
+    }
+
+    let ignore = false;
+
+    const fetchStatus = async () => {
+      setLoading(true);
+      try {
+        const res = await getUserCompleted();
+        if (!ignore) {
+          setCompleted(!!res?.data?.data);
+        }
+      } catch (e) {
+        console.warn("Quiz status fetch failed", e);
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    fetchStatus();
+    return () => {
+      ignore = true;
+    };
+  }, [user?.id]);
 
   // 1. Initialize / Resume Session
   useEffect(() => {
@@ -42,7 +74,7 @@ export const QuizProvider = ({ children }) => {
   };
 
   return (
-    <QuizContext.Provider value={{ session, updateSession, loading }}>
+    <QuizContext.Provider value={{ session, updateSession, loading, completed }}>
       {children}
     </QuizContext.Provider>
   );
