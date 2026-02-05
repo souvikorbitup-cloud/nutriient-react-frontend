@@ -65,7 +65,7 @@ const AddDiteCharts = () => {
   return (
     <div className="flex items-center justify-center px-4">
       <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="mb-6 text-center text-lg font-semibold text-gray-800">
+        <h2 className="mb-6 text-center text-lg font-semibold text-gray-700">
           Add Diet Chart
         </h2>
 
@@ -81,7 +81,7 @@ const AddDiteCharts = () => {
               value={form.value}
               onChange={handleChange}
               placeholder="e.g. 2200"
-              className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-lg border border-t-black-light px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -96,7 +96,7 @@ const AddDiteCharts = () => {
               onChange={handleChange}
               rows="3"
               placeholder="Short description"
-              className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-lg border border-t-black-light px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 
