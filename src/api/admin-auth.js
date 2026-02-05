@@ -23,6 +23,7 @@ export const deleteManager = (managerId) =>
 
 export const adminLogout = () => API.post(`/logout`);
 
-export const getAllUsers = () => API.get(`/users`);
+export const getAllUsers = ({ page, limit }) =>
+  API.get(`/users?page=${page}&limit=${limit}`);
 
 export const getStats = () => API.get(`/stats`);
