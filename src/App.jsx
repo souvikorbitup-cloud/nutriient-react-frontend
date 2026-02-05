@@ -31,6 +31,18 @@ import AdminProtectedRoute from "./layouts/AdminProtectedRoute";
 import AdminLogin from "./pages/admin_pages/AdminLogin";
 import AdminDashboard from "./pages/admin_pages/AdminDashboard";
 import { AdminProvider } from "./context/AdminContext";
+import Products from "./pages/admin_pages/Products";
+import AddProduct from "./pages/admin_pages/AddProduct";
+import Categories from "./pages/admin_pages/Categories";
+import AddCategories from "./pages/admin_pages/AddCategories";
+import AdminProfile from "./pages/admin_pages/AdminProfile";
+import DiteCharts from "./pages/admin_pages/DiteCharts";
+import AddDiteCharts from "./pages/admin_pages/AddDiteCharts";
+import Customers from "./pages/admin_pages/Customers";
+import QuizList from "./pages/admin_pages/QuizList";
+import FollowUp from "./pages/admin_pages/FollowUp";
+import Queries from "./pages/admin_pages/Queries";
+import OrderList from "./pages/admin_pages/OrderList";
 
 const App = () => {
   return (
@@ -84,6 +96,18 @@ const App = () => {
                 <Route element={<AdminProtectedRoute />}>
                   <Route element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
+                    <Route path="products" element={<Products />} />
+                    <Route path="add-product" element={<AddProduct />} />
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="add-category" element={<AddCategories />} />
+                    <Route path="profile" element={<AdminProfile />} />
+                    <Route path="charts" element={<DiteCharts />} />
+                    <Route path="add-charts" element={<AddDiteCharts />} />
+                    <Route path="customers" element={<Customers />} />
+                    <Route path="quiz-list" element={<QuizList />} />
+                    <Route path="followup" element={<FollowUp />} />
+                    <Route path="queries" element={<Queries />} />
+                    <Route path="orders" element={<OrderList />} />
                   </Route>
                 </Route>
               </Route>

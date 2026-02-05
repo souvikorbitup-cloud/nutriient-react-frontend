@@ -12,7 +12,8 @@ import {
   ProductIcon,
   CategoryIcon,
   ChartIcon,
-  UsersIcon
+  UsersIcon,
+  OrdersIcon,
 } from "../../icons";
 import { useSidebar } from "../../context/SidebarContext";
 
@@ -31,6 +32,11 @@ const navItems = [
     ],
   },
   {
+    icon: <OrdersIcon />,
+    name: "Orders",
+    path: "/admin/orders",
+  },
+  {
     icon: <CategoryIcon />,
     name: "Category",
     subItems: [
@@ -46,7 +52,10 @@ const navItems = [
   {
     icon: <ChartIcon />,
     name: "Dite Charts",
-    path: "/admin/charts",
+    subItems: [
+      { name: "Charts List", path: "/admin/charts" },
+      { name: "Add New Chart", path: "/admin/add-charts" },
+    ],
   },
   {
     icon: <UsersIcon />,
@@ -56,7 +65,7 @@ const navItems = [
   {
     icon: <ListIcon />,
     name: "Quiz List",
-    path: "/admin/quizs",
+    path: "/admin/quiz-list",
   },
   {
     icon: <ListIcon />,
@@ -68,7 +77,6 @@ const navItems = [
     name: "Client Queries",
     path: "/admin/queries",
   },
-  
 ];
 
 const AppSidebar = () => {
@@ -94,7 +102,6 @@ const AppSidebar = () => {
         nav.subItems.forEach((subItem) => {
           if (isActive(subItem.path)) {
             setOpenSubmenu({
-              type,
               index,
             });
             submenuMatched = true;
@@ -270,20 +277,10 @@ const AppSidebar = () => {
         <Link to="/">
           {isExpanded || isHovered || isMobileOpen ? (
             <>
-              <img
-                src="/logo.png"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
+              <img src="/logo.png" alt="Logo" width={150} height={40} />
             </>
           ) : (
-            <img
-              src="/preloader.gif"
-              alt="Logo"
-              width={32}
-              height={32}
-            />
+            <img src="/preloader.gif" alt="Logo" width={32} height={32} />
           )}
         </Link>
       </div>
