@@ -116,7 +116,7 @@ const Recommendation = () => {
               </h2>
 
               {/* Badges */}
-              <div className="flex flex-wrap justify-center gap-6 mt-6">
+              <div className="flex flex-wrap justify-center gap-6 mt-6 mb-14 sm:mb-0">
                 {report?.hizValues?.map((item, i) => (
                   <span
                     className="px-6 py-2.5 rounded-full bg-dark-green text-white text-sm font-medium flex-center gap-1"
@@ -260,8 +260,8 @@ const Recommendation = () => {
       {/* Nutrient Personalized Plan Section */}
       <section className="pt-[100px] bg-gradient-green z-10 relative">
         {/* bg layer */}
-        <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="app-container mx-auto px-4">
+        <div className="bg-[linear-gradient(360deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
+        <div className="app-container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-t-black">
               Your Nutrient <br /> Personalized Plan
@@ -431,13 +431,13 @@ const Recommendation = () => {
         </div>
       </section>
 
-      {/* Transformation Section */}
+      {/* Pricing Section */}
       <section className="py-16 md:py-24 relative z-10" ref={sectionRef}>
         {/* bg layer */}
-        <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="container mx-auto px-4">
+        <div className="bg-[linear-gradient(360deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
+        <div className="container mx-auto px-4 relative z-10">
           {/* Heading */}
-          <div className="text-center mb-14">
+          <div className="text-center mb-14 sm:mb-24">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black">
               {`${report.userName}'s Nutriient Personalized Kit`}
             </h2>
@@ -764,8 +764,8 @@ const Recommendation = () => {
       {/* Testimonials Section */}
       <section className="py-16 md:py-24 relative z-10">
         {/* bg layer */}
-        <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
-        <div className="app-container mx-auto px-4">
+        <div className="bg-[linear-gradient(360deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
+        <div className="app-container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               What Our Customers Say
@@ -779,7 +779,7 @@ const Recommendation = () => {
           <Swiper
             modules={[Pagination]}
             slidesPerView={1}
-            spaceBetween={18}
+            spaceBetween={12}
             className="h-[520px]"
             pagination={{
               clickable: true,
@@ -795,7 +795,7 @@ const Recommendation = () => {
             {/* Testimonials */}
             {testimonialSlides.map((user, i) => (
               <SwiperSlide className="px-2 py-4" key={i}>
-                <div className="bg-white rounded-2xl p-8 shadow-lg h-[455px]">
+                <div className="bg-white rounded-2xl p-8 shadow-[0px_0px_5px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_7px_4px_rgba(0,0,0,0.1)] h-[455px]">
                   <div className="flex items-center gap-4 mb-4">
                     <img
                       src={user.image}
