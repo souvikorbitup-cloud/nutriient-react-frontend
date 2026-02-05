@@ -129,7 +129,7 @@ const AdminLogin = () => {
       </div>
 
       {/* ================= RIGHT PANEL ================= */}
-      <div className="relative items-center hidden w-1/2 h-full bg-brand-950 lg:flex dark:bg-white/5">
+      <div className="relative items-center hidden w-1/2 h-full lg:flex">
         <div className="flex flex-col items-center max-w-xs mx-auto text-center">
           <img src="/logo.png" alt="Logo" className="mb-4" />
         </div>
