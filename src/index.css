@@ -131,6 +131,18 @@ section {
   box-sizing: border-box;
 }
 
+.reset-design blockquote {
+  margin: 0;
+}
+.reset-design blockquote p {
+  border-left: 2px solid var(--color-dark-green);
+  padding: 8px 12px;
+  margin: 0;
+  margin-top: 4px;
+  background-color: var(--color-gray-50);
+  font-style: italic;
+}
+
 /* Increase editor height */
 .ck-editor__editable {
   min-height: 200px;
