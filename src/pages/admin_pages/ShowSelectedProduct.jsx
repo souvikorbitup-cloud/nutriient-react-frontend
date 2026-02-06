@@ -143,10 +143,10 @@ const Info = ({ label, value }) => (
 );
 
 const Description = ({ title, content }) => (
-  <div className="rounded-xl border p-6">
-    <h3 className="mb-3 font-semibold text-t-black-light">{title}</h3>
+  <div>
+    <h3 className="mb-4 font-semibold text-t-black-light">{title}</h3>
     <div
-      className="prose max-w-none text-t-black"
+      className="prose max-w-none text-t-black reset-design rounded-xl border p-6"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   </div>

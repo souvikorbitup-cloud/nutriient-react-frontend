@@ -121,6 +121,16 @@ section {
   scrollbar-width: none; /* Firefox */
 }
 
+/* Revert Tailwind resets for CKEditor container */
+.ck-editor__main {
+  all: initial; /* Resets everything to browser defaults */
+}
+
+.ck-editor__main *, .reset-design * {
+  all: revert;
+  box-sizing: border-box;
+}
+
 /* Increase editor height */
 .ck-editor__editable {
   min-height: 200px;
