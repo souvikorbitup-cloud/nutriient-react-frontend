@@ -76,7 +76,7 @@ const Customers = () => {
             </tr>
           </thead>
 
-          <tbody>
+          <tbody className="capitalize">
             {users.length === 0 ? (
               <tr>
                 <td

@@ -126,7 +126,7 @@ const Categories = () => {
                         className="flex justify-between text-gray-600 py-1 pl-3 "
                       >
                         <span className="capitalize">
-                          <i class="fa-solid fa-stop text-dark-green"></i>{" "}
+                          <i className="fa-solid fa-stop text-dark-green"></i>{" "}
                           {sub.name}
                         </span>
 

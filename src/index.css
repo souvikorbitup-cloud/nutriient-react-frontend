@@ -120,3 +120,8 @@ section {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* Increase editor height */
+.ck-editor__editable {
+  min-height: 200px;
+}

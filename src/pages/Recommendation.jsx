@@ -532,7 +532,7 @@ const Recommendation = () => {
                   One Kit Delivered To You & One FREE Consultancuy with our
                   Nutritionists
                 </p>
-                <hr class="h-px my-2 bg-white/50 border-0" />
+                <hr className="h-px my-2 bg-white/50 border-0" />
                 <p className="text-sm">
                   You Can Buy Your Nutrition Plan For Following Months From Your
                   Nuitriient Dashboard
@@ -624,7 +624,7 @@ const Recommendation = () => {
                   One Kit Delivered Automatically Every Monthy After Your
                   Monthly Nutritionist Consultanc
                 </p>
-                <hr class="h-px my-2 bg-white/50 border-0" />
+                <hr className="h-px my-2 bg-white/50 border-0" />
                 <p className="text-sm">
                   Your Diet, Routine And Supplemnets Are Updated Every Month
                   According To Your Improvements And Nutritionist's Consultation
@@ -713,7 +713,7 @@ const Recommendation = () => {
                   One Kit Delivered Automatically Every Monthy After Your
                   Monthly Nutritionist Consultancy
                 </p>
-                <hr class="h-px my-2 bg-white/50 border-0" />
+                <hr className="h-px my-2 bg-white/50 border-0" />
                 <p className="text-sm">
                   Your Diet, Routine And Supplemnets Are Updated Every Month
                   According To Your Improvements And Nutritionist's Consultation

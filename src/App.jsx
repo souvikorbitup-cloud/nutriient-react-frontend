@@ -43,6 +43,8 @@ import QuizList from "./pages/admin_pages/QuizList";
 import FollowUp from "./pages/admin_pages/FollowUp";
 import Queries from "./pages/admin_pages/Queries";
 import OrderList from "./pages/admin_pages/OrderList";
+import ShowSelectedProduct from "./pages/admin_pages/ShowSelectedProduct";
+import UpdateProduct from "./pages/admin_pages/UpdateProduct";
 
 const App = () => {
   return (
@@ -96,18 +98,40 @@ const App = () => {
                 <Route element={<AdminProtectedRoute />}>
                   <Route element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
+
+                    {/* Products */}
                     <Route path="products" element={<Products />} />
+                    <Route
+                      path="products/:productId"
+                      element={<ShowSelectedProduct />}
+                    />
+                    <Route
+                      path="products/:productId/edit"
+                      element={<UpdateProduct />}
+                    />
+
+                    {/* Add Product */}
                     <Route path="add-product" element={<AddProduct />} />
+
+                    {/* Categories */}
                     <Route path="categories" element={<Categories />} />
                     <Route path="add-category" element={<AddCategories />} />
+
+                    {/* Admin */}
                     <Route path="profile" element={<AdminProfile />} />
+
+                    {/* Charts */}
                     <Route path="charts" element={<DiteCharts />} />
                     <Route path="add-charts" element={<AddDiteCharts />} />
+
+                    {/* Users & Orders */}
                     <Route path="customers" element={<Customers />} />
+                    <Route path="orders" element={<OrderList />} />
+
+                    {/* Quiz & Follow-up */}
                     <Route path="quiz-list" element={<QuizList />} />
                     <Route path="followup" element={<FollowUp />} />
                     <Route path="queries" element={<Queries />} />
-                    <Route path="orders" element={<OrderList />} />
                   </Route>
                 </Route>
               </Route>

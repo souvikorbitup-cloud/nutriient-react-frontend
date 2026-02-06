@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLoading from "./AdminLoading";
 import { getAllContacts, deleteContact } from "../../api/contact";
-import { showError, showSuccess } from "../../Utils/toast";
+import { showError, showSuccess } from "../../utils/toast";
 
 const Queries = () => {
   const [contacts, setContacts] = useState([]);
@@ -72,7 +72,7 @@ const Queries = () => {
         {/* Table */}
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
-            <thead>
+            <thead className="bg-gray-100">
               <tr className="order-b border-gray-200 text-left text-sm text-gray-500">
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Email</th>
@@ -86,7 +86,10 @@ const Queries = () => {
             <tbody>
               {contacts.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="py-6 text-center text-sm text-gray-500">
+                  <td
+                    colSpan="6"
+                    className="py-6 text-center text-sm text-gray-500"
+                  >
                     No queries found
                   </td>
                 </tr>
