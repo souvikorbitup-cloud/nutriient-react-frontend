@@ -94,7 +94,7 @@ const Categories = () => {
               >
                 {/* Category */}
                 <div className="flex justify-between">
-                  <span className="font-medium text-gray-800">{cat.name}</span>
+                  <span className="font-medium text-gray-800 capitalize">{cat.name}</span>
 
                   <div className="flex gap-3">
                     <button
@@ -123,9 +123,12 @@ const Categories = () => {
                     {cat.subCategories.map((sub) => (
                       <div
                         key={sub._id}
-                        className="flex justify-between text-gray-600 border-l-8 py-1 pl-3 border-dark-green"
+                        className="flex justify-between text-gray-600 py-1 pl-3 "
                       >
-                        <span>{sub.name}</span>
+                        <span className="capitalize">
+                          <i class="fa-solid fa-stop text-dark-green"></i>{" "}
+                          {sub.name}
+                        </span>
 
                         <div className="flex gap-3 text-sm">
                           <button
@@ -224,7 +227,7 @@ const Categories = () => {
               <button onClick={() => setEditing(null)}>Cancel</button>
               <button
                 onClick={handleUpdate}
-                className="rounded-lg bg-primary px-4 py-2 text-white"
+                className="rounded-lg bg-primary px-4 py-2 text-white cursor-pointer"
               >
                 Save Changes
               </button>
