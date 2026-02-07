@@ -10,6 +10,7 @@ import QuizProgress from "../components/QuizProgress.jsx";
 import Preloder from "../sections/Preloder.jsx";
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
 import { showError } from "../Utils/toast.js";
+import { useAdmin } from "../context/AdminContext.jsx";
 
 const SECTIONS = ["BASIC", "GOAL_SELECT", "GOALS", "LIFESTYLE", "COMPLETED"];
 
@@ -47,6 +48,7 @@ function inferFieldKey(question) {
 const Quiz = () => {
   useDocumentTitle("Nutriient - Quiz");
   const { user, signIn, signUp } = useAuth();
+  const { admin } = useAdmin();
   const { session, updateSession, loading } = useQuiz();
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
@@ -130,7 +132,7 @@ const Quiz = () => {
   useEffect(() => {
     let mounted = true;
     const initialCheck = async () => {
-      if (user?.role) {
+      if (user?.role || admin?.role) {
         showError("Admin & Manager cannot take the quiz.");
         navigate("/admin");
         return;

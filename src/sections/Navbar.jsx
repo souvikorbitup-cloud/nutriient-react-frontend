@@ -4,9 +4,11 @@ import { healthPrePacks, healthSupplements } from "../variables";
 import Button from "../components/Button";
 import MobileMenu from "../components/MobileMenu";
 import { useAuth } from "../context/AuthContext";
+import { useAdmin } from "../context/AdminContext";
 
 const Navbar = () => {
   const { user } = useAuth();
+  const { admin } = useAdmin();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -135,16 +137,16 @@ const Navbar = () => {
           {/* Desktop Right Actions */}
           <div className="flex items-center gap-3 md:gap-6 h-full">
             <div className="hidden lg:flex gap-3 md:gap-6 h-full">
-              {user ? (
+              {user || admin ? (
                 <div className="relative group cursor-pointer flex items-center">
                   <NavLink
-                    to={`${user?.role ? "/admin/profile" : "profile"}`}
+                    to={`${admin?.role ? "/admin/profile" : "profile"}`}
                     className="flex items-center gap-2 text-sm font-medium text-gray-800 cursor-pointer hover:text-primary"
                   >
-                    {user.fullName}
+                    {user?.fullName || admin?.fullName}
                     <img src="/icons/user.svg" alt="user" />
                   </NavLink>
-                  {!user?.role && (
+                  {!admin?.role && (
                     <div
                       className="
       absolute left-1/2 top-full mt-0.5 w-[250px]
@@ -185,30 +187,32 @@ const Navbar = () => {
                 <i
                   className={`fa-solid fa-bag-shopping ${!scrolled && isHomePage ? "text-white" : "text-black"} hover:text-primary transition cursor-pointer text-xl`}
                 ></i>
-                <div
-                  className="
+                {!admin?.role && (
+                  <div
+                    className="
       absolute left-1/2 top-full mt-0.5 w-[250px]
       -translate-x-1/2 rounded-xl bg-white shadow-xl
       opacity-0 invisible
       group-hover:opacity-100 group-hover:visible
       transition-all duration-300
     "
-                >
-                  <div className="grid grid-cols-1 p-6">
-                    <div>
-                      <ul className="space-y-3 text-gray-600">
-                        <li className="hover:text-primary cursor-pointer text-center">
-                          <NavLink to={user ? "/recommend" : "/quiz"}>
-                            Your Recommendation
-                          </NavLink>
-                        </li>
-                        <li className="hover:text-primary cursor-pointer text-center">
-                          <NavLink to="/cart">Your Cart</NavLink>
-                        </li>
-                      </ul>
+                  >
+                    <div className="grid grid-cols-1 p-6">
+                      <div>
+                        <ul className="space-y-3 text-gray-600">
+                          <li className="hover:text-primary cursor-pointer text-center">
+                            <NavLink to={user ? "/recommend" : "/quiz"}>
+                              Your Recommendation
+                            </NavLink>
+                          </li>
+                          <li className="hover:text-primary cursor-pointer text-center">
+                            <NavLink to="/cart">Your Cart</NavLink>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className="flex items-center">

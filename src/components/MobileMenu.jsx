@@ -3,9 +3,11 @@ import { NavLink } from "react-router-dom";
 import Button from "./Button";
 import { healthPrePacks, healthSupplements } from "../variables";
 import { useAuth } from "../context/AuthContext";
+import { useAdmin } from "../context/AdminContext";
 
 export default function MobileMenu({ open, setOpen }) {
   const { user } = useAuth();
+  const { admin } = useAdmin();
   /**
    * panel index
    * 0 = main
@@ -107,9 +109,9 @@ export default function MobileMenu({ open, setOpen }) {
                   Contact
                 </NavLink>
 
-                {user ? (
+                {user || admin ? (
                   <NavLink
-                    to="/profile"
+                    to={`${admin?.role ? "/admin/profile" : "profile"}`}
                     onClick={handleNavClick}
                     className="px-5 py-4 hover:bg-green-500 hover:text-white transition"
                   >
@@ -211,27 +213,31 @@ export default function MobileMenu({ open, setOpen }) {
             </div>
 
             {/* ================= CART ================= */}
-            <div className="w-1/5">
-              <div className="flex flex-col divide-y text-sm">
-                <span className="px-5 py-4 bg-green-500 text-white">Cart</span>
+            {!admin?.role && (
+              <div className="w-1/5">
+                <div className="flex flex-col divide-y text-sm">
+                  <span className="px-5 py-4 bg-green-500 text-white">
+                    Cart
+                  </span>
 
-                <NavLink
-                  to={user ? "/recommend" : "quiz"}
-                  onClick={handleNavClick}
-                  className="px-5 py-4 hover:bg-green-500 hover:text-white transition"
-                >
-                  Your Recommendation
-                </NavLink>
+                  <NavLink
+                    to={user ? "/recommend" : "quiz"}
+                    onClick={handleNavClick}
+                    className="px-5 py-4 hover:bg-green-500 hover:text-white transition"
+                  >
+                    Your Recommendation
+                  </NavLink>
 
-                <NavLink
-                  to="/cart"
-                  onClick={handleNavClick}
-                  className="px-5 py-4 hover:bg-green-500 hover:text-white transition"
-                >
-                  Your Cart
-                </NavLink>
+                  <NavLink
+                    to="/cart"
+                    onClick={handleNavClick}
+                    className="px-5 py-4 hover:bg-green-500 hover:text-white transition"
+                  >
+                    Your Cart
+                  </NavLink>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
