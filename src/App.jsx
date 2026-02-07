@@ -45,6 +45,9 @@ import Queries from "./pages/admin_pages/Queries";
 import OrderList from "./pages/admin_pages/OrderList";
 import ShowSelectedProduct from "./pages/admin_pages/ShowSelectedProduct";
 import UpdateProduct from "./pages/admin_pages/UpdateProduct";
+import AdminOnlyRoute from "./layouts/AdminOnlyRoute";
+import RegisterManager from "./pages/admin_pages/RegisterManager";
+import Managers from "./pages/admin_pages/Managers";
 
 const App = () => {
   return (
@@ -132,6 +135,24 @@ const App = () => {
                     <Route path="quiz-list" element={<QuizList />} />
                     <Route path="followup" element={<FollowUp />} />
                     <Route path="queries" element={<Queries />} />
+
+                    <Route
+                      path="/admin/register-manager"
+                      element={
+                        <AdminOnlyRoute>
+                          <RegisterManager />
+                        </AdminOnlyRoute>
+                      }
+                    />
+
+                    <Route
+                      path="/admin/managers"
+                      element={
+                        <AdminOnlyRoute>
+                          <Managers />
+                        </AdminOnlyRoute>
+                      }
+                    />
                   </Route>
                 </Route>
               </Route>

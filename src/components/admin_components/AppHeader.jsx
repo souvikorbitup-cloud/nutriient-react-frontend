@@ -107,22 +107,24 @@ const AppHeader = () => {
           </button>
         </div>
         {/* <!-- User Area --> */}
-        <Link
-          to="/admin/profile"
-          className={`${
-            isApplicationMenuOpen ? "flex" : "hidden"
-          } items-center w-full gap-3 px-5 py-3 lg:flex shadow-theme-md lg:justify-end lg:px-0 lg:shadow-none hover:text-dark-green`}
-        >
-          {admin.avatar ? (
-            <img
-              src={admin.avatar}
-              className="rounded-full h-12 w-12 aspect-square object-cover"
-            />
-          ) : (
-            <UserCircleIcon className="h-8 w-8" />
-          )}{" "}
-          {admin?.fullName}
-        </Link>
+        <div className="w-full lg:flex lg:justify-end">
+          <Link
+            to="/admin/profile"
+            className={`${
+              isApplicationMenuOpen ? "flex" : "hidden"
+            } items-center gap-3 px-5 py-3 lg:flex shadow-theme-md lg:px-0 lg:shadow-none hover:text-dark-green`}
+          >
+            {admin.avatar ? (
+              <img
+                src={admin.avatar}
+                className="rounded-full h-12 w-12 aspect-square object-cover"
+              />
+            ) : (
+              <UserCircleIcon className="h-8 w-8" />
+            )}{" "}
+            {admin?.fullName}
+          </Link>
+        </div>
       </div>
     </header>
   );

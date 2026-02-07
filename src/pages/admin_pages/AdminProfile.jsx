@@ -77,38 +77,40 @@ const AdminProfile = () => {
 
         {/* Actions */}
         <div className="flex flex-col gap-3">
-          <button
-            onClick={() => setShowProfile(true)}
-            className="w-full py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition cursor-pointer"
-          >
-            Edit Profile
-          </button>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <button
+              onClick={() => setShowProfile(true)}
+              className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
+            >
+              Edit Profile
+            </button>
 
-          <button
-            onClick={() => setShowPassword(true)}
-            className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
-          >
-            Change Password
-          </button>
+            <button
+              onClick={() => setShowPassword(true)}
+              className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
+            >
+              Change Password
+            </button>
 
-          {/* ADMIN ONLY ACTIONS */}
-          {admin.role === "admin" && (
-            <>
-              <button
-                onClick={() => navigate("/admin/managers")}
-                className="w-full py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition cursor-pointer"
-              >
-                Show All Managers
-              </button>
+            {/* ADMIN ONLY ACTIONS */}
+            {admin.role === "admin" && (
+              <>
+                <button
+                  onClick={() => navigate("/admin/managers")}
+                  className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
+                >
+                  Show All Managers
+                </button>
 
-              <button
-                onClick={() => navigate("/admin/register-manager")}
-                className="w-full py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-800 transition cursor-pointer"
-              >
-                Register New Manager
-              </button>
-            </>
-          )}
+                <button
+                  onClick={() => navigate("/admin/register-manager")}
+                  className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition cursor-pointer"
+                >
+                  Register New Manager
+                </button>
+              </>
+            )}
+          </div>
 
           <button
             onClick={handleLogout}
