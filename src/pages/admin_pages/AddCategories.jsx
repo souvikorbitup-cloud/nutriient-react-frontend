@@ -115,6 +115,7 @@ const AddCategories = () => {
               <option value="">Select Type</option>
               <option value="Health Supplements">Health Supplements</option>
               <option value="Health Pre Packs">Health Pre Packs</option>
+              <option value="Vitamins">Vitamins</option>
             </select>
           </div>
 
