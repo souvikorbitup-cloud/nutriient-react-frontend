@@ -138,34 +138,38 @@ const Navbar = () => {
               {user ? (
                 <div className="relative group cursor-pointer flex items-center">
                   <NavLink
-                    to="/profile"
+                    to={`${user?.role ? "/admin/profile" : "profile"}`}
                     className="flex items-center gap-2 text-sm font-medium text-gray-800 cursor-pointer hover:text-primary"
                   >
                     {user.fullName}
                     <img src="/icons/user.svg" alt="user" />
                   </NavLink>
-                  <div
-                    className="
+                  {!user?.role && (
+                    <div
+                      className="
       absolute left-1/2 top-full mt-0.5 w-[250px]
       -translate-x-1/2 rounded-xl bg-white shadow-xl
       opacity-0 invisible
       group-hover:opacity-100 group-hover:visible
       transition-all duration-300
     "
-                  >
-                    <div className="grid grid-cols-1 p-6">
-                      <div>
-                        <ul className="space-y-3 text-gray-600">
-                          <li className="hover:text-primary cursor-pointer text-center">
-                            <NavLink to="/health-reports">My Dashboard</NavLink>
-                          </li>
-                          <li className="hover:text-primary cursor-pointer text-center">
-                            <NavLink to="/my-orders">My Orders</NavLink>
-                          </li>
-                        </ul>
+                    >
+                      <div className="grid grid-cols-1 p-6">
+                        <div>
+                          <ul className="space-y-3 text-gray-600">
+                            <li className="hover:text-primary cursor-pointer text-center">
+                              <NavLink to="/health-reports">
+                                My Dashboard
+                              </NavLink>
+                            </li>
+                            <li className="hover:text-primary cursor-pointer text-center">
+                              <NavLink to="/my-orders">My Orders</NavLink>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ) : (
                 <NavLink
