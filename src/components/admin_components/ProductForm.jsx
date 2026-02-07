@@ -13,6 +13,8 @@ const ProductForm = ({
 }) => {
   const [categories, setCategories] = useState([]);
 
+  const [htmlMode, setHtmlMode] = useState({});
+
   const [existingFeatureImage, setExistingFeatureImage] = useState(
     initialData.featureImage || null,
   );
@@ -31,7 +33,7 @@ const ProductForm = ({
     subGenericName: initialData.subGenericName || "",
     mrp: normalizeDecimal(initialData.mrp),
     sellPrice: normalizeDecimal(initialData.sellPrice),
-    coursDuration: initialData.coursDuration || "month",
+    coursDuration: initialData.coursDuration || "",
     stock: initialData.stock ?? 0,
     isRecommendation: initialData.isRecommendation || false,
     shortDescription: initialData.shortDescription || "",
@@ -172,8 +174,8 @@ const ProductForm = ({
         </div>
       )}
 
-      {/* ================= Names ================= */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* ================= Names & Duration ================= */}
+      <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="mb-1 block text-sm font-medium">
             Generic Name *
@@ -196,6 +198,25 @@ const ProductForm = ({
             onChange={handleChange}
             className="w-full rounded-lg border p-2"
           />
+        </div>
+
+        {/* Course Duration */}
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Course Duration *
+          </label>
+          <select
+            name="coursDuration"
+            value={form.coursDuration}
+            onChange={handleChange}
+            className="w-full rounded-lg border p-2"
+          >
+            <option value="">Select Duration</option>
+            <option value="day">Day</option>
+            <option value="week">Week</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
         </div>
       </div>
 
@@ -268,17 +289,38 @@ const ProductForm = ({
         },
       ].map(({ key, label }) => (
         <div key={key}>
-          <label className="mb-1 block text-sm font-medium">{label}</label>
-          <CKEditor
-            editor={ClassicEditor}
-            data={form[key]}
-            onChange={(_, editor) =>
-              setForm((prev) => ({
-                ...prev,
-                [key]: editor.getData(),
-              }))
-            }
-          />
+          <div className="mb-1 flex items-center justify-between">
+            <label className="text-sm font-medium">{label}</label>
+
+            <button
+              type="button"
+              onClick={() => setHtmlMode((p) => ({ ...p, [key]: !p[key] }))}
+              className="text-xs text-blue-600 hover:underline"
+            >
+              {htmlMode[key] ? "Visual Editor" : "Edit HTML"}
+            </button>
+          </div>
+
+          {htmlMode[key] ? (
+            <textarea
+              value={form[key]}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, [key]: e.target.value }))
+              }
+              className="w-full h-48 rounded-lg border p-2 font-mono text-sm"
+            />
+          ) : (
+            <CKEditor
+              editor={ClassicEditor}
+              data={form[key]}
+              onChange={(_, editor) =>
+                setForm((prev) => ({
+                  ...prev,
+                  [key]: editor.getData(),
+                }))
+              }
+            />
+          )}
         </div>
       ))}
 
