@@ -79,9 +79,9 @@ const AddCategories = () => {
   const filteredParents = categories.filter((cat) => cat.type === form.type);
 
   return (
-    <div className="flex justify-center">
-      <div className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6">
-        <h2 className="mb-6 text-lg font-semibold text-gray-800">
+    <div className="flex items-center justify-center px-4">
+      <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h2 className="mb-6 text-center text-lg font-semibold text-gray-700">
           Add Category / Sub-Category
         </h2>
 
@@ -97,7 +97,7 @@ const AddCategories = () => {
               placeholder="Enter category name"
               value={form.name}
               onChange={handleChange}
-              className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-lg border border-t-black-light px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
 
@@ -110,7 +110,7 @@ const AddCategories = () => {
               name="type"
               value={form.type}
               onChange={handleChange}
-              className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-lg border border-t-black-light px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             >
               <option value="">Select Type</option>
               <option value="Health Supplements">Health Supplements</option>
@@ -130,7 +130,7 @@ const AddCategories = () => {
               value={form.parent}
               onChange={handleChange}
               disabled={!form.type}
-              className="w-full rounded-lg border px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary disabled:bg-gray-100"
+              className="w-full rounded-lg border border-t-black-light px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary"
             >
               <option value="">No Parent (Create top-level category)</option>
 
@@ -150,7 +150,7 @@ const AddCategories = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-dark-green py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60 cursor-pointer"
+            className="w-full rounded-md bg-dark-green py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-60 cursor-pointer hover:bg-dark-green/90"
           >
             Add Category
           </button>
