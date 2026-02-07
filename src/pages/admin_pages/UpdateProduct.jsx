@@ -65,7 +65,7 @@ const UpdateProduct = () => {
 
         <button
           onClick={() => navigate(-1)}
-          className="rounded-lg border px-4 py-2 text-sm"
+          className="rounded-lg border px-4 py-2 text-sm cursor-pointer"
         >
           Back
         </button>

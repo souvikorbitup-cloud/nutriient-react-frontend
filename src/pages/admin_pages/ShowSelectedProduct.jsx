@@ -46,12 +46,20 @@ const ShowSelectedProduct = () => {
       <div className="flex items-center justify-between flex-col sm:flex-row">
         <h2 className="text-2xl font-bold">{product.genericName}</h2>
 
-        <button
-          onClick={() => navigate(`/admin/products/${product._id}/edit`)}
-          className="rounded-lg bg-dark-green px-5 py-2 text-white cursor-pointer mt-4 sm:mt-0"
-        >
-          Edit Product
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => navigate(`/admin/products`)}
+            className="rounded-lg border px-4 py-2 text-sm cursor-pointer"
+          >
+            Back
+          </button>
+          <button
+            onClick={() => navigate(`/admin/products/${product._id}/edit`)}
+            className="rounded-lg bg-dark-green px-5 py-2 text-white cursor-pointer mt-4 sm:mt-0"
+          >
+            Edit Product
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-[30%_70%]">
