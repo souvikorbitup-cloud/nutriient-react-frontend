@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getAllProducts, deleteProduct } from "../../api/product";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { showSuccess, showError } from "../../utils/toast";
 import { normalizeDecimal } from "../../Utils/helpers";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
+
   const navigate = useNavigate();
+  const location = useLocation();
 
   const fetchProducts = async () => {
     try {
@@ -19,7 +21,12 @@ const Products = () => {
   };
 
   useEffect(() => {
-    fetchProducts();
+    // Use cached products when coming back
+    if (location.state?.products?.length) {
+      setProducts(location.state.products);
+    } else {
+      fetchProducts();
+    }
   }, []);
 
   const handleDelete = async () => {
@@ -164,14 +171,22 @@ const Products = () => {
                 <td className="py-3 px-2 border-x border-gray-300 capitalize">
                   <div className="flex justify-center gap-3">
                     <button
-                      onClick={() => navigate(`/admin/products/${p._id}`)}
+                      onClick={() =>
+                        navigate(`/admin/products/${p._id}`, {
+                          state: { products },
+                        })
+                      }
                       className="text-blue-600 hover:underline cursor-pointer"
                     >
                       View
                     </button>
 
                     <button
-                      onClick={() => navigate(`/admin/products/${p._id}/edit`)}
+                      onClick={() =>
+                        navigate(`/admin/products/${p._id}/edit`, {
+                          state: { products },
+                        })
+                      }
                       className="text-yellow-600 hover:underline cursor-pointer"
                     >
                       Edit
