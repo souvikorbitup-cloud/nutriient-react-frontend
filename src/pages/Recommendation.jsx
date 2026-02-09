@@ -43,6 +43,7 @@ const Recommendation = () => {
         }
         setReport(getData);
       } catch (error) {
+        navigate('/quiz', { replace: true })
         showError("No recommendation report found. Please complete the quiz.");
       } finally {
         setLoading(false);
@@ -216,7 +217,7 @@ const Recommendation = () => {
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {report?.rootCause.map((item, i) => (
+            {report?.rootCause?.map((item, i) => (
               <div
                 key={i}
                 className="relative bg-white rounded-2xl px-6 pt-10 pb-8
@@ -372,7 +373,7 @@ const Recommendation = () => {
             {/* LEFT IMAGE */}
             <div className="flex justify-center md:justify-start">
               <img
-                src={report?.chartMaintenanceCalories.image}
+                src={report?.chartMaintenanceCalories?.image}
                 alt="Nutrient Personalized Diet"
                 className="aspect-square w-[397px] object-contain"
               />
@@ -382,7 +383,7 @@ const Recommendation = () => {
             <div className="flex flex-col justify-center">
               {/* Title */}
               <h3 className="text-[22px] md:text-[24px] font-semibold text-dark-green leading-snug">
-                Nutrient Personalized {report?.chartMaintenanceCalories.value}{" "}
+                Nutrient Personalized {report?.chartMaintenanceCalories?.value}{" "}
                 Kcal Meal Plan
               </h3>
 
@@ -390,7 +391,7 @@ const Recommendation = () => {
               <p className="mt-3 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed">
                 According To Your Health Goals And Lifestyle, We Have Designed
                 This Diet Plan With Macros To Be 62% Carbohydrates, 25% Fat And
-                13% Protein On {report?.chartMaintenanceCalories.value} Kcal
+                13% Protein On {report?.chartMaintenanceCalories?.value} Kcal
               </p>
 
               <p className="mt-2 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed">

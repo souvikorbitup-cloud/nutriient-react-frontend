@@ -144,7 +144,11 @@ const Navbar = () => {
                     className="flex items-center gap-2 text-sm font-medium text-gray-800 cursor-pointer hover:text-primary"
                   >
                     {user?.fullName || admin?.fullName}
-                    <img src="/icons/user.svg" alt="user" />
+                    {admin?.avatar ? (
+                      <img src={admin.avatar} className="h-10 w-10 rounded-full object-cover border-1 border-dark-green" />
+                    ) : (
+                      <img src="/icons/user.svg" alt="user" />
+                    )}
                   </NavLink>
                   {!admin?.role && (
                     <div

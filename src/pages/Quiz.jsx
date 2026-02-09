@@ -134,7 +134,7 @@ const Quiz = () => {
     const initialCheck = async () => {
       if (user?.role || admin?.role) {
         showError("Admin & Manager cannot take the quiz.");
-        navigate('/admin', { replace: true });
+        navigate('/', { replace: true });
         return;
       }
       try {
