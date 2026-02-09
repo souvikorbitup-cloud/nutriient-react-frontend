@@ -5,7 +5,7 @@ import {
   deleteCategory,
 } from "../../api/category";
 import AdminLoading from "./AdminLoading";
-import { showError, showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const Categories = () => {
   const [data, setData] = useState([]);
