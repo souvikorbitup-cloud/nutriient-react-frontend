@@ -3,6 +3,7 @@ import { getAllProducts, deleteProduct } from "../../api/product";
 import { useNavigate, useLocation } from "react-router-dom";
 import { showSuccess, showError } from "../../Utils/toast.js";
 import { normalizeDecimal } from "../../Utils/helpers";
+import AdminLoading from "./AdminLoading.jsx";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
