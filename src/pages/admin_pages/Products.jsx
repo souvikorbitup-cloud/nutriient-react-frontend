@@ -7,16 +7,20 @@ import { normalizeDecimal } from "../../Utils/helpers";
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [deleteId, setDeleteId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const fetchProducts = async () => {
     try {
+      setLoading(true);
       const res = await getAllProducts();
       setProducts(res.data.data);
     } catch {
       showError("Failed to load products");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -24,6 +28,7 @@ const Products = () => {
     // Use cached products when coming back
     if (location.state?.products?.length) {
       setProducts(location.state.products);
+      setLoading(false);
     } else {
       fetchProducts();
     }
@@ -39,6 +44,8 @@ const Products = () => {
       showError("Failed to delete product");
     }
   };
+
+  if (loading) return <AdminLoading />;
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
