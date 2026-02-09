@@ -14,12 +14,7 @@ export const ShopProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [product, setProduct] = useState(null);
 
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-    totalPages: 1,
-    totalItems: 0,
-  });
+  const [pagination, setPagination] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -46,8 +41,8 @@ export const ShopProvider = ({ children }) => {
       setLoading(true);
       const res = await getAllProducts({ page, limit });
 
-      setProducts(res.data.data);
-      setPagination(res.data.meta || {});
+      setProducts(res.data.data?.products);
+      setPagination(res.data.data?.pagination || {});
     } catch (err) {
       setError(err);
     } finally {
@@ -68,7 +63,7 @@ export const ShopProvider = ({ children }) => {
       });
 
       setProducts(res.data.data);
-      setPagination(res.data.meta || {});
+      setPagination(res.data.data?.pagination || {});
     } catch (err) {
       setError(err);
     } finally {
@@ -111,6 +106,7 @@ export const ShopProvider = ({ children }) => {
         error,
 
         // actions
+        setError,
         fetchProducts,
         fetchProductsByCategory,
         fetchProductById,
