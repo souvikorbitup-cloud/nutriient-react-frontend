@@ -6,3 +6,6 @@ export const normalizeDecimal = (value) => {
   }
   return value.toString();
 };
+
+export const slugify = (text = "") =>
+  text.toLowerCase().trim().replace(/\s+/g, "-");

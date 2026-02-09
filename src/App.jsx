@@ -48,121 +48,137 @@ import UpdateProduct from "./pages/admin_pages/UpdateProduct";
 import AdminOnlyRoute from "./layouts/AdminOnlyRoute";
 import RegisterManager from "./pages/admin_pages/RegisterManager";
 import Managers from "./pages/admin_pages/Managers";
+import { ShopProvider } from "./context/ShopContext";
+import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
 
 const App = () => {
   return (
-    <AuthProvider>
-      <QuizProvider>
-        <AdminProvider>
-          <BrowserRouter>
-            <CustomToaster />
-            <ScrollToTop />
-            <Routes>
-              {/* Routes WITH Navbar & Footer */}
-              <Route element={<MainLayout />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/faq" element={<Faq />} />
-                <Route path="/contact-us" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/about-us" element={<Aboutus />} />
-                <Route path="/terms-conditions" element={<TermsConditions />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/shipping-policy" element={<ShippingPolicy />} />
-                <Route
-                  path="/refund-return-policy"
-                  element={<RefundPolicy />}
-                />
-                <Route path="/cart" element={<Cart />} />
+    <ShopProvider>
+      <AuthProvider>
+        <QuizProvider>
+          <AdminProvider>
+            <BrowserRouter>
+              <CustomToaster />
+              <ScrollToTop />
+              <Routes>
+                {/* Routes WITH Navbar & Footer */}
+                <Route element={<MainLayout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/faq" element={<Faq />} />
+                  <Route path="/contact-us" element={<Contact />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/about-us" element={<Aboutus />} />
+                  <Route
+                    path="/terms-conditions"
+                    element={<TermsConditions />}
+                  />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/shipping-policy" element={<ShippingPolicy />} />
+                  <Route
+                    path="/refund-return-policy"
+                    element={<RefundPolicy />}
+                  />
+                  <Route path="/cart" element={<Cart />} />
 
-                {/* Auth Routes */}
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/health-reports" element={<HealthRepoat />} />
-                  <Route path="/my-orders" element={<Orders />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route element={<QuizCompleted />}>
-                    <Route path="/recommend" element={<Recommendation />} />
+                  {/* 🛍 SHOP ROUTES */}
+                  <Route path="/shop" element={<Shop />} />
+                  <Route path="/shop/:categoryName" element={<Shop />} />
+                  <Route
+                    path="/product/:productId"
+                    element={<ProductDetails />}
+                  />
+
+                  {/* Auth Routes */}
+                  <Route element={<ProtectedRoute />}>
+                    <Route path="/health-reports" element={<HealthRepoat />} />
+                    <Route path="/my-orders" element={<Orders />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route element={<QuizCompleted />}>
+                      <Route path="/recommend" element={<Recommendation />} />
+                    </Route>
                   </Route>
                 </Route>
-              </Route>
 
-              {/* Routes WITHOUT Navbar & Footer */}
-              <Route element={<QuizLayout />}>
-                <Route path="/quiz" element={<Quiz />} />
-              </Route>
+                {/* Routes WITHOUT Navbar & Footer */}
+                <Route element={<QuizLayout />}>
+                  <Route path="/quiz" element={<Quiz />} />
+                </Route>
 
-              {/* Admin Routes */}
+                {/* Admin Routes */}
 
-              <Route path="/admin">
-                {/* Public */}
-                <Route path="login" element={<AdminLogin />} />
+                <Route path="/admin">
+                  {/* Public */}
+                  <Route path="login" element={<AdminLogin />} />
 
-                {/* Protected */}
-                <Route element={<AdminProtectedRoute />}>
-                  <Route element={<AdminLayout />}>
-                    <Route index element={<AdminDashboard />} />
+                  {/* Protected */}
+                  <Route element={<AdminProtectedRoute />}>
+                    <Route element={<AdminLayout />}>
+                      <Route index element={<AdminDashboard />} />
 
-                    {/* Products */}
-                    <Route path="products" element={<Products />} />
-                    <Route
-                      path="products/:productId"
-                      element={<ShowSelectedProduct />}
-                    />
-                    <Route
-                      path="products/:productId/edit"
-                      element={<UpdateProduct />}
-                    />
+                      {/* Products */}
+                      <Route path="products" element={<Products />} />
+                      <Route
+                        path="products/:productId"
+                        element={<ShowSelectedProduct />}
+                      />
+                      <Route
+                        path="products/:productId/edit"
+                        element={<UpdateProduct />}
+                      />
 
-                    {/* Add Product */}
-                    <Route path="add-product" element={<AddProduct />} />
+                      {/* Add Product */}
+                      <Route path="add-product" element={<AddProduct />} />
 
-                    {/* Categories */}
-                    <Route path="categories" element={<Categories />} />
-                    <Route path="add-category" element={<AddCategories />} />
+                      {/* Categories */}
+                      <Route path="categories" element={<Categories />} />
+                      <Route path="add-category" element={<AddCategories />} />
 
-                    {/* Admin */}
-                    <Route path="profile" element={<AdminProfile />} />
+                      {/* Admin */}
+                      <Route path="profile" element={<AdminProfile />} />
 
-                    {/* Charts */}
-                    <Route path="charts" element={<DiteCharts />} />
-                    <Route path="add-charts" element={<AddDiteCharts />} />
+                      {/* Charts */}
+                      <Route path="charts" element={<DiteCharts />} />
+                      <Route path="add-charts" element={<AddDiteCharts />} />
 
-                    {/* Users & Orders */}
-                    <Route path="customers" element={<Customers />} />
-                    <Route path="orders" element={<OrderList />} />
+                      {/* Users & Orders */}
+                      <Route path="customers" element={<Customers />} />
+                      <Route path="orders" element={<OrderList />} />
 
-                    {/* Quiz & Follow-up */}
-                    <Route path="quiz-list" element={<QuizList />} />
-                    <Route path="followup" element={<FollowUp />} />
-                    <Route path="queries" element={<Queries />} />
+                      {/* Quiz & Follow-up */}
+                      <Route path="quiz-list" element={<QuizList />} />
+                      <Route path="followup" element={<FollowUp />} />
+                      <Route path="queries" element={<Queries />} />
 
-                    <Route
-                      path="/admin/register-manager"
-                      element={
-                        <AdminOnlyRoute>
-                          <RegisterManager />
-                        </AdminOnlyRoute>
-                      }
-                    />
+                      <Route
+                        path="/admin/register-manager"
+                        element={
+                          <AdminOnlyRoute>
+                            <RegisterManager />
+                          </AdminOnlyRoute>
+                        }
+                      />
 
-                    <Route
-                      path="/admin/managers"
-                      element={
-                        <AdminOnlyRoute>
-                          <Managers />
-                        </AdminOnlyRoute>
-                      }
-                    />
+                      <Route
+                        path="/admin/managers"
+                        element={
+                          <AdminOnlyRoute>
+                            <Managers />
+                          </AdminOnlyRoute>
+                        }
+                      />
+                    </Route>
                   </Route>
                 </Route>
-              </Route>
 
-              <Route path="/*" element={<PageNotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </AdminProvider>
-      </QuizProvider>
-    </AuthProvider>
+                <Route path="/*" element={<PageNotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </AdminProvider>
+        </QuizProvider>
+      </AuthProvider>
+    </ShopProvider>
   );
 };
 

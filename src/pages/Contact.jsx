@@ -1,5 +1,4 @@
 import React from "react";
-import Heading from "../Utils/Heading";
 import ContactForm from "../Utils/ContactForm";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 
@@ -10,7 +9,10 @@ const Contact = () => {
   return (
     <section className="app-container mx-auto px-4 py-20 pt-42">
       {/* TITLE */}
-      <Heading text="Contact Us" />
+      <div className="text-center mb-14">
+        <h2 className="text-3xl font-bold">Contact Us</h2>
+        <div className="w-12 h-0.5 bg-primary mx-auto mt-2" />
+      </div>
 
       <div className="grid lg:grid-cols-[55%_45%] items-start w-full align-top pt-5">
         {/* LEFT FORM */}
