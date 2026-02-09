@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { updateUser } from "../api/user-auth.js";
 import QuizProgress from "../components/QuizProgress.jsx";
 import Preloder from "../sections/Preloder.jsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
+import { showError } from "../Utils/toast.js";
+import { useAdmin } from "../context/AdminContext.jsx";
 
 const SECTIONS = ["BASIC", "GOAL_SELECT", "GOALS", "LIFESTYLE", "COMPLETED"];
 
@@ -43,7 +46,9 @@ function inferFieldKey(question) {
 }
 
 const Quiz = () => {
+  useDocumentTitle("Nutriient - Quiz");
   const { user, signIn, signUp } = useAuth();
+  const { admin } = useAdmin();
   const { session, updateSession, loading } = useQuiz();
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
@@ -127,7 +132,11 @@ const Quiz = () => {
   useEffect(() => {
     let mounted = true;
     const initialCheck = async () => {
-      if(user?.role) navigate('/admin', { replace: true });
+      if (user?.role || admin?.role) {
+        showError("Admin & Manager cannot take the quiz.");
+        navigate('/admin', { replace: true });
+        return;
+      }
       try {
         const res = await getUserCompleted();
         const completed = res?.data?.data;
@@ -192,7 +201,10 @@ const Quiz = () => {
     // Guard: ensure the loaded questions belong to the current section.
     // If we just switched sections the questions array may still contain
     // previous-section questions until the fetch completes — skip in that case.
-    if (questions[0]?.section && String(questions[0].section) !== String(session.currentSection)) {
+    if (
+      questions[0]?.section &&
+      String(questions[0].section) !== String(session.currentSection)
+    ) {
       return;
     }
 
@@ -223,9 +235,16 @@ const Quiz = () => {
       navigate("/recommend");
     }, 800);
     return () => clearTimeout(t2);
-  }, [initializing, session?.currentSection, session?.currentStep, questions, navigate]);
+  }, [
+    initializing,
+    session?.currentSection,
+    session?.currentStep,
+    questions,
+    navigate,
+  ]);
 
-  if (initializing || loading || !session || questions.length === 0) return <Preloder />;
+  if (initializing || loading || !session || questions.length === 0)
+    return <Preloder />;
 
   const currentQ = questions[session.currentStep];
   const currentFieldKey = inferFieldKey(currentQ);

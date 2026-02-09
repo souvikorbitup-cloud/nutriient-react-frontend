@@ -6,4 +6,10 @@ const API = axios.create({
   withCredentials: true,
 });
 
+// Public
 export const createContact = (data) => API.post("/", data);
+
+// Admin / Manager
+export const getAllContacts = () => API.get("/");
+export const getContactById = (contactId) => API.get(`/${contactId}`);
+export const deleteContact = (contactId) => API.delete(`/${contactId}`);

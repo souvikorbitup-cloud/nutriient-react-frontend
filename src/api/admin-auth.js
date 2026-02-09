@@ -8,6 +8,8 @@ const API = axios.create({
 
 export const createManager = (data) => API.post("/register", data);
 
+export const currentAdmin = () => API.get("/current-admin");
+
 export const adminLogin = (data) => API.post("/login", data);
 
 export const updateAdmin = (data) => API.put("/update-account", data);
@@ -21,6 +23,7 @@ export const deleteManager = (managerId) =>
 
 export const adminLogout = () => API.post(`/logout`);
 
-export const getAllUsers = () => API.get(`/users`);
+export const getAllUsers = ({ page, limit }) =>
+  API.get(`/users?page=${page}&limit=${limit}`);
 
 export const getStats = () => API.get(`/stats`);
