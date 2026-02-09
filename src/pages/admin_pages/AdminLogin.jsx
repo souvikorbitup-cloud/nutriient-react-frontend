@@ -61,10 +61,10 @@ const AdminLogin = () => {
         <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
           <div>
             <div className="mb-8">
-              <h1 className="mb-2 text-3xl font-semibold text-gray-800 dark:text-white">
+              <h1 className="mb-2 text-3xl font-semibold text-gray-800">
                 Sign In
               </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-gray-500 ">
                 Enter your username and password to sign in
               </p>
             </div>
@@ -73,7 +73,7 @@ const AdminLogin = () => {
             <form className="space-y-5" onSubmit={onLogin}>
               {/* Username */}
               <div>
-                <label className="block mb-1.5 text-sm text-gray-700 dark:text-gray-400">
+                <label className="block mb-1.5 text-sm text-gray-700">
                   Username <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -81,14 +81,13 @@ const AdminLogin = () => {
                   placeholder="Enter Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full h-11 rounded-lg border border-gray-300 px-4 text-sm
-                             dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+                  className="w-full h-11 rounded-lg border border-gray-300 px-4 text-sm"
                 />
               </div>
 
               {/* Password */}
               <div>
-                <label className="block mb-1.5 text-sm text-gray-700 dark:text-gray-400">
+                <label className="block mb-1.5 text-sm text-gray-700 ">
                   Password <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -97,8 +96,7 @@ const AdminLogin = () => {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full h-11 rounded-lg border border-gray-300 px-4 pr-11 text-sm
-                               dark:bg-gray-900 dark:border-gray-700 dark:text-white"
+                    className="w-full h-11 rounded-lg border border-gray-300 px-4 pr-11 text-sm"
                   />
                   <button
                     type="button"
