@@ -104,13 +104,13 @@ const Categories = () => {
                           parent: null,
                         })
                       }
-                      className="text-blue-600"
+                      className="text-blue-600 cursor-pointer"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setConfirmDelete(cat._id)}
-                      className="text-red-600"
+                      className="text-red-600 cursor-pointer"
                     >
                       Delete
                     </button>
@@ -139,13 +139,13 @@ const Categories = () => {
                                 parent: cat._id,
                               })
                             }
-                            className="text-blue-600"
+                            className="text-blue-600 cursor-pointer"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => setConfirmDelete(sub._id)}
-                            className="text-red-600"
+                            className="text-red-600 cursor-pointer"
                           >
                             Delete
                           </button>
@@ -224,7 +224,7 @@ const Categories = () => {
 
             {/* Actions */}
             <div className="flex justify-end gap-3">
-              <button onClick={() => setEditing(null)}>Cancel</button>
+              <button className="cursor-pointer" onClick={() => setEditing(null)}>Cancel</button>
               <button
                 onClick={handleUpdate}
                 className="rounded-lg bg-primary px-4 py-2 text-white cursor-pointer"
@@ -250,13 +250,13 @@ const Categories = () => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="rounded-lg border px-4 py-2"
+                className="rounded-lg border px-4 py-2 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
-                className="rounded-lg bg-red-500 px-4 py-2 text-white"
+                className="rounded-lg bg-red-500 px-4 py-2 text-white cursor-pointer"
               >
                 Delete
               </button>

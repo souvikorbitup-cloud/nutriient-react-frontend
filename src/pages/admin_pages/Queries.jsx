@@ -111,7 +111,7 @@ const Queries = () => {
                     <td className="px-4 py-3 text-right">
                       <button
                         onClick={() => setConfirmId(c._id)}
-                        className="rounded-lg border border-red-300 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                        className="rounded-lg border border-red-300 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 cursor-pointer"
                       >
                         Delete
                       </button>
@@ -134,14 +134,14 @@ const Queries = () => {
               <button
                 disabled={!pagination.hasPrevPage}
                 onClick={() => setPage((p) => p - 1)}
-                className="rounded-lg border px-4 py-2 text-sm disabled:opacity-50"
+                className="rounded-lg border px-4 py-2 text-sm disabled:opacity-50 cursor-pointer"
               >
                 Prev
               </button>
               <button
                 disabled={!pagination.hasNextPage}
                 onClick={() => setPage((p) => p + 1)}
-                className="rounded-lg border px-4 py-2 text-sm disabled:opacity-50"
+                className="rounded-lg border px-4 py-2 text-sm disabled:opacity-50 cursor-pointer"
               >
                 Next
               </button>
@@ -166,7 +166,7 @@ const Queries = () => {
               <button
                 onClick={() => setConfirmId(null)}
                 disabled={deleting}
-                className="rounded-lg border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="rounded-lg border px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
               >
                 Cancel
               </button>
@@ -174,7 +174,7 @@ const Queries = () => {
               <button
                 onClick={handleDelete}
                 disabled={deleting}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 disabled:opacity-60"
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700 disabled:opacity-60 cursor-pointer"
               >
                 {deleting ? "Deleting..." : "Delete"}
               </button>

@@ -101,7 +101,7 @@ const AdminLogin = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
                   >
                     {showPassword ? (
                       <i className="fa-regular fa-eye-slash"></i>
@@ -116,7 +116,7 @@ const AdminLogin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 text-sm text-white bg-dark-green rounded-lg
+                className="w-full py-3 text-sm text-white bg-dark-green rounded-lg cursor-pointer
                            hover:bg-dark-green/90 disabled:opacity-60"
               >
                 {loading ? "Signing in..." : "Sign In"}

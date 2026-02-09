@@ -125,13 +125,13 @@ const DiteCharts = () => {
                   <td className="py-3 text-right space-x-3">
                     <button
                       onClick={() => setEditChart({ ...chart })}
-                      className="text-primary hover:underline"
+                      className="text-primary hover:underline cursor-pointer"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setDeleteId(chart._id)}
-                      className="text-red-500 hover:underline"
+                      className="text-red-500 hover:underline cursor-pointer"
                     >
                       Delete
                     </button>
@@ -153,14 +153,14 @@ const DiteCharts = () => {
             <button
               disabled={!pagination.hasPrevPage}
               onClick={() => setPage((p) => p - 1)}
-              className="rounded-lg border px-4 py-2 disabled:opacity-50"
+              className="rounded-lg border px-4 py-2 disabled:opacity-50 cursor-pointer"
             >
               Prev
             </button>
             <button
               disabled={!pagination.hasNextPage}
               onClick={() => setPage((p) => p + 1)}
-              className="rounded-lg border px-4 py-2 disabled:opacity-50"
+              className="rounded-lg border px-4 py-2 disabled:opacity-50 cursor-pointer"
             >
               Next
             </button>
@@ -215,14 +215,14 @@ const DiteCharts = () => {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setEditChart(null)}
-                className="rounded-lg border px-4 py-2"
+                className="rounded-lg border px-4 py-2 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleUpdate}
                 disabled={saving}
-                className="rounded-lg bg-primary px-4 py-2 text-white"
+                className="rounded-lg bg-primary px-4 py-2 text-white cursor-pointer"
               >
                 {saving ? "Saving..." : "Update"}
               </button>
@@ -245,14 +245,14 @@ const DiteCharts = () => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => setDeleteId(null)}
-                className="rounded-lg border px-4 py-2"
+                className="rounded-lg border px-4 py-2 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDelete}
                 disabled={saving}
-                className="rounded-lg bg-red-500 px-4 py-2 text-white"
+                className="rounded-lg bg-red-500 px-4 py-2 text-white cursor-pointer"
               >
                 {saving ? "Deleting..." : "Delete"}
               </button>

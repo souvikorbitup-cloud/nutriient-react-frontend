@@ -221,7 +221,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={() => setOpen(!open)}
-              className={`lg:hidden ${scrolled ? "text-black" : "text-green-800"} text-2xl md:text-3xl`}
+              className={`lg:hidden ${scrolled ? "text-black" : "text-green-800"} text-2xl md:text-3xl cursor-pointer`}
             >
               {open ? (
                 <i className="fa-solid fa-x"></i>

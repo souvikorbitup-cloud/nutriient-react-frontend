@@ -125,7 +125,7 @@ const AddDiteCharts = () => {
               <button
                 type="button"
                 onClick={removeImage}
-                className="absolute right-2 top-2 rounded-lg bg-black/70 px-3 py-1 text-xs text-white transition hover:bg-black"
+                className="absolute right-2 top-2 rounded-lg bg-black/70 px-3 py-1 text-xs text-white transition hover:bg-black cursor-pointer"
               >
                 Remove
               </button>

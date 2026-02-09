@@ -55,7 +55,7 @@ export default function MobileMenu({ open, setOpen }) {
                 if (panel === 2 || panel === 3) setPanel(1);
                 else if (panel === 1 || panel === 4) setPanel(0);
               }}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <i className="fa-solid fa-chevron-left" />
               Back
@@ -88,7 +88,7 @@ export default function MobileMenu({ open, setOpen }) {
 
                 <button
                   onClick={() => setPanel(1)}
-                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition"
+                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition cursor-pointer"
                 >
                   Shop <i className="fa-solid fa-chevron-right" />
                 </button>
@@ -156,7 +156,7 @@ export default function MobileMenu({ open, setOpen }) {
 
                 <button
                   onClick={() => setPanel(2)}
-                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition"
+                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition cursor-pointer"
                 >
                   Health Supplements
                   <i className="fa-solid fa-chevron-right" />
@@ -164,7 +164,7 @@ export default function MobileMenu({ open, setOpen }) {
 
                 <button
                   onClick={() => setPanel(3)}
-                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition"
+                  className="flex justify-between px-5 py-4 hover:bg-green-500 hover:text-white transition cursor-pointer"
                 >
                   Health Pre Packs
                   <i className="fa-solid fa-chevron-right" />

@@ -11,7 +11,7 @@ const Button = ({ text = "TAKE QUIZ NOW", cText = "MY NUTRITION REPORT" }) => {
   return (
     <button
       onClick={() => navigate(completed ? "/recommend" : "/quiz")}
-      className="rounded-xl uppercase bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] px-6 py-3 text-sm font-semibold text-white shadow-md hover:opacity-90 transition"
+      className="rounded-xl uppercase bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] px-6 py-3 text-sm font-semibold text-white shadow-md hover:opacity-90 transition cursor-pointer"
     >
       {completed ? cText : text}
     </button>

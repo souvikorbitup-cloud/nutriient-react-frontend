@@ -226,7 +226,7 @@ const Products = () => {
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setDeleteId(null)}
-                className="rounded-lg border px-4 py-2"
+                className="rounded-lg border px-4 py-2 cursor-pointer"
               >
                 Cancel
               </button>

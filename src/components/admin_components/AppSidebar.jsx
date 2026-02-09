@@ -154,7 +154,7 @@ const AppSidebar = () => {
           {nav.subItems ? (
             <button
               onClick={() => handleSubmenuToggle(index, menuType)}
-              className={`relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm group ${
+              className={`relative flex items-center w-full gap-3 px-3 py-2 font-medium rounded-lg text-theme-sm group cursor-pointer ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
                   ? "bg-brand-50 text-brand-500 dark:text-brand-400"
                   : "text-gray-700 hover:bg-gray-100 group-hover:text-gray-700"

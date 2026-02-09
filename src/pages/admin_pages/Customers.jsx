@@ -131,7 +131,7 @@ const Customers = () => {
             <button
               disabled={!pagination.hasPrevPage}
               onClick={() => setPage((p) => p - 1)}
-              className={`rounded-lg border px-4 py-2 text-sm transition ${
+              className={`rounded-lg border px-4 py-2 text-sm transition cursor-pointer ${
                 pagination.hasPrevPage
                   ? "border-gray-300 text-gray-700 hover:bg-gray-100"
                   : "cursor-not-allowed border-gray-200 text-gray-400"
@@ -143,7 +143,7 @@ const Customers = () => {
             <button
               disabled={!pagination.hasNextPage}
               onClick={() => setPage((p) => p + 1)}
-              className={`rounded-lg border px-4 py-2 text-sm transition ${
+              className={`rounded-lg border px-4 py-2 text-sm transition cursor-pointer ${
                 pagination.hasNextPage
                   ? "border-gray-300 text-gray-700 hover:bg-gray-100"
                   : "cursor-not-allowed border-gray-200 text-gray-400"

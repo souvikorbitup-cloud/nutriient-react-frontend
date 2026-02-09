@@ -182,7 +182,7 @@ const ContactForm = () => {
         disabled={loading}
         className={`bg-primary text-white ${
           isFaqPage ? "px-5" : "px-8"
-        } py-3 rounded-full hover:bg-transparent hover:text-primary transition border border-primary disabled:opacity-60`}
+        } py-3 rounded-full hover:bg-transparent hover:text-primary transition border border-primary disabled:opacity-60 cursor-pointer`}
       >
         {loading ? "Sending..." : "Submit"}
       </button>

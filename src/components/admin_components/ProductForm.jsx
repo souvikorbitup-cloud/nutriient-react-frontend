@@ -295,7 +295,7 @@ const ProductForm = ({
             <button
               type="button"
               onClick={() => setHtmlMode((p) => ({ ...p, [key]: !p[key] }))}
-              className="text-xs text-blue-600 hover:underline"
+              className="text-xs text-blue-600 hover:underline cursor-pointer"
             >
               {htmlMode[key] ? "Visual Editor" : "Edit HTML"}
             </button>
@@ -339,7 +339,7 @@ const ProductForm = ({
             <button
               type="button"
               onClick={() => setExistingFeatureImage(null)}
-              className="absolute right-2 top-2 rounded bg-red-600 px-2 text-xs text-white"
+              className="absolute right-2 top-2 rounded bg-red-600 px-2 text-xs text-white cursor-pointer"
             >
               ✕
             </button>
@@ -357,7 +357,7 @@ const ProductForm = ({
               onClick={() =>
                 setForm((prev) => ({ ...prev, featureImage: null }))
               }
-              className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white"
+              className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white cursor-pointer"
             >
               ✕
             </button>
@@ -389,7 +389,7 @@ const ProductForm = ({
               <button
                 type="button"
                 onClick={() => removeExistingImage(i)}
-                className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white"
+                className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white cursor-pointer"
               >
                 ✕
               </button>
@@ -405,7 +405,7 @@ const ProductForm = ({
               <button
                 type="button"
                 onClick={() => removeGalleryImage(i)}
-                className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white"
+                className="absolute right-1 top-1 rounded bg-red-600 px-1 text-xs text-white cursor-pointer"
               >
                 ✕
               </button>
