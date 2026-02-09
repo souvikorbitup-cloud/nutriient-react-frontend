@@ -4,7 +4,7 @@ import {
   deleteManager,
   updatePassword,
 } from "../../api/admin-auth";
-import { showSuccess, showError } from "../../utils/toast";
+import { showSuccess, showError } from "../../Utils/toast.js";
 import { useNavigate } from "react-router-dom";
 
 const Managers = () => {

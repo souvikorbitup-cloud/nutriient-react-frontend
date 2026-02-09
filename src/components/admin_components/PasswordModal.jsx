@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { updatePassword } from "../../api/admin-auth";
-import { showError, showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const PasswordModal = ({ onClose }) => {
   const [password, setPassword] = useState("");

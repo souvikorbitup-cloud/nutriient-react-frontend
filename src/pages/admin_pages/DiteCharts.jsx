@@ -5,7 +5,7 @@ import {
   deleteChart,
 } from "../../api/chart";
 import AdminLoading from "./AdminLoading";
-import { showError, showSuccess } from "../../Utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const DiteCharts = () => {
   const [charts, setCharts] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createProduct } from "../../api/product";
-import { showSuccess, showError } from "../../utils/toast";
+import { showSuccess, showError } from "../../Utils/toast.js";
 import ProductForm from "../../components/admin_components/ProductForm";
 
 const AddProduct = () => {

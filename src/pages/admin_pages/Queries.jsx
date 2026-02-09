@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminLoading from "./AdminLoading";
 import { getAllContacts, deleteContact } from "../../api/contact";
-import { showError, showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const Queries = () => {
   const [contacts, setContacts] = useState([]);

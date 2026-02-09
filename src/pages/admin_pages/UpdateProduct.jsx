@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductById, updateProduct } from "../../api/product";
-import { showSuccess, showError } from "../../utils/toast";
+import { showSuccess, showError } from "../../Utils/toast.js";
 import ProductForm from "../../components/admin_components/ProductForm";
 
 const UpdateProduct = () => {

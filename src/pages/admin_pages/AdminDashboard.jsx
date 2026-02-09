@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BoxIconLine, GroupIcon, CategoryIcon, OrdersIcon } from "../../icons";
-import { showError } from "../../Utils/toast";
+import { showError } from "../../Utils/toast.js";
 import { getStats } from "../../api/admin-auth";
 import AdminLoading from "./AdminLoading";
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { addChart } from "../../api/chart";
 import AdminLoading from "./AdminLoading";
-import { showError, showSuccess } from "../../Utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const AddDiteCharts = () => {
   const [form, setForm] = useState({

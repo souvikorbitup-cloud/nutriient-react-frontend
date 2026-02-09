@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createCategory, getAllCategories } from "../../api/category";
 import AdminLoading from "./AdminLoading";
-import { showError, showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../Utils/toast.js";
 
 const AddCategories = () => {
   const [form, setForm] = useState({

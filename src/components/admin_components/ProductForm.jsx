@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { getCategoriesByType } from "../../api/category";
-import { showError } from "../../utils/toast";
+import { showError } from "../../Utils/toast.js";
 import { normalizeDecimal } from "../../Utils/helpers";
 
 const ProductForm = ({

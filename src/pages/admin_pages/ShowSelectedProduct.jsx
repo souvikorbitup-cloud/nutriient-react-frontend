@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../api/product";
-import { showError } from "../../utils/toast";
+import { showError } from "../../Utils/toast.js";
 import { normalizeDecimal } from "../../Utils/helpers";
 
 const ShowSelectedProduct = () => {
