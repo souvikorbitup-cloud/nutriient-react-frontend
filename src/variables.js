@@ -1,18 +1,5 @@
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-// ====================== List of Health Supplements ======================
-export const healthSupplements = [
-  { name: "Calcium", path: "calcium" },
-  { name: "Omega 3", path: "omega-3" },
-];
-
-// ====================== List of Health Pre Packs ======================
-export const healthPrePacks = [
-  { name: "Skin Care", path: "skin-care" },
-  { name: "Gut Health", path: "gut-health" },
-  { name: "Hair Care", path: "hair-care" },
-];
-
 // ================ How we work steps ==================
 export const steps = [
   {

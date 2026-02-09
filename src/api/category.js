@@ -12,7 +12,6 @@ const API = axios.create({
 export const getAllCategories = () => API.get("/");
 
 // Get categories by type
-// example: ?type=fitness
 export const getCategoriesByType = () => API.get(`/type`);
 
 /* ================= ADMIN / MANAGER ================= */

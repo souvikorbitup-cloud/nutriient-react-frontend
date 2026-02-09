@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { healthPrePacks, healthSupplements } from "../variables";
 import Button from "../components/Button";
 import MobileMenu from "../components/MobileMenu";
 import { useAuth } from "../context/AuthContext";
 import { useAdmin } from "../context/AdminContext";
+import { useShop } from "../context/ShopContext";
+import { slugify } from "../Utils/helpers";
 
 const Navbar = () => {
   const { user } = useAuth();
   const { admin } = useAdmin();
+  const { categories } = useShop();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,10 +64,10 @@ const Navbar = () => {
               </li>
               <li className="h-full flex-center border-b-2 border-transparent hover:border-gprimary hover:text-primary transition relative group cursor-pointer">
                 {/* Trigger */}
-                <div>
+                <NavLink to={`/shop`}>
                   <span>SHOP</span>
                   <span className="ml-1 text-xs">▼</span>
-                </div>
+                </NavLink>
 
                 {/* Dropdown Menu */}
                 <div
@@ -78,39 +80,26 @@ const Navbar = () => {
     "
                 >
                   <div className="grid grid-cols-2 gap-8 p-8">
-                    {/* Health Supplements */}
-                    <div>
-                      <h4 className="mb-4 text-sm font-semibold text-gray-900 uppercase text-center">
-                        Health Supplements
-                      </h4>
-                      <ul className="space-y-3 text-sm text-gray-600">
-                        {healthSupplements.map((item, ind) => (
-                          <li
-                            key={ind}
-                            className="hover:text-primary cursor-pointer text-center"
-                          >
-                            <NavLink to={item.path}>{item.name}</NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {categories?.map((group) => (
+                      <div key={group.type}>
+                        <h4 className="mb-4 text-sm font-semibold text-gray-900 uppercase text-center">
+                          {group.type}
+                        </h4>
 
-                    {/* Health Pre Packs */}
-                    <div>
-                      <h4 className="mb-4 text-sm font-semibold text-gray-900 uppercase text-center">
-                        Health Pre Packs
-                      </h4>
-                      <ul className="space-y-3 text-sm text-gray-600">
-                        {healthPrePacks.map((item, ind) => (
-                          <li
-                            key={ind}
-                            className="hover:text-primary cursor-pointer text-center"
-                          >
-                            <NavLink to={item.path}>{item.name}</NavLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                        <ul className="space-y-3 text-sm text-gray-600">
+                          {group.categories.map((cat) => (
+                            <li
+                              key={cat._id}
+                              className="hover:text-primary cursor-pointer text-center"
+                            >
+                              <NavLink to={`/shop/${slugify(cat.name)}`}>
+                                {cat.name}
+                              </NavLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </li>
@@ -145,7 +134,10 @@ const Navbar = () => {
                   >
                     {user?.fullName || admin?.fullName}
                     {admin?.avatar ? (
-                      <img src={admin.avatar} className="h-10 w-10 rounded-full object-cover border-1 border-dark-green" />
+                      <img
+                        src={admin.avatar}
+                        className="h-10 w-10 rounded-full object-cover border-1 border-dark-green"
+                      />
                     ) : (
                       <img src="/icons/user.svg" alt="user" />
                     )}
