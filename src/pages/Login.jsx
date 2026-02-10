@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useDocumentTitle from "../hooks/useDocumentTitle";
 import { useAuth } from "../context/AuthContext";
+import { BASIC_DRAFT_KEY } from "../variables";
 
 function isValidPhone10(digits) {
   return /^\d{10}$/.test(digits);
@@ -31,6 +32,8 @@ const Login = () => {
       {
         const { showSuccess } = await import("../Utils/toast");
         showSuccess("Signed in successfully!");
+        localStorage.removeItem(BASIC_DRAFT_KEY)
+        localStorage.removeItem("quiz_sid")
       }
       navigate("/profile");
     } catch (err) {

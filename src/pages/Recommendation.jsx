@@ -6,7 +6,7 @@ import FAQSection from "../components/FAQSection";
 import { useEffect } from "react";
 import { useState } from "react";
 import { showError } from "../Utils/toast.js";
-import { getUserCompleted, getReport as fetchReport } from "../api/quiz";
+import { getUserSession, getReport as fetchReport } from "../api/quiz";
 import { useNavigate } from "react-router-dom";
 import {
   balancedRecommendations,
@@ -26,9 +26,9 @@ const Recommendation = () => {
     setLoading(true);
     const getReport = async () => {
       try {
-        const resCompleted = await getUserCompleted();
+        const resCompleted = await getUserSession();
         const session = resCompleted?.data?.data;
-        if (!session) navigate("/quiz");
+        if (!session || !session.isCompleted) navigate("/quiz");
         const data = await fetchReport(session?.sessionId);
         const getData = data?.data?.data;
         if (getData?.healthAssessment > 80) {

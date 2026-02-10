@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import Preloder from "../sections/Preloder";
 import { useState } from "react";
-import { getUserCompleted } from "../api/quiz";
+import { getUserSession } from "../api/quiz";
 import { useEffect } from "react";
 
 const QuizCompleted = () => {
@@ -12,9 +12,9 @@ const QuizCompleted = () => {
     setLoading(true);
     const getReport = async () => {
       try {
-        const resCompleted = await getUserCompleted();
+        const resCompleted = await getUserSession();
         const session = resCompleted?.data?.data;
-        if (session) navigate("/recommend");
+        if (session && session.isCompleted) navigate("/recommend");
       } catch (error) {
         showError("No completed quiz session found. Please complete the quiz.");
       } finally {

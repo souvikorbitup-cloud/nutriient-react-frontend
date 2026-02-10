@@ -3,7 +3,7 @@ import { useQuiz } from "../context/QuizContext";
 import { useAuth } from "../context/AuthContext";
 import StepRenderer from "../components/StepRenderer";
 import QuestionSlider from "../components/QuestionSlider";
-import { getQuestions, getUserCompleted, deleteSession } from "../api/quiz.js";
+import { getQuestions, getUserSession, deleteSession } from "../api/quiz.js";
 import { useNavigate } from "react-router-dom";
 import { updateUser } from "../api/user-auth.js";
 import QuizProgress from "../components/QuizProgress.jsx";
@@ -11,10 +11,9 @@ import Preloder from "../sections/Preloder.jsx";
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
 import { showError } from "../Utils/toast.js";
 import { useAdmin } from "../context/AdminContext.jsx";
+import { BASIC_DRAFT_KEY } from "../variables.js";
 
 const SECTIONS = ["BASIC", "GOAL_SELECT", "GOALS", "LIFESTYLE", "COMPLETED"];
-
-const BASIC_DRAFT_KEY = "quiz_basic_draft";
 
 function loadBasicDraft() {
   try {
@@ -70,8 +69,8 @@ const Quiz = () => {
   } = {}) => {
     if (withLoading) setActionLoading(true);
     try {
-      const resCompleted = await getUserCompleted();
-      const completed = resCompleted?.data?.data;
+      const resCompleted = await getUserSession();
+      const completed = resCompleted?.data?.data?.isCompleted;
       if (completed) {
         if (skipShow) {
           try {
@@ -138,8 +137,8 @@ const Quiz = () => {
         return;
       }
       try {
-        const res = await getUserCompleted();
-        const completed = res?.data?.data;
+        const res = await getUserSession();
+        const completed = res?.data?.data?.isCompleted;
         if (completed) {
           // If completed, immediately navigate away (showing only Preloder during this phase)
           localStorage.removeItem("quiz_sid");

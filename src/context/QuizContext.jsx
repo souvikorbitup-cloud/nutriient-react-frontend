@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { getSession, getUserCompleted, syncSession } from "../api/quiz.js";
+import { getSession, getUserSession, syncSession } from "../api/quiz.js";
 import { useAuth } from "./AuthContext.jsx";
 
 export const QuizContext = createContext();
@@ -11,41 +11,32 @@ export const QuizProvider = ({ children }) => {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (!user) {
-      setCompleted(false);
-      setLoading(false);
-      return;
-    }
-
-    let ignore = false;
-
-    const fetchStatus = async () => {
-      setLoading(true);
-      try {
-        const res = await getUserCompleted();
-        if (!ignore) {
-          setCompleted(!!res?.data?.data);
-        }
-      } catch (e) {
-        console.warn("Quiz status fetch failed", e);
-      } finally {
-        if (!ignore) setLoading(false);
-      }
-    };
-
-    fetchStatus();
-    return () => {
-      ignore = true;
-    };
-  }, [user?.id]);
-
   // 1. Initialize / Resume Session
   useEffect(() => {
     const init = async () => {
       let sid = localStorage.getItem("quiz_sid");
-      if (!sid) {
-        sid = uuidv4();
+      if (!sid || user) {
+        try {
+          setLoading(true);
+          const res = await getUserSession();
+          if (res?.data?.data) {
+            console.log("User Session Data:", res.data.data);
+
+            sid = res.data.data.sessionId;
+            if (res.data.data.isCompleted) {
+              setCompleted(true);
+            }
+          } else {
+            setCompleted(false);
+            sid = uuidv4();
+          }
+        } catch (e) {
+          console.warn("Session fetch failed, starting new session", e);
+          setCompleted(false);
+          sid = uuidv4();
+        } finally {
+          setLoading(false);
+        }
         localStorage.setItem("quiz_sid", sid);
       }
       const res = await getSession(sid);
@@ -53,7 +44,7 @@ export const QuizProvider = ({ children }) => {
       setLoading(false);
     };
     init();
-  }, []);
+  }, [user]);
 
   // 2. Sync Logic
   const updateSession = async (section, step, data, goal = null) => {
@@ -74,7 +65,9 @@ export const QuizProvider = ({ children }) => {
   };
 
   return (
-    <QuizContext.Provider value={{ session, updateSession, loading, completed }}>
+    <QuizContext.Provider
+      value={{ session, updateSession, loading, completed }}
+    >
       {children}
     </QuizContext.Provider>
   );

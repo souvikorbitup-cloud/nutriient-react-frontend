@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
-
-const BASIC_DRAFT_KEY = "quiz_basic_draft";
+import { BASIC_DRAFT_KEY } from "../variables";
 
 function loadBasicDraft() {
   try {
@@ -176,7 +175,7 @@ const StepRenderer = ({
               goal === "BASIC"
                 ? `Welcome ${user.fullName}`
                 : question.stepOrder === 2
-                  ? `${question.questionText} ${loadBasicDraft(BASIC_DRAFT_KEY)?.fullName || user?.fullName || "User"}!`
+                  ? `${question.questionText} ${user?.fullName || loadBasicDraft(BASIC_DRAFT_KEY)?.fullName || "User"}!`
                   : question.questionText}
             </h2>
             <h3 className="text-md font-bold mt-4 text-green-900 text-center">

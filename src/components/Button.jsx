@@ -5,7 +5,7 @@ import Preloder from "../sections/Preloder";
 const Button = ({ text = "TAKE QUIZ NOW", cText = "MY NUTRITION REPORT" }) => {
   const navigate = useNavigate();
   const { completed, loading } = useQuiz();
-
+  
   if (loading) return <Preloder />;
 
   return (

@@ -13,7 +13,7 @@ export const getQuestions = (section, goal = "NONE") =>
 
 export const syncSession = (payload) => API.post("/sync", payload);
 
-export const getUserCompleted = () => API.get("/user/completed");
+export const getUserSession = () => API.get("/user/session");
 
 export const deleteSession = (id) => API.delete(`/session/${id}`);
 
