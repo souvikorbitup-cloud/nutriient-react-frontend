@@ -6,11 +6,13 @@ import { useAuth } from "../context/AuthContext";
 import { useAdmin } from "../context/AdminContext";
 import { useShop } from "../context/ShopContext";
 import { slugify } from "../Utils/helpers";
+import { useCart } from "../context/CartContext";
 
 const Navbar = () => {
   const { user } = useAuth();
   const { admin } = useAdmin();
   const { categories } = useShop();
+  const { items } = useCart();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -180,6 +182,11 @@ const Navbar = () => {
               )}
 
               <div className="relative group cursor-pointer flex items-center">
+                {items.length > 0 && (
+                  <span className="text-xs h-4 w-4 flex-center rounded-full bg-dark-green text-white absolute top-5 -right-1">
+                    {items.length}
+                  </span>
+                )}
                 <i
                   className={`fa-solid fa-bag-shopping ${!scrolled && isHomePage ? "text-white" : "text-black"} hover:text-primary transition cursor-pointer text-xl`}
                 ></i>
