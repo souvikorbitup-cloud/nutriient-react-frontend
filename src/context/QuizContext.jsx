@@ -20,8 +20,6 @@ export const QuizProvider = ({ children }) => {
           setLoading(true);
           const res = await getUserSession();
           if (res?.data?.data) {
-            console.log("User Session Data:", res.data.data);
-
             sid = res.data.data.sessionId;
             if (res.data.data.isCompleted) {
               setCompleted(true);
