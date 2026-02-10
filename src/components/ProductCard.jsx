@@ -1,27 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { slugify } from "../Utils/helpers";
-import { showSuccess } from "../Utils/toast";
+import { normalizeDecimal, slugify } from "../Utils/helpers";
+import { showSuccess, showError } from "../Utils/toast";
+import { useCart } from "../context/CartContext";
 
 const ProductCard = ({ product }) => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
-  const mrp = product?.mrp?.$numberDecimal || 0;
-  const sellPrice = product?.sellPrice?.$numberDecimal || 0;
+  const mrp = normalizeDecimal(product?.mrp);
+  const sellPrice = normalizeDecimal(product?.sellPrice);
   const stock = product?.stock || 0;
 
   const [qty, setQty] = useState(1);
 
   /* ================= HANDLERS ================= */
 
-  const handleAddToCart = (e) => {
+  const handleAddToCart = async (e) => {
     e.stopPropagation();
 
-    console.log("ADD TO CART:", {
-      productId: product._id,
-      quantity: qty,
-    });
-    showSuccess("Product added to cart successfully!");
+    if (stock < 1) {
+      showError("Product is out of stock");
+      return;
+    }
+
+    try {
+      await addToCart(product, qty);
+      showSuccess("Product added to cart successfully!");
+    } catch (err) {
+      showError("Failed to add product to cart");
+    }
   };
 
   const handleShowCategory = (e, catName) => {
@@ -71,7 +79,9 @@ const ProductCard = ({ product }) => {
           <span className="text-sm font-semibold text-gray-900">
             ₹{sellPrice}
           </span>
-          <span className="text-xs line-through text-gray-400">₹{mrp}</span>
+          {mrp > sellPrice && (
+            <span className="text-xs line-through text-gray-400">₹{mrp}</span>
+          )}
         </div>
 
         {/* META */}
@@ -91,15 +101,18 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* ================= ACTIONS ================= */}
-      {product.isOutOfStock ? (
+      {product.isOutOfStock || stock < 1 ? (
         <button
           disabled
-          className="w-full py-2 text-sm rounded-lg bg-red-100 text-red-600"
+          className="w-full py-2 text-sm rounded-lg bg-red-100 text-red-600 cursor-not-allowed"
         >
           Out of Stock
         </button>
       ) : (
-        <div className="grid gap-2 grid-cols-1 sm:grid-cols-2" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="grid gap-2 grid-cols-1 sm:grid-cols-2"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* QUANTITY CONTROLLER */}
           <div className="flex items-center border rounded-lg overflow-hidden border-gray-400">
             <button
@@ -122,7 +135,7 @@ const ProductCard = ({ product }) => {
             <button
               onClick={increaseQty}
               disabled={qty === stock}
-              className={`px-3 py-2 text-sm grow 
+              className={`px-3 py-2 text-sm grow
                 ${
                   qty === stock
                     ? "text-gray-400 cursor-not-allowed"

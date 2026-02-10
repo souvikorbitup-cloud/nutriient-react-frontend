@@ -1,5 +1,6 @@
 export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const BASIC_DRAFT_KEY = "quiz_basic_draft";
+export const CART_KEY = "guest_cart";
 
 // ================ How we work steps ==================
 export const steps = [
