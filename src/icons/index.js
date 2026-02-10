@@ -13,6 +13,9 @@ import UsersIcon from "./users.svg?react";
 import GroupIcon from "./group.svg?react";
 import BoxIconLine from "./box-line.svg?react";
 import OrdersIcon from "./orders.svg?react";
+import Cart from "./cart.svg?react";
+import Order from "./order.svg?react";
+import HealthReport from "./health-report.svg?react";
 
 export {
   GridIcon,
@@ -28,4 +31,7 @@ export {
   GroupIcon,
   BoxIconLine,
   OrdersIcon,
+  Cart,
+  Order,
+  HealthReport,
 };
