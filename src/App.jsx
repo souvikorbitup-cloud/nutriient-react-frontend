@@ -52,6 +52,7 @@ import { ShopProvider } from "./context/ShopContext";
 import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import { CartProvider } from "./context/CartContext";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
   return (
@@ -86,6 +87,7 @@ const App = () => {
                       element={<RefundPolicy />}
                     />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/checkout" element={<Checkout />} />
 
                     {/* 🛍 SHOP ROUTES */}
                     <Route path="/shop" element={<Shop />} />

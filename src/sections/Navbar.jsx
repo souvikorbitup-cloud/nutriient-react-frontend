@@ -130,7 +130,7 @@ const Navbar = () => {
                 <div className="relative group cursor-pointer flex items-center">
                   <NavLink
                     to={`${admin?.role ? "/admin/profile" : "profile"}`}
-                    className="flex items-center gap-2 text-sm font-medium text-gray-800 cursor-pointer hover:text-primary"
+                    className="flex items-center gap-2 text-sm font-medium text-gray-800 cursor-pointer hover:text-primary capitalize"
                   >
                     {user?.fullName || admin?.fullName}
                     {admin?.avatar ? (

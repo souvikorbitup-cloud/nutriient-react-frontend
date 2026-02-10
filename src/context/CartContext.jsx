@@ -13,6 +13,7 @@ import {
 } from "../Utils/cartStorage";
 import { useAuth } from "./AuthContext";
 import { showError } from "../Utils/toast";
+import { CART_KEY } from "../variables";
 
 const CartContext = createContext(null);
 
@@ -138,6 +139,13 @@ export const CartProvider = ({ children }) => {
     loadUserCart();
   };
 
+  /* ---------------- REMOVE CART ---------------- */
+
+  const clearCart = () => {
+    setItems([]);
+    localStorage.removeItem(CART_KEY);
+  };
+
   /* ---------------- AUTO SYNC ---------------- */
 
   useEffect(() => {
@@ -152,6 +160,8 @@ export const CartProvider = ({ children }) => {
       addToCart,
       updateQuantity,
       removeItem,
+      syncGuestCart,
+      clearCart,
     }),
     [items, loading],
   );

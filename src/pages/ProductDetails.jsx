@@ -88,7 +88,7 @@ const ProductDetails = () => {
             ))}
           </div>
 
-          <div className="flex-1 border rounded-xl p-6 border-gray-400">
+          <div className="flex-1 border rounded-xl p-6 border-gray-300">
             <img
               src={activeImage}
               alt={product?.genericName}
@@ -148,7 +148,7 @@ const ProductDetails = () => {
 
           {/* ================= ADD TO CART ================= */}
           <div className="flex gap-3">
-            <div className="flex items-center border rounded-lg overflow-hidden border-gray-400">
+            <div className="flex items-center border rounded-lg overflow-hidden border-gray-300">
               <button
                 onClick={decreaseQty}
                 disabled={qty === 1}
@@ -230,7 +230,7 @@ const Description = ({ title, content }) => (
   <div>
     <h3 className="mb-4 font-semibold text-t-black-light">{title}</h3>
     <div
-      className="prose max-w-none text-t-black reset-design rounded-xl border p-6 border-gray-400"
+      className="prose max-w-none text-t-black reset-design rounded-xl border p-6 border-gray-300"
       dangerouslySetInnerHTML={{ __html: content }}
     />
   </div>

@@ -72,7 +72,7 @@ const Profile = () => {
     }
   };
 
-  /* ---------------- VALIDATION (TOAST ONLY) ---------------- */
+  /* ---------------- VALIDATION ---------------- */
 
   const validateForm = () => {
     if (!form.fullName || form.fullName.trim().length < 3) {
@@ -165,7 +165,7 @@ const Profile = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Profile Form */}
-        <div className="lg:col-span-2 bg-white rounded-2xl sm:shadow sm:p-6 space-y-4">
+        <div className="lg:col-span-2 bg-white rounded-2xl sm:border sm:border-gray-300 sm:p-6 space-y-4">
           <ProfileInput
             label="Full Name"
             name="fullName"
@@ -279,7 +279,7 @@ const Profile = () => {
         </div>
 
         {/* Links */}
-        <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+        <div className="bg-white rounded-2xl border border-gray-300 p-6 space-y-4">
           <h3>Other Links</h3>
           <QuickLink
             title="My Cart"
@@ -342,7 +342,7 @@ const ProfileInput = ({ label, ...props }) => (
     <label className="block text-sm text-t-black-light mb-1">{label}</label>
     <input
       {...props}
-      className="w-full rounded-lg border border-gray-400 px-3 py-2 text-sm disabled:bg-gray-100"
+      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm disabled:bg-gray-100"
     />
   </div>
 );
@@ -352,7 +352,7 @@ const SelectInput = ({ label, options, ...props }) => (
     <label className="block text-sm text-t-black-light mb-1">{label}</label>
     <select
       {...props}
-      className="w-full rounded-lg border border-gray-400 px-3 py-2 text-sm disabled:bg-gray-100"
+      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm disabled:bg-gray-100"
     >
       {options.map((opt) => (
         <option key={opt} value={opt}>
@@ -366,7 +366,7 @@ const SelectInput = ({ label, options, ...props }) => (
 const QuickLink = ({ title, onClick, Icon }) => (
   <button
     onClick={onClick}
-    className="w-full py-3 rounded-xl border border-gray-400 text-left px-4 hover:bg-dark-green hover:text-white transition flex gap-2 items-center cursor-pointer"
+    className="w-full py-3 rounded-xl border border-gray-300 text-left px-4 hover:bg-dark-green hover:text-white transition flex gap-2 items-center cursor-pointer"
   >
     <Icon className="size-6" />
     {title}

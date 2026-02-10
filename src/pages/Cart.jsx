@@ -56,7 +56,7 @@ const Cart = () => {
   /* ================= CART UI ================= */
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-32">
+    <div className="app-container mx-auto px-4 py-20 pt-32">
       <h1 className="text-2xl font-bold mb-6">My Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -72,7 +72,7 @@ const Cart = () => {
             return (
               <div
                 key={item.productId || item.product._id}
-                className={`flex gap-4 items-center border p-4 rounded-xl border-gray-400 ${
+                className={`flex gap-4 items-center border p-4 rounded-xl border-gray-300 ${
                   isOut ? "opacity-70 bg-gray-50" : ""
                 }`}
               >
@@ -113,7 +113,7 @@ const Cart = () => {
                     )
                   }
                   className={`w-16 border rounded px-2 py-1 text-center ${
-                    isOut ? "bg-gray-200 cursor-not-allowed" : "border-gray-400"
+                    isOut ? "bg-gray-200 cursor-not-allowed" : "border-gray-300"
                   }`}
                 />
 
@@ -130,7 +130,7 @@ const Cart = () => {
         </div>
 
         {/* ================= RIGHT ================= */}
-        <div className="border border-gray-400 rounded-2xl p-6 h-fit sticky top-28">
+        <div className="border border-gray-300 rounded-2xl p-6 h-fit sticky top-28">
           <h2 className="text-lg font-semibold mb-4">Price Details</h2>
 
           <div className="space-y-3 text-sm">
