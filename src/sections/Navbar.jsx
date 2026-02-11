@@ -187,9 +187,11 @@ const Navbar = () => {
                     {items.length}
                   </span>
                 )}
-                <i
-                  className={`fa-solid fa-bag-shopping ${!scrolled && isHomePage ? "text-white" : "text-black"} hover:text-primary transition cursor-pointer text-xl`}
-                ></i>
+                <NavLink to="/cart">
+                  <i
+                    className={`fa-solid fa-bag-shopping ${!scrolled && isHomePage ? "text-white" : "text-black"} hover:text-primary transition cursor-pointer text-xl`}
+                  ></i>
+                </NavLink>
                 {!admin?.role && (
                   <div
                     className="

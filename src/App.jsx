@@ -53,6 +53,7 @@ import Shop from "./pages/Shop";
 import ProductDetails from "./pages/ProductDetails";
 import { CartProvider } from "./context/CartContext";
 import Checkout from "./pages/Checkout";
+import OrderDetails from "./pages/OrderDetails";
 
 const App = () => {
   return (
@@ -104,6 +105,7 @@ const App = () => {
                         element={<HealthRepoat />}
                       />
                       <Route path="/my-orders" element={<Orders />} />
+                      <Route path="/order/:orderId" element={<OrderDetails />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route element={<QuizCompleted />}>
                         <Route path="/recommend" element={<Recommendation />} />

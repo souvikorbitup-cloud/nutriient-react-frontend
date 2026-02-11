@@ -2,6 +2,13 @@ export const BASE_URL = import.meta.env.VITE_BASE_URL;
 export const BASIC_DRAFT_KEY = "quiz_basic_draft";
 export const CART_KEY = "guest_cart";
 
+export const STATUS_STYLES = {
+  PENDING: "bg-yellow-100 text-yellow-700",
+  SHIPPED: "bg-blue-100 text-blue-700",
+  DELIVERED: "bg-green-100 text-green-700",
+  CANCELLED: "bg-red-100 text-red-700",
+};
+
 // ================ How we work steps ==================
 export const steps = [
   {
