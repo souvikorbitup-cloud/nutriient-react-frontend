@@ -5,6 +5,7 @@ import {
   userSignIn,
   userSignUp,
 } from "../api/user-auth.js";
+import { BASIC_DRAFT_KEY } from "../variables.js";
 
 const AuthContext = createContext(null);
 
@@ -75,6 +76,8 @@ export const AuthProvider = ({ children }) => {
     setAuthLoading(true);
     try {
       await logoutUser();
+      localStorage.removeItem(BASIC_DRAFT_KEY);
+      localStorage.removeItem("quiz_sid");
     } catch {
       // ignore
     } finally {
