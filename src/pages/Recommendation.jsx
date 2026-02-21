@@ -43,7 +43,7 @@ const Recommendation = () => {
         }
         setReport(getData);
       } catch (error) {
-        navigate('/quiz', { replace: true })
+        navigate("/quiz", { replace: true });
         showError("No recommendation report found. Please complete the quiz.");
       } finally {
         setLoading(false);
@@ -79,7 +79,7 @@ const Recommendation = () => {
         <div className="app-container mx-auto flex items-center min-h-[646px]">
           <div className="flex flex-col items-center gap-7 text-center max-w-[714px] mx-auto p-4">
             <div className="flex flex-col gap-6">
-              <div className="text-green-1 font-bold text-lg">
+              <div className="text-green-1 font-bold text-lg capitalize">
                 Goal: {report?.goal}
               </div>
 
@@ -98,7 +98,7 @@ const Recommendation = () => {
               </div>
               <div className="text-t-black-light text-center">
                 <p
-                  className={`text-xl sm:text-2xl text-white py-2.5 px-6 ${report.healthAssessmentBgColor} rounded-full`}
+                  className={`text-xl sm:text-2xl text-white py-2.5 px-6 ${report.healthAssessmentBgColor} rounded-full capitalize`}
                 >
                   {report?.healthAssessmentTag}
                 </p>
@@ -106,7 +106,7 @@ const Recommendation = () => {
             </div>
 
             {/* Description */}
-            <p className="text-t-black text-sm font-light">
+            <p className="text-t-black text-sm font-light capitalize">
               {report?.goalTag?.normalText}{" "}
               <strong className="font-semibold">
                 {report?.goalTag?.boldtext}
@@ -115,14 +115,14 @@ const Recommendation = () => {
 
             <div>
               <h2 className="text-center text-2xl font-semibold">
-                High-impact zones:
+                High-Impact zones:
               </h2>
 
               {/* Badges */}
               <div className="flex flex-wrap justify-center gap-6 mt-6 mb-14 sm:mb-0">
                 {report?.hizValues?.map((item, i) => (
                   <span
-                    className="px-6 py-2.5 rounded-full bg-dark-green text-white text-sm font-medium flex-center gap-1"
+                    className="px-6 py-2.5 rounded-full bg-dark-green text-white text-sm font-medium flex-center gap-1 capitalize"
                     key={i}
                   >
                     <img src={item.image} alt="icon" />{" "}
@@ -141,10 +141,10 @@ const Recommendation = () => {
         <div className="bg-[linear-gradient(359deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[373px] w-full absolute top-0 left-0 z-0"></div>
         <div className="app-container mx-auto relative z-10 px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4 capitalize">
               Your BMR & Maintenance Calories
             </h2>
-            <p className="text-t-black-light mx-auto">
+            <p className="text-t-black-light mx-auto capitalize">
               Based on your weight, age, gender and activity level, we
               calculated:
             </p>
@@ -152,26 +152,26 @@ const Recommendation = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white rounded-2xl p-8 shadow-[0_0_12px_0_rgba(0,0,0,0.20)]">
-              <h3 className="text-nutrient-green font-bold text-lg sm:text-2xl mb-3 text-center">
+              <h3 className="text-nutrient-green font-bold text-lg sm:text-2xl mb-3 text-center capitalize">
                 BMR (Basal Metabolic Rate)
               </h3>
               <div className="text-2xl sm:text-5xl font-bold text-green-1 mb-4 text-center">
                 {report?.bmr} kcal/day
               </div>
-              <p className="text-t-black-light text-sm text-center">
+              <p className="text-t-black-light text-sm text-center capitalize">
                 This is an estimation. You BMR will be recalculated with your
                 height again in 1st consultation with more data like your height
                 in cm and waist size.
               </p>
             </div>
             <div className="bg-white rounded-2xl p-8 shadow-[0_0_12px_0_rgba(0,0,0,0.20)]">
-              <h3 className="text-nutrient-green font-bold text-lg sm:text-2xl mb-3 text-center">
+              <h3 className="text-nutrient-green font-bold text-lg sm:text-2xl mb-3 text-center capitalize">
                 Maintenance Calories
               </h3>
               <div className="text-2xl sm:text-5xl font-bold text-green-1 mb-4 text-center">
                 {report?.maintenanceCalories} kcal/day
               </div>
-              <p className="text-t-black-light text-sm text-center">
+              <p className="text-t-black-light text-sm text-center capitalize">
                 This is the total calories you burn daily including movement.
               </p>
             </div>
@@ -180,19 +180,19 @@ const Recommendation = () => {
       </section>
 
       <section className="pt-16 md:pt-24 bg-gradient-green z-10 relative">
-        <h2 className="text-3xl md:text-4xl font-bold text-t-black text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-t-black text-center capitalize">
           Why this matters
         </h2>
         <div className="relative">
           <div className="bg-dark-green color-white rounded-2xl p-6 max-w-[320px] sm:max-w-2xl mx-auto mt-8 relative z-10">
-            <h3 className="text-white font-normal text-lg sm:text-2xl mb-3 text-center ">
+            <h3 className="text-white font-normal text-lg sm:text-2xl mb-3 text-center capitalize">
               {report?.idealTarget?.text || "Your Target:"}
             </h3>
             <div className="text-xl sm:text-4xl font-bold text-white mb-4 text-center">
               {report?.idealTarget?.low}-{report?.idealTarget?.high}{" "}
               {report?.idealTarget?.unit}
             </div>
-            <p className="text-white text-sm text-center font-normal">
+            <p className="text-white text-sm text-center font-normal capitalize">
               This will be built into your personalized 7-day diet plan.
             </p>
           </div>
@@ -205,10 +205,10 @@ const Recommendation = () => {
         <div className="app-container mx-auto px-4">
           {/* Heading */}
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold text-t-black">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black capitalize">
               Root Causes
             </h2>
-            <p className="mt-3 text-t-black-light text-sm md:text-base max-w-2xl mx-auto">
+            <p className="mt-3 text-t-black-light text-sm md:text-base max-w-2xl mx-auto capitalize">
               Your Health Assessment Shows The Main Root Causes Behind Your
               <br className="hidden md:block" />
               Weight Struggles Appear To Be:
@@ -243,14 +243,14 @@ const Recommendation = () => {
                 <h3
                   className="text-center text-2xl leading-snug font-semibold
                              text-dark-green
-                             whitespace-pre-line pb-6"
+                             whitespace-pre-line pb-6 capitalize"
                 >
                   {item.title}
                 </h3>
 
                 <p
                   className="text-center text-t-black-light text-sm
-                            leading-relaxed whitespace-pre-line"
+                            leading-relaxed whitespace-pre-line capitalize"
                 >
                   {item.descripton}
                 </p>
@@ -266,21 +266,21 @@ const Recommendation = () => {
         <div className="bg-[linear-gradient(360deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
         <div className="app-container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-t-black">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-t-black capitalize">
               Your Nutrient <br /> Personalized Plan
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="order-2 sm:order-1">
-              <h3 className="text-2xl sm:text-4xl font-bold text-t-black mb-6">
+              <h3 className="text-2xl sm:text-4xl font-bold text-t-black mb-6 capitalize">
                 Diet, Exercise & Monitoring
               </h3>
               <div className="space-y-4">
                 {personalizedPlans.map((item, i) => (
                   <div className="flex items-start gap-3" key={i}>
                     <img src={item.image} alt="icon" />
-                    <p className="text-t-black-light">{item.text}</p>
+                    <p className="text-t-black-light capitalize">{item.text}</p>
                   </div>
                 ))}
               </div>
@@ -305,7 +305,7 @@ const Recommendation = () => {
       <section className="py-16 md:py-24">
         <div className="app-container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold text-t-black">
+            <h2 className="text-2xl md:text-4xl font-bold text-t-black capitalize">
               Your Recommended Dietary Supplements
             </h2>
           </div>
@@ -321,10 +321,10 @@ const Recommendation = () => {
                 />
               </div>
               <div className="w-[230px] sm:w-full">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4">
+                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
                   Probiotic
                 </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center">
+                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
                   Supports gut health and improves digestion
                 </p>
               </div>
@@ -340,10 +340,10 @@ const Recommendation = () => {
                 />
               </div>
               <div className="w-[230px] sm:w-full order-1 sm:order-2">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4">
+                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
                   Probiotic
                 </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center">
+                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
                   Supports gut health and improves digestion
                 </p>
               </div>
@@ -359,10 +359,10 @@ const Recommendation = () => {
                 />
               </div>
               <div className="w-[230px] sm:w-full">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4">
+                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
                   Probiotic
                 </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center">
+                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
                   Supports gut health and improves digestion
                 </p>
               </div>
@@ -382,38 +382,38 @@ const Recommendation = () => {
             {/* RIGHT CONTENT */}
             <div className="flex flex-col justify-center">
               {/* Title */}
-              <h3 className="text-[22px] md:text-[24px] font-semibold text-dark-green leading-snug">
+              <h3 className="text-[22px] md:text-[24px] font-semibold text-dark-green leading-snug capitalize">
                 Nutrient Personalized {report?.chartMaintenanceCalories?.value}{" "}
                 Kcal Meal Plan
               </h3>
 
               {/* Description */}
-              <p className="mt-3 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed">
+              <p className="mt-3 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed capitalize">
                 According To Your Health Goals And Lifestyle, We Have Designed
                 This Diet Plan With Macros To Be 62% Carbohydrates, 25% Fat And
                 13% Protein On {report?.chartMaintenanceCalories?.value} Kcal
               </p>
 
-              <p className="mt-2 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed">
+              <p className="mt-2 text-sm md:text-[15px] text-t-black-light font-thin leading-relaxed capitalize">
                 And It Is Balanced With All Micro Nutrients To Be Adequate For
                 Your Health Requirements In Mind.
               </p>
 
               {/* Bullet Points */}
               <ul className="mt-4 space-y-3">
-                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin">
+                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin capitalize">
                   <span className="mt-1 w-2.5 h-2.5 bg-[#3c9a45] rounded-sm flex-shrink-0" />
                   It Greatly Helps In Weight Loss By Enhancing Fat Metabolism,
                   Especially Around Abdominal.
                 </li>
 
-                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin">
+                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin capitalize">
                   <span className="mt-1 w-2.5 h-2.5 bg-[#3c9a45] rounded-sm flex-shrink-0" />
                   20:1 Ratio: 675mg Of Green Tea Leaf Extract Is Equivalent To 7
                   Cups Of Green Tea.
                 </li>
 
-                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin">
+                <li className="flex gap-3 text-sm md:text-[15px] text-t-black-light font-thin capitalize">
                   <span className="mt-1 w-2.5 h-2.5 bg-[#3c9a45] rounded-sm flex-shrink-0" />
                   Along With Burning Calories, It Also Helps To Regulate Bad
                   Cholesterol Levels In Our Body.
@@ -422,7 +422,7 @@ const Recommendation = () => {
 
               {/* Green Highlight Box */}
               <div className="mt-6 bg-[#3c9a45] rounded-xl p-5">
-                <p className="text-white text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed capitalize">
                   Nutriient diet plan is designed for you with your suggested
                   dietary supplements to fulfill all your nutritional needs to
                   build immunity in this viral season and sustainability in
@@ -441,10 +441,10 @@ const Recommendation = () => {
         <div className="container mx-auto px-4 relative z-10">
           {/* Heading */}
           <div className="text-center mb-14 sm:mb-24">
-            <h2 className="text-3xl md:text-4xl font-bold text-t-black">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black capitalize">
               {`${report.userName}'s Nutriient Personalized Kit`}
             </h2>
-            <p className="mt-3 text-t-black-light text-sm md:text-base max-w-3xl mx-auto">
+            <p className="mt-3 text-t-black-light text-sm md:text-base max-w-3xl mx-auto capitalize">
               Your Nutriient Journey is tailored to you—combining a structured
               diet chart, targeted supplements, and guided monitoring.
             </p>
@@ -454,7 +454,7 @@ const Recommendation = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* <!-- Plan 1: Basic --> */}
             <div className="bg-white rounded-lg shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)] p-6 flex flex-col">
-              <h3 className="text-2xl font-semibold mb-4">Trial</h3>
+              <h3 className="text-2xl font-semibold mb-4 capitalize">Trial</h3>
               <span className="text-lg text-t-black-light/70 font-semibold line-through">
                 ₹999
               </span>
@@ -466,13 +466,13 @@ const Recommendation = () => {
                   Save 20%
                 </span>
               </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
                 One Month Plan
               </p>
-              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer">
+              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer capitalize">
                 Select Trial Plan
               </button>
-              <span className="mb-8 text-sm text-t-black-light">
+              <span className="mb-8 text-sm text-t-black-light capitalize">
                 *Get Additional 10% Discount On Online Payment
               </span>
               <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
@@ -491,7 +491,9 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Try For 1 Month Then Decide</span>
+                  <span className="capitalize">
+                    Try For 1 Month Then Decide
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -508,7 +510,9 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Free Nutritionist's Consultation</span>
+                  <span className="capitalize">
+                    Free Nutritionist's Consultation
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -525,16 +529,16 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>24/7 Support With Experts</span>
+                  <span className="capitalize">24/7 Support With Experts</span>
                 </li>
               </ul>
               <div className="p-4 bg-black rounded-xl text-white mt-6">
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   One Kit Delivered To You & One FREE Consultancuy with our
                   Nutritionists
                 </p>
                 <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   You Can Buy Your Nutrition Plan For Following Months From Your
                   Nuitriient Dashboard
                 </p>
@@ -558,13 +562,13 @@ const Recommendation = () => {
                   Save 40%
                 </span>
               </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
                 Six Months Subscription
               </p>
               <button className="w-full bg-dark-green  text-white  py-2 px-4 rounded-md font-semibold hover:bg-dark-green/80  transition duration-200 mb-1 cursor-pointer">
                 Select Standard Plan
               </button>
-              <span className="mb-8 text-sm text-t-black-light">
+              <span className="mb-8 text-sm text-t-black-light capitalize">
                 *Get Additional 10% Discount On Online Payment
               </span>
               <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
@@ -583,7 +587,7 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Good Value For Money</span>
+                  <span className="capitalize">Good Value For Money</span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -600,7 +604,9 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Pay Monthly Cancel Any Time</span>
+                  <span className="capitalize">
+                    Pay Monthly Cancel Any Time
+                  </span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -617,16 +623,16 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Uninterrupted Guidance</span>
+                  <span className="capitalize">Uninterrupted Guidance</span>
                 </li>
               </ul>
               <div className="p-4 bg-dark-green rounded-xl text-white mt-6">
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   One Kit Delivered Automatically Every Monthy After Your
                   Monthly Nutritionist Consultanc
                 </p>
                 <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   Your Diet, Routine And Supplemnets Are Updated Every Month
                   According To Your Improvements And Nutritionist's Consultation
                 </p>
@@ -647,13 +653,13 @@ const Recommendation = () => {
                   Save 50%
                 </span>
               </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8">
+              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
                 Twelve Months Subscription
               </p>
-              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer">
+              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer capitalize">
                 Select Premium Plan
               </button>
-              <span className="mb-8 text-sm text-t-black-light">
+              <span className="mb-8 text-sm text-t-black-light capitalize">
                 *Get Additional 10% Discount On Online Payment
               </span>
               <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
@@ -672,7 +678,7 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Best Value For Money</span>
+                  <span className="capitalize">Best Value For Money</span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -689,7 +695,7 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Uninterrupted Routine</span>
+                  <span className="capitalize">Uninterrupted Routine</span>
                 </li>
                 <li className="flex items-start">
                   <svg
@@ -706,16 +712,16 @@ const Recommendation = () => {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  <span>Uninterrupted Guidance</span>
+                  <span className="capitalize">Uninterrupted Guidance</span>
                 </li>
               </ul>
               <div className="p-4 bg-black rounded-xl text-white mt-6">
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   One Kit Delivered Automatically Every Monthy After Your
                   Monthly Nutritionist Consultancy
                 </p>
                 <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm">
+                <p className="text-sm capitalize">
                   Your Diet, Routine And Supplemnets Are Updated Every Month
                   According To Your Improvements And Nutritionist's Consultation
                 </p>
@@ -737,7 +743,7 @@ const Recommendation = () => {
               />
             </div>
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-8 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-8 text-center capitalize">
                 Your Path to a Balanced & Healthier You
               </h2>
 
@@ -770,10 +776,10 @@ const Recommendation = () => {
         <div className="bg-[linear-gradient(360deg,rgba(255,255,255,0.25)_0.98%,rgba(57,150,69,0.25)_99.02%)] h-[180px] w-full absolute top-0 left-0 z-0"></div>
         <div className="app-container mx-auto px-4 relative z-10">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4 capitalize">
               What Our Customers Say
             </h2>
-            <p className="text-t-black-light max-w-3xl mx-auto">
+            <p className="text-t-black-light max-w-3xl mx-auto capitalize">
               Your Nutrient Plan is fully personalised, medically-aligned
               lifestyle transformation program designed specifically for you.
             </p>
@@ -835,11 +841,11 @@ const Recommendation = () => {
                       </div>
                     </div>
                   </div>
-                  <h5 className=" font-medium text-xl mb-3 text-t-black">
+                  <h5 className=" font-medium text-xl mb-3 text-t-black capitalize">
                     {user.title}
                   </h5>
                   <p className=" text-t-black-light leading-relaxed">
-                    I{user.desc}
+                    {user.desc}
                   </p>
                 </div>
               </SwiperSlide>
@@ -865,7 +871,7 @@ const Recommendation = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
               Our Team
             </h2>
-            <p className="text-t-black-light max-w-3xl mx-auto">
+            <p className="text-t-black-light max-w-3xl mx-auto capitalize">
               Your Nutrient Plan is fully personalised, medically-aligned
               lifestyle transformation program designed specifically for you.
             </p>
@@ -883,13 +889,16 @@ const Recommendation = () => {
             <div className="pt-18 text-center">
               <h3 className="text-2xl font-bold mb-5">
                 Hi, this is{" "}
-                <span className="text-dark-green">Ritambhara Mondal</span>,
+                <span className="text-dark-green capitalize">
+                  Ritambhara Mondal
+                </span>
+                ,
               </h3>
-              <p className=" text-t-black-light mb-8">
+              <p className=" text-t-black-light mb-8 capitalize">
                 Chief Nutritionist at Nutrient
               </p>
 
-              <p className="text-t-black-light max-w-4xl mx-auto leading-relaxed">
+              <p className="text-t-black-light max-w-4xl mx-auto leading-relaxed capitalize">
                 At Nutriient, we firstly know about you and your health very
                 well and according to your body needs and concerns, we recommend
                 you detailed diet for day-to-day life and supplements to support
@@ -902,7 +911,7 @@ const Recommendation = () => {
               </p>
 
               <div className="pt-12">
-                <h4 className="text-2xl font-semibold mb-6">
+                <h4 className="text-2xl font-semibold mb-6 capitalize">
                   All our Health Supplements are
                 </h4>
                 <div className="flex justify-center gap-12 md:gap-16">
@@ -922,13 +931,13 @@ const Recommendation = () => {
                     className="w-20 h-20"
                   />
                 </div>
-                <p className="text-t-black-light font-thin">
+                <p className="text-t-black-light font-thin capitalize">
                   That means all our products meet the international Standard
                   for Quality.
                 </p>
               </div>
               <div className="pt-12">
-                <h4 className="text-2xl font-semibold mb-6">
+                <h4 className="text-2xl font-semibold mb-6 capitalize">
                   All Our Dietary Supplements are also
                 </h4>
                 <div className="flex justify-center gap-12 md:gap-16">
@@ -966,7 +975,7 @@ const Recommendation = () => {
       <section className="py-16 md:py-24 relative z-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-t-black mb-4 capitalize">
               Frequently Asked Questions
             </h2>
           </div>
