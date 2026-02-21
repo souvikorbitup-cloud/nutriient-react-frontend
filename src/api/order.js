@@ -20,7 +20,7 @@ export const fetchOrderByIdApi = (orderId) => API.get(`/${orderId}`);
    ADMIN
 ====================== */
 
-export const fetchAllOrdersApi = () => API.get("/");
+export const fetchAllOrdersApi = (params = {}) => API.get("/", { params });
 
 export const updateDeliveryStateApi = (orderId, deliveryState) =>
   API.put(`/${orderId}/delivery-state`, { deliveryState });
