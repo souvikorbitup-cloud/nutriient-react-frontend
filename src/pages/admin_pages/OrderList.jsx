@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchAllOrdersApi, updateDeliveryStateApi } from "../../api/order";
 import { showError, showSuccess } from "../../Utils/toast";
 import AdminLoading from "./AdminLoading";
+import { useLocation } from "react-router-dom";
 
 const DELIVERY_STATES = ["PENDING", "SHIPPED", "DELIVERED", "CANCELLED"];
 
@@ -10,12 +11,20 @@ const OrderList = () => {
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [pagination, setPagination] = useState(null);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
+
+  const location = useLocation();
 
   /* ================= Fetch Orders ================= */
-  const fetchOrders = async () => {
+  const fetchOrders = async (pageNumber = 1) => {
     try {
-      const res = await fetchAllOrdersApi();
-      setOrders(res.data.data || []);
+      setLoading(true);
+      const res = await fetchAllOrdersApi({ page: pageNumber, limit });
+      setOrders(res.data.data.orders || []);
+      setPagination(res.data.data.pagination || null);
+      setPage(pageNumber);
     } catch (err) {
       showError("Failed to fetch orders");
     } finally {
@@ -24,7 +33,14 @@ const OrderList = () => {
   };
 
   useEffect(() => {
-    fetchOrders();
+    // Use cached products when coming back
+    if (location.state?.orders?.length) {
+      setOrders(location.state.orders);
+      setPagination(location.state.pagination || null);
+      setLoading(false);
+    } else {
+      fetchOrders(1);
+    }
   }, []);
 
   /* ================= Update Status ================= */
@@ -39,7 +55,7 @@ const OrderList = () => {
         ),
       );
 
-      showSuccess("Order status updated");
+      showSuccess(`Order status updated to ${newState}`);
     } catch (err) {
       showError("Failed to update status");
     } finally {
@@ -133,6 +149,58 @@ const OrderList = () => {
           </tbody>
         </table>
       </div>
+
+      {/* ================= PAGINATION ================= */}
+      {pagination?.totalPages > 1 && (
+        <div className="mt-8 flex justify-center items-center gap-2 flex-wrap">
+          {/* PREV */}
+          <button
+            disabled={!pagination.hasPrevPage}
+            onClick={() => fetchProducts(page - 1)}
+            className={`px-3 py-2 rounded-lg border text-sm
+              ${
+                pagination.hasPrevPage
+                  ? "hover:bg-gray-100"
+                  : "opacity-50 cursor-not-allowed"
+              }`}
+          >
+            Prev
+          </button>
+
+          {/* PAGE NUMBERS */}
+          {Array.from({ length: pagination.totalPages }).map((_, i) => {
+            const pageNumber = i + 1;
+            return (
+              <button
+                key={pageNumber}
+                onClick={() => fetchProducts(pageNumber)}
+                className={`px-4 py-2 rounded-lg border text-sm
+                  ${
+                    page === pageNumber
+                      ? "bg-dark-green text-white"
+                      : "hover:bg-gray-100"
+                  }`}
+              >
+                {pageNumber}
+              </button>
+            );
+          })}
+
+          {/* NEXT */}
+          <button
+            disabled={!pagination.hasNextPage}
+            onClick={() => fetchProducts(page + 1)}
+            className={`px-3 py-2 rounded-lg border text-sm
+              ${
+                pagination.hasNextPage
+                  ? "hover:bg-gray-100"
+                  : "opacity-50 cursor-not-allowed"
+              }`}
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* ================= MODAL ================= */}
       {selectedOrder && (
