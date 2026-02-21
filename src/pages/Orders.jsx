@@ -26,14 +26,22 @@ const Orders = () => {
     }
   };
 
-  
-
   if (loading) return <Preloder />;
 
   if (!orders.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-gray-500">
-        No orders found
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 px-4 text-center">
+        <i className="fa-solid fa-cart-shopping text-5xl text-gray-300" />
+        <h2 className="text-xl font-semibold">Your Order is empty</h2>
+        <p className="text-gray-500 text-sm">
+          Looks like you haven’t added anything yet
+        </p>
+        <button
+          onClick={() => navigate("/shop")}
+          className="mt-2 px-6 py-3 rounded-xl bg-dark-green text-white cursor-pointer hover:bg-dark-green/90 transition"
+        >
+          Continue Shopping
+        </button>
       </div>
     );
   }
