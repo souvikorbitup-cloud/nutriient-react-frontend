@@ -1,9 +1,10 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { normalizeDecimal } from "../Utils/helpers";
+import Preloder from "../sections/Preloder";
 
 const Cart = () => {
-  const { items, updateQuantity, removeItem } = useCart();
+  const { items, updateQuantity, removeItem, loading } = useCart();
   const navigate = useNavigate();
 
   /* ================= CALCULATIONS ================= */
@@ -32,6 +33,8 @@ const Cart = () => {
   const hasOutOfStockItem = items.some(
     (i) => i.product?.isOutOfStock || i.product?.stock === 0,
   );
+
+  if (loading) return <Preloder />;
 
   /* ================= EMPTY CART ================= */
 
