@@ -14,8 +14,24 @@ const OrderList = () => {
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
+  const [statusFilter, setStatusFilter] = useState("ALL");
 
   const location = useLocation();
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "PENDING":
+        return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      case "SHIPPED":
+        return "bg-blue-100 text-blue-700 border-blue-300";
+      case "DELIVERED":
+        return "bg-green-100 text-green-700 border-green-300";
+      case "CANCELLED":
+        return "bg-red-100 text-red-700 border-red-300";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-300";
+    }
+  };
 
   /* ================= Fetch Orders ================= */
   const fetchOrders = async (pageNumber = 1) => {
@@ -67,13 +83,33 @@ const OrderList = () => {
   const formatPrice = (price) =>
     Number(price?.$numberDecimal || price).toFixed(2);
 
+  const filteredOrders =
+    statusFilter === "ALL"
+      ? orders
+      : orders.filter((order) => order.deliveryState === statusFilter);
+
   if (loading) return <AdminLoading />;
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
       {/* ================= HEADER ================= */}
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-gray-800">All Orders</h2>
+        <h2 className="text-lg font-semibold text-gray-800">Orders</h2>
+        <div className="flex items-center gap-3">
+          <label className="text-sm text-gray-600 capitalize">Filter:</label>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="border px-3 py-2 rounded border-gray-200 text-sm"
+          >
+            <option value="ALL">All</option>
+            {DELIVERY_STATES.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -89,63 +125,81 @@ const OrderList = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr
-                key={order._id}
-                className="border-b border-gray-200 text-sm hover:bg-gray-50"
-              >
-                <td className="py-3 px-2 border-x border-gray-200 text-center">
-                  {order._id}
-                </td>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
+                <tr
+                  key={order._id}
+                  className="border-b border-gray-200 text-sm hover:bg-gray-50"
+                >
+                  <td className="py-3 px-2 border-x border-gray-200 text-center">
+                    {order._id}
+                  </td>
 
-                <td className="py-3 px-2 border-x border-gray-200 text-center">
-                  {order.user?.fullName}
-                  <br />
-                  <span className="text-xs text-gray-500">
-                    {order.user?.email}
-                  </span>
-                </td>
+                  <td className="py-3 px-2 border-x border-gray-200 text-center">
+                    {order.user?.fullName}
+                    <br />
+                    <span className="text-xs text-gray-500">
+                      {order.user?.email}
+                    </span>
+                  </td>
 
-                <td className="py-3 px-2 border-x border-gray-200 text-center">
-                  {order.user?.mobile}
-                </td>
+                  <td className="py-3 px-2 border-x border-gray-200 text-center">
+                    {order.user?.mobile}
+                  </td>
 
-                <td className="py-3 px-2 border-x border-gray-200 text-center">
-                  ₹{formatPrice(order.totalPrice)}
-                </td>
+                  <td className="py-3 px-2 border-x border-gray-200 text-center">
+                    ₹{formatPrice(order.totalPrice)}
+                  </td>
 
-                <td className="py-3 px-2 border-x border-gray-200 text-center">
-                  <select
-                    value={order.deliveryState}
-                    disabled={updatingId === order._id}
-                    onChange={(e) =>
-                      handleStatusChange(order._id, e.target.value)
-                    }
-                    className="border px-2 py-1 rounded border-gray-200"
-                  >
-                    {DELIVERY_STATES.map((state) => (
-                      <option key={state}>{state}</option>
-                    ))}
-                  </select>
-                </td>
+                  <td className="py-3 px-2 border-x border-gray-200 text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <span
+                        className={`px-3 py-1 text-xs font-medium rounded-full border ${getStatusColor(
+                          order.deliveryState,
+                        )}`}
+                      >
+                        {order.deliveryState}
+                      </span>
 
-                <td className="py-3 px-2 border-x border-gray-200 text-center flex-center gap-2">
-                  <button
-                    onClick={() => setSelectedOrder(order)}
-                    className="bg-dark-green text-white px-3 py-1 rounded hover:bg-dark-green/90 cursor-pointer"
-                    title="View More"
-                  >
-                    <i className="fa-solid fa-bars"></i>
-                  </button>
-                  <button
-                    className="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-700/90 cursor-pointer"
-                    title="Edit"
-                  >
-                    <i className="fa-regular fa-pen-to-square"></i>
-                  </button>
+                      <select
+                        value={order.deliveryState}
+                        disabled={updatingId === order._id}
+                        onChange={(e) =>
+                          handleStatusChange(order._id, e.target.value)
+                        }
+                        className="border px-2 py-1 rounded border-gray-200 text-xs"
+                      >
+                        {DELIVERY_STATES.map((state) => (
+                          <option key={state}>{state}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </td>
+
+                  <td className="py-3 px-2 border-x border-gray-200 text-center flex-center gap-2">
+                    <button
+                      onClick={() => setSelectedOrder(order)}
+                      className="bg-dark-green text-white px-3 py-1 rounded hover:bg-dark-green/90 cursor-pointer"
+                      title="View More"
+                    >
+                      <i className="fa-solid fa-bars"></i>
+                    </button>
+                    <button
+                      className="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-700/90 cursor-pointer"
+                      title="Edit"
+                    >
+                      <i className="fa-regular fa-pen-to-square"></i>
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={7} className="py-6 text-center text-gray-500">
+                  No orders found.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
