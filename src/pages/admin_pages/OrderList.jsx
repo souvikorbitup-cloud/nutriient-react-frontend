@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchAllOrdersApi, updateDeliveryStateApi } from "../../api/order";
-import { showError, showSuccess } from "../../utils/toast";
+import { showError, showSuccess } from "../../Utils/toast";
 import AdminLoading from "./AdminLoading";
 
 const DELIVERY_STATES = ["PENDING", "SHIPPED", "DELIVERED", "CANCELLED"];
