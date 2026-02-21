@@ -47,7 +47,7 @@ const Orders = () => {
   }
 
   return (
-    <section className="app-container mx-auto px-4 py-20 pt-32">
+    <section className="app-container mx-auto px-4 py-20 pt-32 min-h-[70vh]">
       <h1 className="text-2xl font-bold mb-6">My Orders</h1>
 
       <div className="space-y-4">
