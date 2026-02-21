@@ -6,7 +6,7 @@ import FAQSection from "../components/FAQSection";
 import { useEffect } from "react";
 import { useState } from "react";
 import { showError } from "../Utils/toast.js";
-import { getUserSession, getReport as fetchReport } from "../api/quiz";
+import { getUserSession, getReport } from "../api/quiz";
 import { useNavigate } from "react-router-dom";
 import {
   balancedRecommendations,
@@ -24,12 +24,13 @@ const Recommendation = () => {
   const [report, setReport] = useState({});
   useEffect(() => {
     setLoading(true);
-    const getReport = async () => {
+    const getQuizReport = async () => {
       try {
         const resCompleted = await getUserSession();
+        
         const session = resCompleted?.data?.data;
-        if (!session || !session.isCompleted) navigate("/quiz");
-        const data = await fetchReport(session?.sessionId);
+        if (!session || !session.isCompleted) return navigate("/quiz");
+        const data = await getReport(session?.sessionId);
         const getData = data?.data?.data;
         if (getData?.healthAssessment > 80) {
           getData.healthAssessmentTextColor = "text-green-500";
@@ -49,7 +50,7 @@ const Recommendation = () => {
         setLoading(false);
       }
     };
-    getReport();
+    getQuizReport();
   }, []);
 
   if (loading) return <Preloder />;
