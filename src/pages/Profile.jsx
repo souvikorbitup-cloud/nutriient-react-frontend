@@ -20,6 +20,7 @@ const Profile = () => {
   const [form, setForm] = useState({
     fullName: "",
     email: "",
+    mobile: "",
     altMobile: "",
     age: "",
     gender: "unset",
@@ -40,6 +41,7 @@ const Profile = () => {
       setForm({
         fullName: user.fullName || "",
         email: user.email || "",
+        mobile: user.mobile || "",
         altMobile: user.altMobile || "",
         age: user.age || "",
         gender: user.gender || "unset",
@@ -179,6 +181,12 @@ const Profile = () => {
             value={form.email}
             onChange={handleChange}
             disabled={!editing}
+          />
+          <ProfileInput
+            label="Mobile Number"
+            name="mobile"
+            value={form.mobile}
+            disabled
           />
           <ProfileInput
             label="Alternate Mobile"
