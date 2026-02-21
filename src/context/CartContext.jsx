@@ -129,14 +129,19 @@ export const CartProvider = ({ children }) => {
     const guestCart = getGuestCart();
     if (!guestCart.length) return;
 
-    const payload = guestCart.map((item) => ({
-      productId: item.productId,
-      quantity: item.quantity,
-    }));
+    const payload = guestCart.map((item) => {
+      const stock = item.product?.stock ?? Infinity;
+
+      return {
+        productId: item.productId,
+        quantity: Math.min(item.quantity, stock), // Ensure quantity does not exceed stock
+      };
+    });
 
     await syncCartApi(payload);
     clearGuestCart();
-    loadUserCart();
+
+    await loadUserCart(); // reload once
   };
 
   /* ---------------- REMOVE CART ---------------- */
@@ -149,7 +154,11 @@ export const CartProvider = ({ children }) => {
   /* ---------------- AUTO SYNC ---------------- */
 
   useEffect(() => {
-    if (user) syncGuestCart();
+    const guestCart = getGuestCart();
+
+    if (user && guestCart.length) {
+      syncGuestCart();
+    }
     // eslint-disable-next-line
   }, [user]);
 

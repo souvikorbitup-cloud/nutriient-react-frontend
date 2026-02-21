@@ -11,7 +11,7 @@ import { updateUser } from "../api/user-auth";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { items, syncGuestCart, clearCart } = useCart();
+  const { items, clearCart } = useCart();
   const { user, signUp, signIn, refresh } = useAuth();
 
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ const Checkout = () => {
     fullName: "",
     email: "",
     mobile: "",
+    confirmMobile: "",
     altMobile: "",
     landmark: "",
     city: "",
@@ -42,7 +43,7 @@ const Checkout = () => {
     }
 
     if (form.altMobile && !/^\d{10}$/.test(form.altMobile)) {
-      showError("Enter a valid 10-digit mobile number");
+      showError("Enter a valid 10-digit alternate mobile number");
       return false;
     }
 
@@ -61,12 +62,12 @@ const Checkout = () => {
       return false;
     }
 
-    if (form.zipCode && !/^\d{6}$/.test(form.zipCode)) {
+    if (!form.zipCode || !/^\d{6}$/.test(form.zipCode)) {
       showError("Enter a valid 6-digit PIN code");
       return false;
     }
 
-    if (form.state && !INDIAN_STATES_UT.includes(form.state)) {
+    if (!form.state || !INDIAN_STATES_UT.includes(form.state)) {
       showError("Please select a valid Indian state");
       return false;
     }
@@ -109,8 +110,83 @@ const Checkout = () => {
 
   /* ================= HANDLERS ================= */
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => {
+      const updated = { ...prev, [name]: value };
+
+      // Trigger auto auth when confirmMobile typed
+      if (
+        name === "confirmMobile" &&
+        form.mobile !== value &&
+        value.length === 10
+      ) {
+        showError("Mobile numbers do not match");
+      } else if (name === "confirmMobile" && value.length === 10) {
+        setTimeout(() => {
+          handleAutoAuth(value);
+        }, 300);
+      }
+
+      return updated;
+    });
+  };
+
+  const handleAutoAuth = async (confirmMobileValue) => {
+    if (user) return;
+
+    if (
+      !form.fullName ||
+      !form.mobile ||
+      !/^\d{10}$/.test(form.mobile) ||
+      form.mobile !== confirmMobileValue
+    ) {
+      return;
+    }
+
+    try {
+      let didAuth = false;
+
+      try {
+        // Try Login
+        await signIn({
+          mobile: form.mobile,
+        });
+        didAuth = true;
+      } catch (err) {
+        if (err?.response?.status === 404) {
+          // Register if not exists
+          await signUp({
+            fullName: form.fullName || "User",
+            email: form.email || undefined,
+            mobile: form.mobile,
+          });
+          didAuth = true;
+        } else {
+          throw err;
+        }
+      }
+
+      try {
+        await updateUser({
+          fullName: form.fullName,
+          email: form.email || undefined,
+          altMobile: form.altMobile || undefined,
+        });
+        await refresh(); // Refresh user data in context after update
+      } catch (error) {
+        // ignore
+      }
+
+      if (didAuth) {
+        localStorage.removeItem(BASIC_DRAFT_KEY);
+        localStorage.removeItem("quiz_sid");
+      }
+    } catch (err) {
+      console.error("Auto auth failed", err);
+    }
+  };
 
   /* ================= PLACE ORDER ================= */
 
@@ -124,53 +200,6 @@ const Checkout = () => {
 
     try {
       setLoading(true);
-
-      let didAuth = false;
-
-      /* ================= GUEST FLOW ================= */
-      if (!user) {
-        if (!form.fullName || !form.mobile) {
-          showError("Name and phone are required");
-          return;
-        }
-
-        try {
-          await signUp({
-            fullName: form.fullName,
-            email: form.email || undefined,
-            mobile: form.mobile,
-            altMobile: form.altMobile || undefined,
-          });
-
-          didAuth = true;
-        } catch (err) {
-          if (err?.response?.status === 409) {
-            await signIn({ mobile: form.mobile });
-
-            didAuth = true;
-          } else {
-            throw err;
-          }
-        }
-      }
-
-      /* ================= WAIT FOR CART SYNC ================= */
-      if (didAuth) {
-        await syncGuestCart(); // 🔥 THIS IS THE FIX
-        localStorage.removeItem(BASIC_DRAFT_KEY);
-        localStorage.removeItem("quiz_sid");
-      }
-
-      try {
-        await updateUser({
-          fullName: form.fullName,
-          email: form.email || undefined,
-          altMobile: form.altMobile || undefined,
-        });
-        await refresh(); // Refresh user data in context after update
-      } catch (error) {
-        // ignore
-      }
 
       /* ================= CREATE ORDER ================= */
       const payload = {
@@ -233,7 +262,7 @@ const Checkout = () => {
             />
 
             <Input
-              label="Email*"
+              label="Email"
               name="email"
               type="email"
               placeholder="you@example.com"
@@ -251,13 +280,23 @@ const Checkout = () => {
                 onChange={handleChange}
               />
 
-              <Input
-                label="Alternate Phone"
-                name="altMobile"
-                placeholder="Optional"
-                value={form.altMobile}
-                onChange={handleChange}
-              />
+              {!user ? (
+                <Input
+                  label="Confirm Phone*"
+                  name="confirmMobile"
+                  placeholder="Re-enter phone number"
+                  value={form.confirmMobile}
+                  onChange={handleChange}
+                />
+              ) : (
+                <Input
+                  label="Alternate Phone"
+                  name="altMobile"
+                  placeholder="Optional"
+                  value={form.altMobile}
+                  onChange={handleChange}
+                />
+              )}
             </div>
 
             <Input
@@ -278,7 +317,7 @@ const Checkout = () => {
               />
 
               <SelectInput
-                label="State"
+                label="State*"
                 name="state"
                 value={form.state}
                 onChange={handleChange}
@@ -297,7 +336,10 @@ const Checkout = () => {
 
           {/* CART ITEMS */}
           <div className="border rounded-xl p-6 space-y-4 border-gray-300">
-            <h2 className="font-semibold mb-4">Order Items</h2>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="font-semibold">Order Items</h2>
+              <button className="text-sm text-green-600 hover:underline cursor-pointer" onClick={() => navigate("/cart")}>Edit Cart</button>
+            </div>
 
             {items.map((item) => (
               <div
