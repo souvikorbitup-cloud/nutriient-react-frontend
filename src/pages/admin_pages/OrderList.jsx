@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllOrdersApi, updateDeliveryStateApi } from "../../api/order";
+import {
+  fetchAllOrdersApi,
+  updateDeliveryStateApi,
+  updateOrderByAdminApi,
+} from "../../api/order";
 import { showError, showSuccess } from "../../Utils/toast";
 import AdminLoading from "./AdminLoading";
 import { useLocation } from "react-router-dom";
+import { getAllProductsName } from "../../api/product";
 
 const DELIVERY_STATES = ["PENDING", "SHIPPED", "DELIVERED", "CANCELLED"];
 
@@ -15,6 +20,10 @@ const OrderList = () => {
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
   const [statusFilter, setStatusFilter] = useState("ALL");
+
+  const [editOrder, setEditOrder] = useState(null);
+  const [allProducts, setAllProducts] = useState([]);
+  const [saving, setSaving] = useState(false);
 
   const location = useLocation();
 
@@ -30,6 +39,103 @@ const OrderList = () => {
         return "bg-red-100 text-red-700 border-red-300";
       default:
         return "bg-gray-100 text-gray-700 border-gray-300";
+    }
+  };
+
+  const openEditModal = async (order) => {
+    try {
+      setEditOrder({
+        ...order,
+        orderDetails: order.orderDetails.map((item) => ({
+          product: item.product._id,
+          productData: item.product,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+      });
+
+      const res = await getAllProductsName();
+      setAllProducts(res.data.data || []);
+    } catch (err) {
+      showError("Failed to load products");
+    }
+  };
+
+  const handleQuantityChange = (productId, value) => {
+    const stock = getProductStock(productId);
+    const qty = Math.max(1, Math.min(Number(value), stock));
+
+    setEditOrder((prev) => ({
+      ...prev,
+      orderDetails: prev.orderDetails.map((item) =>
+        item.product === productId ? { ...item, quantity: qty } : item,
+      ),
+    }));
+  };
+
+  const handleAddProduct = (productId) => {
+    if (!productId) return;
+
+    const product = allProducts.find((p) => p._id === productId);
+    if (!product) return;
+
+    if (product.stock < 1) {
+      showError("Product is out of stock");
+      return;
+    }
+
+    if (editOrder.orderDetails.some((i) => i.product === productId)) {
+      showError("Product already exists in order");
+      return;
+    }
+
+    setEditOrder((prev) => ({
+      ...prev,
+      orderDetails: [
+        ...prev.orderDetails,
+        {
+          product: product._id,
+          productData: product,
+          quantity: 1,
+          price: product.sellPrice,
+        },
+      ],
+    }));
+  };
+
+  const handleRemoveProduct = (productId) => {
+    setEditOrder((prev) => ({
+      ...prev,
+      orderDetails: prev.orderDetails.filter(
+        (item) => item.product !== productId,
+      ),
+    }));
+  };
+
+  const handleSaveOrder = async () => {
+    try {
+      setSaving(true);
+
+      const payload = {
+        shippingAddress: editOrder.shippingAddress,
+        orderDetails: editOrder.orderDetails.map((item) => ({
+          product: item.product,
+          quantity: item.quantity,
+        })),
+      };
+
+      await updateOrderByAdminApi(editOrder._id, payload);
+
+      showSuccess("Order updated successfully");
+
+      setEditOrder(null);
+      fetchOrders(page);
+    } catch (err) {
+      console.log(err);
+
+      showError("Failed to update order");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -82,6 +188,11 @@ const OrderList = () => {
   /* ================= Helpers ================= */
   const formatPrice = (price) =>
     Number(price?.$numberDecimal || price).toFixed(2);
+
+  const getProductStock = (productId) => {
+    const product = allProducts.find((p) => p._id === productId);
+    return product?.stock || 0;
+  };
 
   const filteredOrders =
     statusFilter === "ALL"
@@ -185,7 +296,9 @@ const OrderList = () => {
                       <i className="fa-solid fa-bars"></i>
                     </button>
                     <button
-                      className="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-700/90 cursor-pointer"
+                      disabled={order.deliveryState !== "PENDING"}
+                      onClick={() => openEditModal(order)}
+                      className="bg-blue-700 text-white px-3 py-1 rounded hover:bg-blue-700/90 cursor-pointer disabled:bg-gray-700 disabled:hover:cursor-not-allowed"
                       title="Edit"
                     >
                       <i className="fa-regular fa-pen-to-square"></i>
@@ -325,6 +438,167 @@ const OrderList = () => {
             <h3 className="text-right text-lg font-bold">
               Total: ₹{formatPrice(selectedOrder.totalPrice)}
             </h3>
+          </div>
+        </div>
+      )}
+
+      {editOrder && (
+        <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
+          <div className="bg-white w-[900px] max-h-[90vh] overflow-y-auto rounded-lg p-6 relative">
+            <button
+              onClick={() => setEditOrder(null)}
+              className="absolute top-3 right-4 text-red-500 font-bold cursor-pointer"
+            >
+              ✕
+            </button>
+
+            <h3 className="text-xl font-bold mb-6">Edit Order</h3>
+
+            {/* ===== Shipping ===== */}
+            <h4 className="font-semibold mb-2">Shipping Address</h4>
+
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <input
+                className="border p-2 rounded border-gray-200"
+                value={editOrder.shippingAddress.landmark}
+                onChange={(e) =>
+                  setEditOrder({
+                    ...editOrder,
+                    shippingAddress: {
+                      ...editOrder.shippingAddress,
+                      landmark: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Landmark"
+              />
+
+              <input
+                className="border p-2 rounded border-gray-200"
+                value={editOrder.shippingAddress.city}
+                onChange={(e) =>
+                  setEditOrder({
+                    ...editOrder,
+                    shippingAddress: {
+                      ...editOrder.shippingAddress,
+                      city: e.target.value,
+                    },
+                  })
+                }
+                placeholder="City"
+              />
+
+              <input
+                className="border p-2 rounded border-gray-200"
+                value={editOrder.shippingAddress.state}
+                onChange={(e) =>
+                  setEditOrder({
+                    ...editOrder,
+                    shippingAddress: {
+                      ...editOrder.shippingAddress,
+                      state: e.target.value,
+                    },
+                  })
+                }
+                placeholder="State"
+              />
+
+              <input
+                className="border p-2 rounded border-gray-200"
+                value={editOrder.shippingAddress.zipCode}
+                onChange={(e) =>
+                  setEditOrder({
+                    ...editOrder,
+                    shippingAddress: {
+                      ...editOrder.shippingAddress,
+                      zipCode: e.target.value,
+                    },
+                  })
+                }
+                placeholder="Zip Code"
+              />
+            </div>
+
+            {/* ===== Products ===== */}
+            <h4 className="font-semibold mb-3">Products</h4>
+
+            {editOrder.orderDetails.map((item) => {
+              const stock = getProductStock(item.product);
+
+              return (
+                <div
+                  key={item.product}
+                  className="flex items-center gap-4 border p-3 mb-3 rounded border-gray-200"
+                >
+                  <img
+                    src={item.productData.featureImage}
+                    alt=""
+                    className="w-14 h-14 object-cover rounded"
+                  />
+
+                  <div className="flex-1">
+                    <p className="font-medium">
+                      {item.productData.genericName}
+                    </p>
+                    <p className="text-xs text-gray-500">Stock: {stock}</p>
+                  </div>
+
+                  <input
+                    type="number"
+                    min="1"
+                    max={stock}
+                    value={item.quantity}
+                    onChange={(e) =>
+                      handleQuantityChange(item.product, e.target.value)
+                    }
+                    className="border px-2 py-1 w-20 rounded border-gray-200"
+                  />
+
+                  <button
+                    onClick={() => handleRemoveProduct(item.product)}
+                    className="bg-red-500 text-white px-3 py-2 rounded hover:bg-red-600 cursor-pointer"
+                  >
+                    <i className="fa-regular fa-trash-can"></i>
+                  </button>
+                </div>
+              );
+            })}
+
+            {/* ===== Add Product ===== */}
+            <div className="mt-4">
+              <select
+                onChange={(e) => handleAddProduct(e.target.value)}
+                className="border px-3 py-2 rounded w-full border-gray-200"
+              >
+                <option value="">Add New Product</option>
+                {allProducts.map((product) => {
+                  const price =
+                    product.sellPrice?.$numberDecimal || product.sellPrice;
+
+                  return (
+                    <option
+                      key={product._id}
+                      value={product._id}
+                      disabled={product.stock === 0}
+                    >
+                      {product.genericName} - ₹{Number(price).toFixed(2)}
+                      (Stock: {product.stock})
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            {/* ===== Save Button ===== */}
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={handleSaveOrder}
+                disabled={saving}
+                className="bg-dark-green text-white px-6 py-2 rounded hover:bg-dark-green/90 cursor-pointer"
+              >
+                {saving ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
           </div>
         </div>
       )}

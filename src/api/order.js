@@ -24,3 +24,6 @@ export const fetchAllOrdersApi = (params = {}) => API.get("/", { params });
 
 export const updateDeliveryStateApi = (orderId, deliveryState) =>
   API.put(`/${orderId}/delivery-state`, { deliveryState });
+
+export const updateOrderByAdminApi = (orderId, data) =>
+  API.put(`/${orderId}`, data);
