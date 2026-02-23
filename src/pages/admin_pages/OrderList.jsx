@@ -8,6 +8,7 @@ import { showError, showSuccess } from "../../Utils/toast";
 import AdminLoading from "./AdminLoading";
 import { useLocation } from "react-router-dom";
 import { getAllProductsName } from "../../api/product";
+import { INDIAN_STATES_UT } from "../../variables";
 
 const DELIVERY_STATES = ["PENDING", "SHIPPED", "DELIVERED", "CANCELLED"];
 
@@ -488,8 +489,7 @@ const OrderList = () => {
                 placeholder="City"
               />
 
-              <input
-                className="border p-2 rounded border-gray-200"
+              <select
                 value={editOrder.shippingAddress.state}
                 onChange={(e) =>
                   setEditOrder({
@@ -500,8 +500,14 @@ const OrderList = () => {
                     },
                   })
                 }
-                placeholder="State"
-              />
+                className="border p-2 rounded border-gray-200"
+              >
+                {["", ...INDIAN_STATES_UT].map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt || "Select"}
+                  </option>
+                ))}
+              </select>
 
               <input
                 className="border p-2 rounded border-gray-200"
