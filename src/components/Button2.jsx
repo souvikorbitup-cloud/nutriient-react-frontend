@@ -1,13 +1,23 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Button2 = ({ text, url = "/pricing", scrollToSection, sectionRef }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (scrollToSection && sectionRef) {
+      scrollToSection(sectionRef);
+    } else if (url) {
+      navigate(url);
+    }
+  };
+
   return (
     <button
-      className="flex px-[20px] py-[12px]
-         justify-center items-center gap-[8px]
+      className="flex px-4 py-3 sm:px-5 sm:py-3
+         justify-center items-center gap-1.5 sm:gap-2
          rounded-[8px]
-         bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] hover:bg-[linear-gradient(270deg,#E7497B_0%,#717FF3_100%)] text-white uppercase cursor-pointer"
-      onClick={() => scrollToSection(sectionRef)}
+         bg-[linear-gradient(90deg,#E7497B_0%,#717FF3_100%)] hover:bg-[linear-gradient(270deg,#E7497B_0%,#717FF3_100%)] text-white uppercase cursor-pointer text-sm sm:text-base"
+      onClick={handleClick}
     >
       {text}{" "}
       <svg

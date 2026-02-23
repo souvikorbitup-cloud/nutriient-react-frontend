@@ -34,7 +34,7 @@ const Orders = () => {
         <i className="fa-solid fa-cart-shopping text-5xl text-gray-300" />
         <h2 className="text-xl font-semibold">Your Order is empty</h2>
         <p className="text-gray-500 text-sm">
-          Looks like you haven’t added anything yet
+          Looks like you haven’t ordered anything yet
         </p>
         <button
           onClick={() => navigate("/shop")}

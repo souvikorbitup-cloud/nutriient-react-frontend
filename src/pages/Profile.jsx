@@ -144,7 +144,7 @@ const Profile = () => {
       <div className="flex flex-col md:flex-row md:justify-between gap-4 mb-6 items-center">
         <div className="text-center sm:text-left">
           <h1 className="text-2xl font-bold text-t-black">My Profile</h1>
-          <p className="text-t-black-light">
+          <p className="text-t-black-light capitalize">
             Manage your personal & health information
           </p>
         </div>
