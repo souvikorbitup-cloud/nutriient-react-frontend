@@ -7,7 +7,7 @@ const QuizList = () => {
   const [reports, setReports] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit] = useState(1);
+  const [limit] = useState(10);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const location = useLocation();
