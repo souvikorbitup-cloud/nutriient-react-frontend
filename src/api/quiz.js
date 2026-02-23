@@ -18,3 +18,7 @@ export const getUserSession = () => API.get("/user/session");
 export const deleteSession = (id) => API.delete(`/session/${id}`);
 
 export const getReport = (id) => API.get(`/report/${id}`);
+
+// Admin only
+export const getAllQuizReports = (page = 1, limit = 10) =>
+  API.get(`/admin/reports?page=${page}&limit=${limit}`);
