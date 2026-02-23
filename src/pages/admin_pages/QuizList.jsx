@@ -7,7 +7,7 @@ const QuizList = () => {
   const [reports, setReports] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [page, setPage] = useState(1);
-  const [limit] = useState(10);
+  const [limit] = useState(1);
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(null);
   const location = useLocation();
@@ -216,7 +216,7 @@ const QuizList = () => {
           {/* PREV */}
           <button
             disabled={!pagination.hasPrevPage}
-            onClick={() => fetchProducts(page - 1)}
+            onClick={() => fetchReports(page - 1)}
             className={`px-3 py-2 rounded-lg border text-sm
               ${
                 pagination.hasPrevPage
@@ -233,7 +233,7 @@ const QuizList = () => {
             return (
               <button
                 key={pageNumber}
-                onClick={() => fetchProducts(pageNumber)}
+                onClick={() => fetchReports(pageNumber)}
                 className={`px-4 py-2 rounded-lg border text-sm
                   ${
                     page === pageNumber
@@ -249,7 +249,7 @@ const QuizList = () => {
           {/* NEXT */}
           <button
             disabled={!pagination.hasNextPage}
-            onClick={() => fetchProducts(page + 1)}
+            onClick={() => fetchReports(page + 1)}
             className={`px-3 py-2 rounded-lg border text-sm
               ${
                 pagination.hasNextPage
