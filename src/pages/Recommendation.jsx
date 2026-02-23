@@ -313,7 +313,7 @@ const Recommendation = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-20 sm:gap-6 mx-auto mt-24">
             {/* Supplement 1 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between">
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
               <div className="flex items-center justify-center">
                 <img
                   src="/recomended/product-1.png"
@@ -332,7 +332,7 @@ const Recommendation = () => {
             </div>
 
             {/* Supplement 2 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between">
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
               <div className="flex items-center justify-center order-2 sm:order-1">
                 <img
                   src="/recomended/product-2.png"
@@ -351,7 +351,7 @@ const Recommendation = () => {
             </div>
 
             {/* Supplement 3 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between">
+            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
               <div className="flex items-center justify-center">
                 <img
                   src="/recomended/product-3.png"
