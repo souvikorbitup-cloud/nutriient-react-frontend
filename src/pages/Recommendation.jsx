@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { showError } from "../Utils/toast.js";
 import { getUserSession, getReport } from "../api/quiz";
+import { getProductsByGoal } from "../api/product";
 import { useNavigate } from "react-router-dom";
 import {
   balancedRecommendations,
@@ -20,6 +21,7 @@ const Recommendation = () => {
   useDocumentTitle("Nutriient - Recommendation");
   const sectionRef = useRef(null);
   const navigate = useNavigate();
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState({});
   useEffect(() => {
@@ -27,7 +29,7 @@ const Recommendation = () => {
     const getQuizReport = async () => {
       try {
         const resCompleted = await getUserSession();
-        
+
         const session = resCompleted?.data?.data;
         if (!session || !session.isCompleted) return navigate("/quiz");
         const data = await getReport(session?.sessionId);
@@ -52,6 +54,21 @@ const Recommendation = () => {
     };
     getQuizReport();
   }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        if (!report?.goal) return;
+        const res = await getProductsByGoal(report.goal);
+        setRecommendedProducts(res?.data?.data?.products || []);
+      } catch (error) {
+        showError("Failed to load recommended products");
+      }
+    };
+    
+    fetchProducts();
+  }, [report.goal]);
+  
 
   if (loading) return <Preloder />;
 
@@ -180,7 +197,7 @@ const Recommendation = () => {
         </div>
       </section>
 
-      <section className="pt-16 md:pt-24 bg-gradient-green z-10 relative">
+      <section className="pt-16 px-4 md:pt-24 bg-gradient-green z-10 relative">
         <h2 className="text-3xl md:text-4xl font-bold text-t-black text-center capitalize">
           Why this matters
         </h2>
@@ -286,16 +303,16 @@ const Recommendation = () => {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[380px] sm:h-[576px] sm:w-[584px] relative order-1 sm:order-2">
+            <div className="aspect-square relative order-1 sm:order-2">
               <img
                 src="/recomended/plane-img-1.png"
                 alt="img"
-                className="absolute bottom-0 left-0 z-10 w-[80%] "
+                className="absolute bottom-0 left-0 z-10 w-[85%] "
               />
               <img
                 src="/recomended/plane-img-back.png"
                 alt="img"
-                className="absolute top-0 right-0 z-0 w-[80%]"
+                className="absolute top-0 right-0 z-0 w-[85%]"
               />
             </div>
           </div>
@@ -311,63 +328,31 @@ const Recommendation = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-20 sm:gap-6 mx-auto mt-24">
-            {/* Supplement 1 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
-              <div className="flex items-center justify-center">
-                <img
-                  src="/recomended/product-1.png"
-                  alt="Probiotic"
-                  className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
-                />
-              </div>
-              <div className="w-[230px] sm:w-full">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
-                  Probiotic
-                </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
-                  Supports gut health and improves digestion
-                </p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 sm:gap-6 mx-auto mt-28">
+            {recommendedProducts.length > 0 && recommendedProducts.map((product, index) => (
+              <div
+                key={product._id}
+                className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0"
+              >
+                <div className="flex items-center justify-center">
+                  <img
+                    src={product?.featureImage}
+                    alt={product?.genericName}
+                    className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
+                  />
+                </div>
 
-            {/* Supplement 2 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
-              <div className="flex items-center justify-center order-2 sm:order-1">
-                <img
-                  src="/recomended/product-2.png"
-                  alt="Probiotic"
-                  className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
-                />
-              </div>
-              <div className="w-[230px] sm:w-full order-1 sm:order-2">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
-                  Probiotic
-                </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
-                  Supports gut health and improves digestion
-                </p>
-              </div>
-            </div>
+                <div className="w-[230px] sm:w-full">
+                  <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
+                    {product?.genericName}
+                  </h3>
 
-            {/* Supplement 3 */}
-            <div className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0">
-              <div className="flex items-center justify-center">
-                <img
-                  src="/recomended/product-3.png"
-                  alt="Probiotic"
-                  className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
-                />
+                  <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
+                    {product?.shortDescription}
+                  </p>
+                </div>
               </div>
-              <div className="w-[230px] sm:w-full">
-                <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
-                  Probiotic
-                </h3>
-                <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
-                  Supports gut health and improves digestion
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-[340px_1fr] gap-8 bg-white rounded-2xl p-5 sm:p-8 shadow-[0_0_12px_0_rgba(0,0,0,0.20)]">

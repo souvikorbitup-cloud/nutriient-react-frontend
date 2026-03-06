@@ -8,6 +8,7 @@ export const QuizContext = createContext();
 export const QuizProvider = ({ children }) => {
   const { user } = useAuth();
   const [completed, setCompleted] = useState(false);
+  const [currentGoal, setCurrentGoal] = useState(null);
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -23,6 +24,7 @@ export const QuizProvider = ({ children }) => {
             sid = res.data.data.sessionId;
             if (res.data.data.isCompleted) {
               setCompleted(true);
+              setCurrentGoal(res.data.data.selectedGoal);
             }
           } else {
             setCompleted(false);
@@ -64,7 +66,7 @@ export const QuizProvider = ({ children }) => {
 
   return (
     <QuizContext.Provider
-      value={{ session, updateSession, loading, completed }}
+      value={{ session, updateSession, loading, completed, currentGoal }}
     >
       {children}
     </QuizContext.Provider>

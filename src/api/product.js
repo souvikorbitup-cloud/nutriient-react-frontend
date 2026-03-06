@@ -19,6 +19,10 @@ export const getProductById = (productId) => API.get(`/${productId}`);
 export const getProductsByCategoryName = (categoryName) =>
   API.get(`/category/${categoryName}`);
 
+// Get recommended products by goal
+export const getProductsByGoal = (goal) =>
+  API.get(`/recommendation/${encodeURIComponent(goal)}`);
+
 /* ================= ADMIN / MANAGER ================= */
 
 // Create product (multipart/form-data)
