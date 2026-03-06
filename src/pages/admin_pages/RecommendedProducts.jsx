@@ -23,7 +23,7 @@ const RecommendedProducts = () => {
 
       const [goalRes, productsRes] = await Promise.all([
         getProductsGroupedByGoal(),
-        getAllProductsName(),
+        getAllProductsName(true),
       ]);
 
       setGoalProducts(goalRes.data.data || {});

@@ -10,7 +10,10 @@ const API = axios.create({
 
 // Get all products
 export const getAllProducts = (params = {}) => API.get("/", { params });
-export const getAllProductsName = () => API.get("/all");
+export const getAllProductsName = (recommended = false) =>
+  API.get("/all", {
+    params: { recommended },
+  });
 
 // Get product by ID
 export const getProductById = (productId) => API.get(`/${productId}`);
