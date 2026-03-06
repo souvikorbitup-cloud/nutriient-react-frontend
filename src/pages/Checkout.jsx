@@ -29,6 +29,32 @@ const Checkout = () => {
     zipCode: "",
   });
 
+  const [recommendationData, setRecommendationData] = useState(null);
+  const [noOfMonths, setNoOfMonths] = useState(1);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("recommendationCheckout");
+    if (stored) {
+      const data = JSON.parse(stored);
+      switch (data?.plan?.duration) {
+        case "One Month Plan":
+          setNoOfMonths(1);
+          break;
+        case "Three Months Subscription":
+          setNoOfMonths(3);
+          break;
+        case "Six Months Subscription":
+          setNoOfMonths(6);
+          break;
+        case "Twelve Months Subscription":
+          setNoOfMonths(12);
+          break;
+      }
+
+      setRecommendationData(data);
+    }
+  }, []);
+
   /* ---------------- VALIDATION ---------------- */
 
   const validateForm = () => {
@@ -225,6 +251,12 @@ const Checkout = () => {
     }
   };
 
+  const handleRecommendationPlaceOrder = async () => {
+    if (!validateForm()) return;
+
+    console.log("Recommendation Order Placed");
+  };
+
   /* ================= EMPTY CART ================= */
 
   if (loading) return <Preloder />;
@@ -334,66 +366,157 @@ const Checkout = () => {
             </div>
           </div>
 
-          {/* CART ITEMS */}
-          <div className="border rounded-xl p-6 space-y-4 border-gray-300">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="font-semibold">Order Items</h2>
-              <button className="text-sm text-green-600 hover:underline cursor-pointer" onClick={() => navigate("/cart")}>Edit Cart</button>
-            </div>
+          {recommendationData ? (
+            <div className="border rounded-xl p-6 space-y-4 border-gray-300">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-semibold">
+                  Chosen Plan:{" "}
+                  <span className="text-green-600">
+                    {recommendationData.plan.name}
+                  </span>
+                </h2>
+                <p className="text-green-600">
+                  {recommendationData.plan.duration}
+                </p>
+              </div>
 
-            {items.map((item) => (
-              <div
-                key={item.productId || item.product._id}
-                className="flex gap-4 items-center"
-              >
+              {recommendationData.products.map((product) => (
+                <div
+                  key={product.productId || product._id}
+                  className="flex gap-4 items-center"
+                >
+                  <img
+                    src={product.featureImage}
+                    className="w-16 h-16 object-cover rounded"
+                  />
+
+                  <div className="flex-1">
+                    <p className="font-medium">{product.genericName}</p>
+                  </div>
+                </div>
+              ))}
+              <div className="flex gap-4 items-center">
                 <img
-                  src={item.product.featureImage}
+                  src={recommendationData.chart.image}
                   className="w-16 h-16 object-cover rounded"
                 />
 
                 <div className="flex-1">
-                  <p className="font-medium">{item.product.genericName}</p>
-                  <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
+                  <p className="font-medium">Diet Chart</p>
                 </div>
-
-                <p className="font-semibold">
-                  ₹{normalizeDecimal(item.product.sellPrice) * item.quantity}
-                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="border rounded-xl p-6 space-y-4 border-gray-300">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="font-semibold">Order Items</h2>
+                <button
+                  className="text-sm text-green-600 hover:underline cursor-pointer"
+                  onClick={() => navigate("/cart")}
+                >
+                  Edit Cart
+                </button>
+              </div>
+
+              {items.map((item) => (
+                <div
+                  key={item.productId || item.product._id}
+                  className="flex gap-4 items-center"
+                >
+                  <img
+                    src={item.product.featureImage}
+                    className="w-16 h-16 object-cover rounded"
+                  />
+
+                  <div className="flex-1">
+                    <p className="font-medium">{item.product.genericName}</p>
+                    <p className="text-sm text-gray-500">
+                      Qty: {item.quantity}
+                    </p>
+                  </div>
+
+                  <p className="font-semibold">
+                    ₹{normalizeDecimal(item.product.sellPrice) * item.quantity}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+          {/* CART ITEMS */}
         </div>
 
         {/* ================= RIGHT ================= */}
         <div className="border rounded-xl p-6 h-fit sticky top-28 border-gray-300">
           <h2 className="font-semibold mb-4">Price Summary</h2>
 
-          <div className="space-y-3 text-sm">
-            <div className="flex justify-between">
-              <span>Total MRP</span>
-              <span>₹{totals.totalMrp}</span>
-            </div>
+          {recommendationData ? (
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span>Total MRP</span>
+                <span>
+                  ₹{recommendationData.plan.originalPrice} x {noOfMonths} = ₹
+                  {recommendationData.plan.originalPrice * noOfMonths}
+                </span>
+              </div>
 
-            <div className="flex justify-between text-green-600">
-              <span>Discount</span>
-              <span>-₹{discount}</span>
-            </div>
+              <div className="flex justify-between text-green-600">
+                <span>Discount</span>
+                <span>
+                  -₹
+                  {recommendationData.plan.originalPrice * noOfMonths -
+                    recommendationData.plan.price * noOfMonths}
+                </span>
+              </div>
 
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>₹{totals.subTotal}</span>
-            </div>
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>₹{recommendationData.plan.price * noOfMonths}</span>
+              </div>
 
-            <div className="flex justify-between">
-              <span>Delivery</span>
-              <span className="text-green-600">FREE</span>
-            </div>
+              <div className="flex justify-between">
+                <span>Delivery</span>
+                <span className="text-green-600">
+                  {deliveryCharge > 0 ? deliveryCharge : "FREE"}
+                </span>
+              </div>
 
-            <div className="border-t pt-3 flex justify-between font-semibold">
-              <span>Total Payable</span>
-              <span>₹{finalAmount}</span>
+              <div className="border-t pt-3 flex justify-between font-semibold">
+                <span>Total Payable</span>
+                <span>
+                  ₹{recommendationData.plan.price * noOfMonths + deliveryCharge}
+                </span>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="space-y-3 text-sm">
+              <div className="flex justify-between">
+                <span>Total MRP</span>
+                <span>₹{totals.totalMrp}</span>
+              </div>
+
+              <div className="flex justify-between text-green-600">
+                <span>Discount</span>
+                <span>-₹{discount}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Subtotal</span>
+                <span>₹{totals.subTotal}</span>
+              </div>
+
+              <div className="flex justify-between">
+                <span>Delivery</span>
+                <span className="text-green-600">
+                  {deliveryCharge > 0 ? deliveryCharge : "FREE"}
+                </span>
+              </div>
+
+              <div className="border-t pt-3 flex justify-between font-semibold">
+                <span>Total Payable</span>
+                <span>₹{finalAmount}</span>
+              </div>
+            </div>
+          )}
 
           {/* PAYMENT MODE */}
           <div className="mt-6">
@@ -409,7 +532,11 @@ const Checkout = () => {
           </div>
 
           <button
-            onClick={handlePlaceOrder}
+            onClick={
+              recommendationData
+                ? handleRecommendationPlaceOrder
+                : handlePlaceOrder
+            }
             disabled={loading}
             className="mt-6 w-full py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 disabled:bg-gray-400 cursor-pointer"
           >

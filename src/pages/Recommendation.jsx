@@ -84,6 +84,22 @@ const Recommendation = () => {
     fetchPlans();
   }, []);
 
+  const handleSelectPlan = (plan) => {
+    const checkoutData = {
+      type: "QUIZ",
+      plan,
+      products: recommendedProducts,
+      chart: report?.chartMaintenanceCalories,
+    };
+
+    sessionStorage.setItem(
+      "recommendationCheckout",
+      JSON.stringify(checkoutData),
+    );
+
+    navigate("/checkout");
+  };
+
   if (loading) return <Preloder />;
 
   const scrollToSection = (ref) => {
@@ -488,6 +504,7 @@ const Recommendation = () => {
                   </p>
 
                   <button
+                    onClick={() => handleSelectPlan(plan)}
                     className={`w-full py-2 px-4 rounded-md font-semibold transition duration-200 mb-1 cursor-pointer capitalize
         ${plan.recommended ? "bg-dark-green text-white hover:bg-dark-green/80" : "bg-gray-900 text-white hover:bg-gray-700"}`}
                   >
