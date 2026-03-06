@@ -87,7 +87,7 @@ const RecommendedProducts = () => {
   if (loading) return <AdminLoading />;
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
+    <div className="bg-white">
       <h2 className="text-lg font-semibold text-gray-800 mb-6">
         Recommended Products
       </h2>
