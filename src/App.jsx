@@ -54,6 +54,7 @@ import ProductDetails from "./pages/ProductDetails";
 import { CartProvider } from "./context/CartContext";
 import Checkout from "./pages/Checkout";
 import OrderDetails from "./pages/OrderDetails";
+import RecommendedProducts from "./pages/admin_pages/RecommendedProducts";
 
 const App = () => {
   return (
@@ -105,7 +106,10 @@ const App = () => {
                         element={<HealthRepoat />}
                       />
                       <Route path="/my-orders" element={<Orders />} />
-                      <Route path="/order/:orderId" element={<OrderDetails />} />
+                      <Route
+                        path="/order/:orderId"
+                        element={<OrderDetails />}
+                      />
                       <Route path="/profile" element={<Profile />} />
                       <Route element={<QuizCompleted />}>
                         <Route path="/recommend" element={<Recommendation />} />
@@ -142,6 +146,10 @@ const App = () => {
 
                         {/* Add Product */}
                         <Route path="add-product" element={<AddProduct />} />
+                        <Route
+                          path="recommended-products"
+                          element={<RecommendedProducts />}
+                        />
 
                         {/* Categories */}
                         <Route path="categories" element={<Categories />} />

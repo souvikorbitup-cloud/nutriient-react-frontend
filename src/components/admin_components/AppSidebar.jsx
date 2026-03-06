@@ -32,6 +32,11 @@ const navItems = [
   },
   {
     icon: <OrdersIcon />,
+    name: "Rec-Products",
+    path: "/admin/recommended-products",
+  },
+  {
+    icon: <OrdersIcon />,
     name: "Orders",
     path: "/admin/orders",
   },

@@ -39,3 +39,10 @@ export const updateProduct = (productId, data) =>
 
 // Delete product
 export const deleteProduct = (productId) => API.delete(`/${productId}`);
+
+// Get products grouped by goals
+export const getProductsGroupedByGoal = () => API.get("/goals/recommendations");
+
+// Add or remove product from goal
+export const updateProductGoal = (productId, data) =>
+  API.patch(`/${productId}/goal`, data);
