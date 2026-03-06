@@ -55,6 +55,9 @@ import { CartProvider } from "./context/CartContext";
 import Checkout from "./pages/Checkout";
 import OrderDetails from "./pages/OrderDetails";
 import RecommendedProducts from "./pages/admin_pages/RecommendedProducts";
+import PricingPlans from "./pages/admin_pages/PricingPlans";
+import AddPricingPlan from "./pages/admin_pages/AddPricingPlan";
+import UpdatePricing from "./pages/admin_pages/UpdatePricing";
 
 const App = () => {
   return (
@@ -156,6 +159,17 @@ const App = () => {
                         <Route
                           path="add-category"
                           element={<AddCategories />}
+                        />
+
+                        {/* Pricing */}
+                        <Route path="pricing" element={<PricingPlans />} />
+                        <Route
+                          path="add-pricing"
+                          element={<AddPricingPlan />}
+                        />
+                        <Route
+                          path="pricing/:planId/edit"
+                          element={<UpdatePricing />}
                         />
 
                         {/* Admin */}

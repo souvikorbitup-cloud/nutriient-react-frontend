@@ -13,6 +13,9 @@ import {
   ChartIcon,
   UsersIcon,
   OrdersIcon,
+  PriceIcon,
+  RecommendedIcon,
+  QuizIcon,
 } from "../../icons";
 import { useSidebar } from "../../context/SidebarContext";
 
@@ -31,7 +34,7 @@ const navItems = [
     ],
   },
   {
-    icon: <OrdersIcon />,
+    icon: <RecommendedIcon />,
     name: "Rec-Products",
     path: "/admin/recommended-products",
   },
@@ -39,6 +42,14 @@ const navItems = [
     icon: <OrdersIcon />,
     name: "Orders",
     path: "/admin/orders",
+  },
+  {
+    icon: <PriceIcon />,
+    name: "Pricing",
+    subItems: [
+      { name: "Pricing List", path: "/admin/pricing" },
+      { name: "Add Pricing", path: "/admin/add-pricing" },
+    ],
   },
   {
     icon: <CategoryIcon />,
@@ -62,7 +73,7 @@ const navItems = [
     path: "/admin/customers",
   },
   {
-    icon: <ListIcon />,
+    icon: <QuizIcon />,
     name: "Quiz List",
     path: "/admin/quiz-list",
   },

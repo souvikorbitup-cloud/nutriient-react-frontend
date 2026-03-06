@@ -16,6 +16,9 @@ import OrdersIcon from "./orders.svg?react";
 import Cart from "./cart.svg?react";
 import Order from "./order.svg?react";
 import HealthReport from "./health-report.svg?react";
+import PriceIcon from "./price-icon.svg?react";
+import RecommendedIcon from "./recommended-icon.svg?react";
+import QuizIcon from "./quiz.svg?react";
 
 export {
   GridIcon,
@@ -34,4 +37,7 @@ export {
   Cart,
   Order,
   HealthReport,
+  PriceIcon,
+  RecommendedIcon,
+  QuizIcon,
 };
