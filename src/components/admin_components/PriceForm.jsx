@@ -105,10 +105,10 @@ const PriceForm = ({
           className="w-full rounded-lg border p-2"
         >
           <option value="">Select Duration</option>
-          <option value="One Month">One Month</option>
-          <option value="Three Months">Three Months</option>
-          <option value="Six Months">Six Months</option>
-          <option value="Twelve Months">Twelve Months</option>
+          <option value="One Month Plan">One Month Plan</option>
+          <option value="Three Months Subscription">Three Months Subscription</option>
+          <option value="Six Months Subscription">Six Months Subscription</option>
+          <option value="Twelve Months Subscription">Twelve Months Subscription</option>
         </select>
       </div>
 

@@ -16,12 +16,14 @@ import {
 } from "../variables";
 import Preloder from "../sections/Preloder";
 import useDocumentTitle from "../hooks/useDocumentTitle.js";
+import { getActivePricingPlans } from "../api/pricingPlan";
 
 const Recommendation = () => {
   useDocumentTitle("Nutriient - Recommendation");
   const sectionRef = useRef(null);
   const navigate = useNavigate();
   const [recommendedProducts, setRecommendedProducts] = useState([]);
+  const [pricingPlans, setPricingPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState({});
   useEffect(() => {
@@ -65,10 +67,22 @@ const Recommendation = () => {
         showError("Failed to load recommended products");
       }
     };
-    
+
     fetchProducts();
   }, [report.goal]);
-  
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        const res = await getActivePricingPlans();
+        setPricingPlans((res?.data?.data || []).reverse());
+      } catch (error) {
+        showError("Failed to load pricing plans");
+      }
+    };
+
+    fetchPlans();
+  }, []);
 
   if (loading) return <Preloder />;
 
@@ -329,30 +343,31 @@ const Recommendation = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-20 sm:gap-6 mx-auto mt-28">
-            {recommendedProducts.length > 0 && recommendedProducts.map((product, index) => (
-              <div
-                key={product._id}
-                className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0"
-              >
-                <div className="flex items-center justify-center">
-                  <img
-                    src={product?.featureImage}
-                    alt={product?.genericName}
-                    className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
-                  />
-                </div>
+            {recommendedProducts.length > 0 &&
+              recommendedProducts.map((product, index) => (
+                <div
+                  key={product._id}
+                  className="bg-white rounded-2xl p-6 shadow-[0_0_12px_0_rgba(0,0,0,0.20)] flex sm:flex-col items-center sm:items-stretch justify-between gap-4 sm:gap-0"
+                >
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={product?.featureImage}
+                      alt={product?.genericName}
+                      className="w-[100px] h-[100px] sm:w-[150px] sm:h-[150px] object-contain scale-175 -translate-y-9 sm:-translate-y-10"
+                    />
+                  </div>
 
-                <div className="w-[230px] sm:w-full">
-                  <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
-                    {product?.genericName}
-                  </h3>
+                  <div className="w-[230px] sm:w-full">
+                    <h3 className="text-dark-green font-bold text-xl mb-2 sm:text-center sm:mt-4 capitalize">
+                      {product?.genericName}
+                    </h3>
 
-                  <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
-                    {product?.shortDescription}
-                  </p>
+                    <p className="text-t-black-light sm:mb-4 sm:text-center capitalize">
+                      {product?.shortDescription}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           <div className="mt-6 grid grid-cols-1 md:grid-cols-[340px_1fr] gap-8 bg-white rounded-2xl p-5 sm:p-8 shadow-[0_0_12px_0_rgba(0,0,0,0.20)]">
@@ -438,281 +453,99 @@ const Recommendation = () => {
 
           {/* Pricing section */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* <!-- Plan 1: Basic --> */}
-            <div className="bg-white rounded-lg shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)] p-6 flex flex-col">
-              <h3 className="text-2xl font-semibold mb-4 capitalize">Trial</h3>
-              <span className="text-lg text-t-black-light/70 font-semibold line-through">
-                ₹999
-              </span>
-              <div className="mb-6">
-                <span className="text-4xl text-t-black font-semibold">
-                  ₹799
-                </span>{" "}
-                <span className="text-sm text-t-black-light font-semibold">
-                  Save 20%
-                </span>
-              </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
-                One Month Plan
-              </p>
-              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer capitalize">
-                Select Trial Plan
-              </button>
-              <span className="mb-8 text-sm text-t-black-light capitalize">
-                *Get Additional 10% Discount On Online Payment
-              </span>
-              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">
-                    Try For 1 Month Then Decide
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">
-                    Free Nutritionist's Consultation
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">24/7 Support With Experts</span>
-                </li>
-              </ul>
-              <div className="p-4 bg-black rounded-xl text-white mt-6">
-                <p className="text-sm capitalize">
-                  One Kit Delivered To You & One FREE Consultancuy with our
-                  Nutritionists
-                </p>
-                <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm capitalize">
-                  You Can Buy Your Nutrition Plan For Following Months From Your
-                  Nuitriient Dashboard
-                </p>
-              </div>
-            </div>
+            {pricingPlans.map((plan) => {
+              return (
+                <div
+                  key={plan._id}
+                  className={`bg-white rounded-lg p-6 flex flex-col
+        ${plan.recommended ? "border-2 border-dark-green relative lg:scale-110" : "shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)]"}`}
+                >
+                  {plan.recommended && (
+                    <span className="absolute top-0 right-4 -mt-3 bg-dark-green  text-white  text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
+                      Recommended
+                    </span>
+                  )}
 
-            {/* <!-- Plan 2: Plus / Recommended --> */}
-            <div className="bg-white  rounded-lg p-6 flex flex-col border-2 border-dark-green  relative lg:scale-110">
-              <span className="absolute top-0 right-4 -mt-3 bg-dark-green  text-white  text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">
-                Recommended
-              </span>
-              <h3 className="text-2xl font-semibold mb-4">Standard</h3>
-              <span className="text-lg text-t-black-light/70 font-semibold line-through">
-                ₹999
-              </span>
-              <div className="mb-6">
-                <span className="text-4xl text-t-black font-semibold">
-                  ₹599
-                </span>{" "}
-                <span className="text-sm text-t-black-light font-semibold">
-                  Save 40%
-                </span>
-              </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
-                Six Months Subscription
-              </p>
-              <button className="w-full bg-dark-green  text-white  py-2 px-4 rounded-md font-semibold hover:bg-dark-green/80  transition duration-200 mb-1 cursor-pointer">
-                Select Standard Plan
-              </button>
-              <span className="mb-8 text-sm text-t-black-light capitalize">
-                *Get Additional 10% Discount On Online Payment
-              </span>
-              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">Good Value For Money</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">
-                    Pay Monthly Cancel Any Time
-                  </span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">Uninterrupted Guidance</span>
-                </li>
-              </ul>
-              <div className="p-4 bg-dark-green rounded-xl text-white mt-6">
-                <p className="text-sm capitalize">
-                  One Kit Delivered Automatically Every Monthy After Your
-                  Monthly Nutritionist Consultanc
-                </p>
-                <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm capitalize">
-                  Your Diet, Routine And Supplemnets Are Updated Every Month
-                  According To Your Improvements And Nutritionist's Consultation
-                </p>
-              </div>
-            </div>
+                  <h3 className="text-2xl font-semibold mb-4 capitalize">
+                    {plan.name}
+                  </h3>
 
-            {/* <!-- Plan 3: Pro --> */}
-            <div className="bg-white rounded-lg shadow-[0px_0px_15px_2px_rgba(0,0,0,0.1)] lg:shadow-[0px_0px_30px_10px_rgba(0,0,0,0.1)] p-6 flex flex-col">
-              <h3 className="text-2xl font-semibold mb-4">Premium</h3>
-              <span className="text-lg text-t-black-light/70 font-semibold line-through">
-                ₹999
-              </span>
-              <div className="mb-6">
-                <span className="text-4xl text-t-black font-semibold">
-                  ₹499
-                </span>{" "}
-                <span className="text-sm text-t-black-light font-semibold">
-                  Save 50%
-                </span>
-              </div>
-              <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
-                Twelve Months Subscription
-              </p>
-              <button className="w-full bg-gray-900  text-white  py-2 px-4 rounded-md font-semibold hover:bg-gray-700  transition duration-200 mb-1 cursor-pointer capitalize">
-                Select Premium Plan
-              </button>
-              <span className="mb-8 text-sm text-t-black-light capitalize">
-                *Get Additional 10% Discount On Online Payment
-              </span>
-              <ul className="space-y-3 text-sm feature-list text-t-black-light  flex-grow">
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
+                  <span className="text-lg text-t-black-light/70 font-semibold line-through">
+                    ₹{plan.originalPrice}
+                  </span>
+
+                  <div className="mb-6">
+                    <span className="text-4xl text-t-black font-semibold">
+                      ₹{plan.price}
+                    </span>{" "}
+                    <span className="text-sm text-t-black-light font-semibold">
+                      Save {plan.savePercentage}%
+                    </span>
+                  </div>
+
+                  <p className="text-gray-600 mb-6 text-lg font-semibold underline underline-offset-8 capitalize">
+                    {plan.duration}
+                  </p>
+
+                  <button
+                    className={`w-full py-2 px-4 rounded-md font-semibold transition duration-200 mb-1 cursor-pointer capitalize
+        ${plan.recommended ? "bg-dark-green text-white hover:bg-dark-green/80" : "bg-gray-900 text-white hover:bg-gray-700"}`}
                   >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">Best Value For Money</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">Uninterrupted Routine</span>
-                </li>
-                <li className="flex items-start">
-                  <svg
-                    className="w-5 h-5 text-dark-green mr-2 mt-0.5"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                  <span className="capitalize">Uninterrupted Guidance</span>
-                </li>
-              </ul>
-              <div className="p-4 bg-black rounded-xl text-white mt-6">
-                <p className="text-sm capitalize">
-                  One Kit Delivered Automatically Every Monthy After Your
-                  Monthly Nutritionist Consultancy
-                </p>
-                <hr className="h-px my-2 bg-white/50 border-0" />
-                <p className="text-sm capitalize">
-                  Your Diet, Routine And Supplemnets Are Updated Every Month
-                  According To Your Improvements And Nutritionist's Consultation
-                </p>
-              </div>
-            </div>
+                    Select {plan.name} Plan
+                  </button>
+
+                  <span className="mb-8 text-sm text-t-black-light capitalize">
+                    *Get Additional 10% Discount On Online Payment
+                  </span>
+
+                  <ul className="space-y-3 text-sm text-t-black-light flex-grow">
+                    {plan.features?.map((feature, i) => (
+                      <li key={i} className="flex items-start">
+                        <svg
+                          className="w-5 h-5 text-dark-green mr-2 mt-0.5"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth="2"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+
+                        <span className="capitalize">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {plan.highlightBox &&
+                    (plan.recommended ? (
+                      <div className="p-4 bg-dark-green rounded-xl text-white mt-6">
+                        <p className="text-sm capitalize">
+                          {plan.highlightBox.title}
+                        </p>
+                        <hr className="h-px my-2 bg-white/50 border-0" />
+                        <p className="text-sm capitalize">
+                          {plan.highlightBox.description}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="p-4 bg-black rounded-xl text-white mt-6">
+                        <p className="text-sm capitalize">
+                          {plan.highlightBox.title}
+                        </p>
+                        <hr className="h-px my-2 bg-white/50 border-0" />
+                        <p className="text-sm capitalize">
+                          {plan.highlightBox.description}
+                        </p>
+                      </div>
+                    ))}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
